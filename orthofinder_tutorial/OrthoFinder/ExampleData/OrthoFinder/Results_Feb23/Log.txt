@@ -1,0 +1,14 @@
+2021-02-23 15:28:40 : Started OrthoFinder version 2.5.2
+Command Line: /Users/gnickles/anaconda3/bin/orthofinder -f ExampleData/
+
+WorkingDirectory_Base: /Users/gnickles/Documents/GN_Botany563/orthofinder_tutorial/OrthoFinder/ExampleData/OrthoFinder/Results_Feb23/WorkingDirectory/
+
+Species used: 
+0: Mycoplasma_agalactiae.faa
+1: Mycoplasma_gallisepticum.faa
+2: Mycoplasma_genitalium.faa
+3: Mycoplasma_hyopneumoniae.faa
+
+FN_Orthogroups: /Users/gnickles/Documents/GN_Botany563/orthofinder_tutorial/OrthoFinder/ExampleData/OrthoFinder/Results_Feb23/WorkingDirectory/clusters_OrthoFinder_I1.5.txt_id_pairs.txt
+WorkingDirectory_Trees: /Users/gnickles/Documents/GN_Botany563/orthofinder_tutorial/OrthoFinder/ExampleData/OrthoFinder/Results_Feb23/WorkingDirectory/
+2021-02-23 15:29:12 : OrthoFinder run completed

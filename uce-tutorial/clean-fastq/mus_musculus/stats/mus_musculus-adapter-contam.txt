@@ -1,0 +1,8 @@
+TrimmomaticPE: Started with arguments:
+ -phred33 /Users/gnickles/Documents/GN_Botany563/uce-tutorial/clean-fastq/mus_musculus/raw-reads/mus_musculus-READ1.fastq.gz /Users/gnickles/Documents/GN_Botany563/uce-tutorial/clean-fastq/mus_musculus/raw-reads/mus_musculus-READ2.fastq.gz /Users/gnickles/Documents/GN_Botany563/uce-tutorial/clean-fastq/mus_musculus/split-adapter-quality-trimmed/mus_musculus-READ1.fastq.gz /Users/gnickles/Documents/GN_Botany563/uce-tutorial/clean-fastq/mus_musculus/split-adapter-quality-trimmed/mus_musculus-READ1-single.fastq.gz /Users/gnickles/Documents/GN_Botany563/uce-tutorial/clean-fastq/mus_musculus/split-adapter-quality-trimmed/mus_musculus-READ2.fastq.gz /Users/gnickles/Documents/GN_Botany563/uce-tutorial/clean-fastq/mus_musculus/split-adapter-quality-trimmed/mus_musculus-READ2-single.fastq.gz ILLUMINACLIP:/Users/gnickles/Documents/GN_Botany563/uce-tutorial/clean-fastq/mus_musculus/adapters.fasta:2:30:10 LEADING:5 TRAILING:15 SLIDINGWINDOW:4:15 MINLEN:40
+Multiple cores found: Using 4 threads
+Using Long Clipping Sequence: 'AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGTAGATCTCGGTGGTCGCCGTATCATT'
+Using Long Clipping Sequence: 'AGATCGGAAGAGCACACGTCTGAACTCCAGTCACCTACAACGGCATCTCGTATGCCGTCTTCTGCTTG'
+ILLUMINACLIP: Using 0 prefix pairs, 2 forward/reverse sequences, 0 forward only sequences, 0 reverse only sequences
+Input Read Pairs: 1298196 Both Surviving: 1068977 (82.34%) Forward Only Surviving: 172930 (13.32%) Reverse Only Surviving: 21901 (1.69%) Dropped: 34388 (2.65%)
+TrimmomaticPE: Completed successfully

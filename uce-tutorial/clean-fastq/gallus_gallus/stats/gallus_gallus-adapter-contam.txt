@@ -1,0 +1,8 @@
+TrimmomaticPE: Started with arguments:
+ -phred33 /Users/gnickles/Documents/GN_Botany563/uce-tutorial/clean-fastq/gallus_gallus/raw-reads/gallus_gallus-READ1.fastq.gz /Users/gnickles/Documents/GN_Botany563/uce-tutorial/clean-fastq/gallus_gallus/raw-reads/gallus_gallus-READ2.fastq.gz /Users/gnickles/Documents/GN_Botany563/uce-tutorial/clean-fastq/gallus_gallus/split-adapter-quality-trimmed/gallus_gallus-READ1.fastq.gz /Users/gnickles/Documents/GN_Botany563/uce-tutorial/clean-fastq/gallus_gallus/split-adapter-quality-trimmed/gallus_gallus-READ1-single.fastq.gz /Users/gnickles/Documents/GN_Botany563/uce-tutorial/clean-fastq/gallus_gallus/split-adapter-quality-trimmed/gallus_gallus-READ2.fastq.gz /Users/gnickles/Documents/GN_Botany563/uce-tutorial/clean-fastq/gallus_gallus/split-adapter-quality-trimmed/gallus_gallus-READ2-single.fastq.gz ILLUMINACLIP:/Users/gnickles/Documents/GN_Botany563/uce-tutorial/clean-fastq/gallus_gallus/adapters.fasta:2:30:10 LEADING:5 TRAILING:15 SLIDINGWINDOW:4:15 MINLEN:40
+Multiple cores found: Using 4 threads
+Using Long Clipping Sequence: 'AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGTAGATCTCGGTGGTCGCCGTATCATT'
+Using Long Clipping Sequence: 'AGATCGGAAGAGCACACGTCTGAACTCCAGTCACTTCTCCTTCAATCTCGTATGCCGTCTTCTGCTTG'
+ILLUMINACLIP: Using 0 prefix pairs, 2 forward/reverse sequences, 0 forward only sequences, 0 reverse only sequences
+Input Read Pairs: 376559 Both Surviving: 373625 (99.22%) Forward Only Surviving: 1407 (0.37%) Reverse Only Surviving: 369 (0.10%) Dropped: 1158 (0.31%)
+TrimmomaticPE: Completed successfully

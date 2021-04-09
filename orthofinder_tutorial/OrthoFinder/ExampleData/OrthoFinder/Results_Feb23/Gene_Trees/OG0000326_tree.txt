@@ -1,0 +1,1 @@
+(Mycoplasma_hyopneumoniae_gi|71851902|gb|AAZ44510.1|:0.341052,(Mycoplasma_hyopneumoniae_gi|144227644|gb|AAZ44545.2|:0.89037,(Mycoplasma_hyopneumoniae_gi|144227625|gb|AAZ44516.2|:0.299297,Mycoplasma_hyopneumoniae_gi|71851936|gb|AAZ44544.1|:0.486656):0.135253):0.341052);

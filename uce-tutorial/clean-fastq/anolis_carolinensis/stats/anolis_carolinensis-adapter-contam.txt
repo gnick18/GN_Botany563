@@ -1,0 +1,8 @@
+TrimmomaticPE: Started with arguments:
+ -phred33 /Users/gnickles/Documents/GN_Botany563/uce-tutorial/clean-fastq/anolis_carolinensis/raw-reads/anolis_carolinensis-READ1.fastq.gz /Users/gnickles/Documents/GN_Botany563/uce-tutorial/clean-fastq/anolis_carolinensis/raw-reads/anolis_carolinensis-READ2.fastq.gz /Users/gnickles/Documents/GN_Botany563/uce-tutorial/clean-fastq/anolis_carolinensis/split-adapter-quality-trimmed/anolis_carolinensis-READ1.fastq.gz /Users/gnickles/Documents/GN_Botany563/uce-tutorial/clean-fastq/anolis_carolinensis/split-adapter-quality-trimmed/anolis_carolinensis-READ1-single.fastq.gz /Users/gnickles/Documents/GN_Botany563/uce-tutorial/clean-fastq/anolis_carolinensis/split-adapter-quality-trimmed/anolis_carolinensis-READ2.fastq.gz /Users/gnickles/Documents/GN_Botany563/uce-tutorial/clean-fastq/anolis_carolinensis/split-adapter-quality-trimmed/anolis_carolinensis-READ2-single.fastq.gz ILLUMINACLIP:/Users/gnickles/Documents/GN_Botany563/uce-tutorial/clean-fastq/anolis_carolinensis/adapters.fasta:2:30:10 LEADING:5 TRAILING:15 SLIDINGWINDOW:4:15 MINLEN:40
+Multiple cores found: Using 4 threads
+Using Long Clipping Sequence: 'AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGTAGATCTCGGTGGTCGCCGTATCATT'
+Using Long Clipping Sequence: 'AGATCGGAAGAGCACACGTCTGAACTCCAGTCACGGCGAAGGTTATCTCGTATGCCGTCTTCTGCTTG'
+ILLUMINACLIP: Using 0 prefix pairs, 2 forward/reverse sequences, 0 forward only sequences, 0 reverse only sequences
+Input Read Pairs: 1874362 Both Surviving: 1621842 (86.53%) Forward Only Surviving: 135101 (7.21%) Reverse Only Surviving: 77672 (4.14%) Dropped: 39747 (2.12%)
+TrimmomaticPE: Completed successfully

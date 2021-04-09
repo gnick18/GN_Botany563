@@ -1,0 +1,8 @@
+TrimmomaticPE: Started with arguments:
+ -phred33 /Users/gnickles/Documents/GN_Botany563/uce-tutorial/clean-fastq/alligator_mississippiensis/raw-reads/alligator_mississippiensis-READ1.fastq.gz /Users/gnickles/Documents/GN_Botany563/uce-tutorial/clean-fastq/alligator_mississippiensis/raw-reads/alligator_mississippiensis-READ2.fastq.gz /Users/gnickles/Documents/GN_Botany563/uce-tutorial/clean-fastq/alligator_mississippiensis/split-adapter-quality-trimmed/alligator_mississippiensis-READ1.fastq.gz /Users/gnickles/Documents/GN_Botany563/uce-tutorial/clean-fastq/alligator_mississippiensis/split-adapter-quality-trimmed/alligator_mississippiensis-READ1-single.fastq.gz /Users/gnickles/Documents/GN_Botany563/uce-tutorial/clean-fastq/alligator_mississippiensis/split-adapter-quality-trimmed/alligator_mississippiensis-READ2.fastq.gz /Users/gnickles/Documents/GN_Botany563/uce-tutorial/clean-fastq/alligator_mississippiensis/split-adapter-quality-trimmed/alligator_mississippiensis-READ2-single.fastq.gz ILLUMINACLIP:/Users/gnickles/Documents/GN_Botany563/uce-tutorial/clean-fastq/alligator_mississippiensis/adapters.fasta:2:30:10 LEADING:5 TRAILING:15 SLIDINGWINDOW:4:15 MINLEN:40
+Multiple cores found: Using 4 threads
+Using Long Clipping Sequence: 'AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGTAGATCTCGGTGGTCGCCGTATCATT'
+Using Long Clipping Sequence: 'AGATCGGAAGAGCACACGTCTGAACTCCAGTCACGGAGCTATGGATCTCGTATGCCGTCTTCTGCTTG'
+ILLUMINACLIP: Using 0 prefix pairs, 2 forward/reverse sequences, 0 forward only sequences, 0 reverse only sequences
+Input Read Pairs: 1750000 Both Surviving: 1573403 (89.91%) Forward Only Surviving: 94181 (5.38%) Reverse Only Surviving: 38375 (2.19%) Dropped: 44041 (2.52%)
+TrimmomaticPE: Completed successfully
