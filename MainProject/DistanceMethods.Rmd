@@ -1,0 +1,44 @@
+---
+title: "DistanceBasedMethods"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+installing the required packages
+```{r}
+install.packages("htmltools")
+install.packages("adegenet")
+install.packages("phangorn", dep=TRUE)
+install.packages('ape')
+```
+
+loading the packages. Initially this was giving me issues but removing the dependencies seemed to fix almost all of the problems
+```{r}
+library(stats)
+library(ade4)
+library(ape)
+library(adegenet)
+library(phangorn)
+```
+
+```{bash}
+getwd()
+```
+
+
+Loading in my data that is an aligned fasta file. 
+```{r}
+aln <- fasta2DNAbin("./data/MusclePF05141.afa")
+```
+computing the genetic distances
+```{r}
+D <- dist.dna(aln, model="TN93")
+```
+getting the NJ tree
+```{r}
+tre <- nj(D)
+```
+
