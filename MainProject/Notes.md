@@ -1,3 +1,183 @@
+# My Project Plan
+
+I'm going to lay out my project plan. This is a living document and I may find the need to alter it as I'm starting different parts of my work.
+
+**Goal of Project**: Construct a phylogenetic tree of every backbone isocyandide synthesis gene in the fungal order Eurotiales. 
+
+**Explanation of this note markdown file**
+
+This markdown file is broken into three main parts. 
+
+1. the intro (what you're reading)
+2. TL;DR which will be my condensed completed pipeline and steps I took
+3. All of my notes including failed attempts and troublshooting. This is where I'll do most of my documnetation and when I do something that works it will be copied into the TL;DR section to make it easier to reference later on.
+
+**Background:** Secondary metabolites (SM), which are predominately produced by filamentous fungi, play a crucial role in development, virulence, and protection from environmental damage. These compounds, such as penicillin, have been historically leveraged for a variety of pharmaceutical applications. All SM that have been found in fungal genomes are arranged in a contiguous biosynthetic gene cluster (BGC). The regulation of these BGCs is a result of environmental and developmental stimuli. Temperature, light, nutrition, and stressors have all been shown to impact the synthesis of SM. 
+
+There exists common patterns that underlys different classes of major secondary metabolite families. The main commonly studied and analyzed groups are nonribosomal peptide synthetases (NRPS), polyketide synthases (PKS), terpenes, and hybrid mixes between the other families. Bioinformaticians have been able to exploit these patterns allowing scientists to easily search for all of the BGCS within any genome(s) of interest. However, these programs rely on one very large assumtion: the program can only search for what is canonical. There are countless of examples off non-canonical BGCs in fungi, plants, and bacteria. 
+
+There currently doesn't exist any tools geared toward helping users search for their own non-canoncal gene clusters. I have created a python tool called GBKCreator.py that has enabled me to develop the first dataset of isocyanide BGCS in every sequenced Eurotiales. These isocyanide synthatses (ICS) were first characterized the Keller Lab several years ago, and it's been found that every ICS contains the same core bacbone gene and protein domain. By searching for this protein domain in every annotated Eurotiales genome, and grabbing windows around the located backbone gene, I was also to manually analyze and network the distribution and patterns in this noval secondary metabilite family.
+
+For class I will run a phylogenetic analysis of the backbone ICS protein domains that my program discovered. My networking program I've already been running take into account the evolution of entire gene clusters. This phylogenetic approach will allow me to get insite into the evolution of the core bacbkbone ICS protein domain. The resulting trees that are made by this analysis might give inside into the evolutionary history of this novel secondary metabolite family.
+
+**Overall steps with justification of each step**
+
+There are some things that are going to be done after step 6 but it goes far beyond the scope of this class and phlogenetic work. This pipeline is just for my phylogenetic tree building process. 
+
+1. Create a pipeline that can grab the amino acid sequences of every ICS protein domain within Eurotiales. This pipeline then needs to condense them all into a single fasta file, while adding in the metadata to each grabbed core protein domain.
+
+- This part of the project is straightforard in terms of goal, but will require me to make a custom bash/python pipeline to exicute the most efficiently.
+
+2. Make an alignment of the fasta file using both muscle and T-Coffee
+
+- I will use both and will then evaluate which one produced the file with the highest quality sequence alignment
+
+3. Using trimAl, remove the poorly aligned regions from my multiple sequence alignment. 
+
+-  I will previously used trimAl and it is a great tool to automate removal of poorly aligned regions
+-  I will also maintain my untrimmed-tree and depending on if it is not full of gaps, will use in parallel to the trimmed dataset 
+   -  both will be evaluated after the tree building stage for quality of the trees they were able to construct
+4. Using ModelFinder2 identify the optimal model of evolution for my dataset.
+
+- This is my first time choosing a model of evolution when making a phylogenetic tree. I think this is a really sensible way to prevent me from adding too many parameters that don't necessarily improve the model
+- ModelFinder2 seems to run relativley fast and will work on my dataset, and is commonly used in the field 
+5. Using IQ-Tree, construct a maximum liklihood phylogenetic tree with the ideal model found by ModelFinder2.
+
+- I have tried both IQ-Tree and RAxML but just tend to prefer IQ-Tree. Both would be more than sufficient provided that I give it them the same model. Due to my preference I'll stick with using IQ-Tree for this part of the analysis
+
+6. Analyze the groupings that are made in the phylogenetic tree. It would be interesting to then track the branching and groupings that occured in this tree and compare it against the species tree. Could help give insight on things like if the evolutionary history of these clusters predate Eurotiales, if horizontal gene transfer occured, etc.
+
+
+
+***References of information in background***
+
+Blin, K. *et al.* AntiSMASH 5.0: Updates to the secondary metabolite genome mining pipeline. *Nucleic Acids Res.* **47**, W81–W87 (2019).
+
+Caesar, L. K., Kelleher, N. L. & Keller, N. P. In the fungus where it happens: history and future propelling Aspergillus nidulans as the archetype of natural products research. *Fungal Genet. Biol.* **144**, 103477 (2020).
+
+Keller, N. P. Fungal secondary metabolism: regulation, function and drug discovery. *Nature Reviews Microbiology* vol. 17 167–180 (2019).
+
+Lim, F. Y. *et al.* Fungal isocyanide synthases and xanthocillin biosynthesis in Aspergillus fumigatus. *MBio* **9**, (2018).
+
+**How I am going to keep everything reproduciple**
+
+Everytime I run a small script I will include it in the notes document. I am also going to consistentlly use version control on github to save all of the checkpoints throughout the development of this project. All but the raw genome files and their annotations will be used to do this.
+
+# TL;DR
+
+## Gathering the data
+I used the follow on all of the Eurotiales annotated data. This was from every sequenced genome that was present in the NCBI databse late 2020. The main goal of this section is to grab my protein domain of interest everytime it occurs in all of the genomes, converting that into a fasta format, and condensing them all into a single document while adding in metadata to uniquly identify the sequences later on.
+
+```sh
+#!/bin/bash
+
+for dir in */ ; do
+  cd ./$dir
+  grep "PF05141" *.fa.tsv > tsvFiltered
+  cut -f1 tsvFiltered > temp
+  echo $dir > proteinFastaFiltered
+  grep -f temp -A 1 *prot.fa | grep -v -- "^--$" >> proteinFastaFiltered
+  rm temp
+  cd ..
+done
+
+for dir in */ ; do
+  cd ./$dir
+  cat proteinFastaFiltered >> ../EurotialesFastaAll
+  cat tsvFiltered >> ../Eurotiales_tsvAll
+  rm tsvFiltered
+  rm proteinFastaFiltered
+  cd ..
+done
+```
+
+followed by 
+
+```python
+#! /usr/bin/env python
+#Author: Grant Nickles
+
+import os
+import sys
+import pdb
+from Bio import SeqIO
+def grepFixer(fastaPath, oldFastaPath):
+    allRecords = {}
+    for record in SeqIO.parse(oldFastaPath, "fasta"):
+        allRecords[record.id[:-2]] = record.description
+    editedFasta = []
+    with open(fastaPath) as fa:
+        lines = fa.readlines()
+        genomeName = None
+        for index, line in enumerate(lines):
+            line = line.strip('\n')
+            if line.startswith("GC"):
+                genomeName = line.replace(".tar.gz_folder/", "")
+            elif line.startswith(">"):
+                editedLine = line + " " + allRecords[genomeName] + "\n"
+                editedFasta.append(editedLine)
+            else:
+                editedFasta.append(line + "\n")
+    outputPath = r"/Users/gnickles/Documents/GN_Botany563/MainProject/data/FinalPF04151.fa"
+    with open(outputPath, "a+") as finalFasta:
+        for l in editedFasta:
+            finalFasta.write(l)
+
+fastaPath = r"/Users/gnickles/Documents/GN_Botany563/MainProject/data/EurotialesFastaAll"
+oldFastaPath = r"/Users/gnickles/Documents/GN_Botany563/MainProject/data/PF05141_Euro.fa"
+grepFixer(fastaPath, oldFastaPath)
+```
+
+followed by
+
+```python
+#! /usr/bin/env python
+#Author: Grant Nickles
+import os
+import sys
+import pdb
+from Bio import SeqIO
+
+def MakePF05141(tsvPath, fastaPath):
+    annotationInfo = {}
+    with open (tsvPath) as tsv:
+        lines = tsv.readlines()
+        for index, line in enumerate(lines):
+            line=line.rstrip()
+            separated = line.split("\t")
+            name = separated[0]
+            start = separated[6]
+            stop = separated[7]
+            annotationInfo[name] = [start, stop]
+    editedRecords = []
+    for record in SeqIO.parse(fastaPath, "fasta"):
+        try:
+            start = int(annotationInfo[record.id][0])
+            stop = int(annotationInfo[record.id][1])
+            editedRecords.append(record[start-1:stop])
+        except:
+            editedRecords.append(record)
+            print(record.id + " needs to be filtered by hand.")
+    outputPath = os.path.join("/Users/gnickles/Documents/GN_Botany563/MainProject/data", "PF05141.fa")
+    SeqIO.write(editedRecords, outputPath, 'fasta')
+
+tsvPath = r'/Users/gnickles/Documents/GN_Botany563/MainProject/data/Eurotiales_tsvAll'
+fastaPath = r'/Users/gnickles/Documents/GN_Botany563/MainProject/data/EurotialesFastaAll'
+MakePF05141(tsvPath, fastaPath)
+```
+
+This made a single fasta file with the gene names. This may be the big issue for the time being as this doesn't include any of the identifying info. I'll think about how I can add that later.
+
+Update on 03/05/2021: I figured out how to add the identifying info. It wasn't hard and just used a single python script and and echo statement on my bash script.
+
+```sh
+rna-gnl|WGS:AHIG|ASPCADRAFT_mRNA21606 needs to be filtered by hand.
+#looking into it this isn't anywhere in the tsv file. I opted to remove it.
+>rna-gnl|WGS:AHIG|ASPCADRAFT_mRNA21606 GCA_001990825.1_4 Fungi,Ascomycota,Eurotiomycetes,Eurotiales,Aspergillaceae,Aspergillus,Aspergillus_carbonarius,Aspergillus_carbonarius_ITEM_5010
+VSYQKLFPTRAGSHYIHIRFPNGRQFPAPAPGQAQQAVDAVIRAWEETECKQAQTPIQRELIIDANPWLRMTQWAVYLQGIHPCDLRQRARCPSAEISDPVEKAIQTLWWTVDQVVRKSQRTVQHCGVAIRMEAARTQQTELPYRPLLGYMDEDSIMKRVYPWQQVLTFFART
+```
+
+
 # Notes and troubleshooting 
 
 #### Botany 563 Main Project Pipeline
@@ -1293,4 +1473,389 @@ Analysis started: 23-Mar-2021 11:04:58 / finished: 23-Mar-2021 11:58:40
 Elapsed time: 3222.037 seconds
 
 ```
+
+## Running Mafft and T-Coffee on my final dataset 
+
+### Muscle
+
+I ran the following:
+
+```sh
+$ muscle -in ./PF05141.fa -out MusclePf05141.afa
+
+MUSCLE v3.8.1551 by Robert C. Edgar
+
+http://www.drive5.com/muscle
+This software is donated to the public domain.
+Please cite: Edgar, R.C. Nucleic Acids Res 32(5), 1792-97.
+
+PF05141 363 seqs, lengths min 48, max 330, avg 253
+00:00:01      3 MB(0%)  Iter   1  100.00%  K-mer dist pass 1
+00:00:01      3 MB(0%)  Iter   1  100.00%  K-mer dist pass 2
+00:00:02     62 MB(1%)  Iter   1  100.00%  Align node       
+00:00:02     62 MB(1%)  Iter   1  100.00%  Root alignment
+00:00:03     63 MB(1%)  Iter   2  100.00%  Refine tree   
+00:00:03     63 MB(1%)  Iter   2  100.00%  Root alignment
+00:00:03     63 MB(1%)  Iter   2  100.00%  Root alignment
+00:00:19     63 MB(1%)  Iter   3  100.00%  Refine biparts
+00:00:34     63 MB(1%)  Iter   4  100.00%  Refine biparts
+00:00:34     63 MB(1%)  Iter   5  100.00%  Refine biparts
+00:00:34     63 MB(1%)  Iter   5  100.00%  Refine biparts
+```
+
+- this was super fast
+- For the most part I'm pretty happy with how it looks
+  
+- most sequences have decent coverage with not a ton of gaps
+  
+
+Some are almost entirly gaps, I have to decide if I want to remove those ones and re-run the alignment. If there is a potential sequence I'll remove I'll include it below. 
+
+I'm also realizing I need to remove identical copies. This dataset has multiple species genomes, thus they may have perfectly identical sequences. If there are any identical species that have the same sequence I will remove it.
+
+```shell
+#! /usr/bin/env python
+#Author: Grant Nickles
+
+import os
+import sys
+import pdb
+from Bio import SeqIO
+
+oldFastaPath = "/Users/gnickles/Documents/GN_Botany563/MainProject/data/PF05141.fa"
+
+RecordsToSave = []
+SavedRecords = {}
+for record in SeqIO.parse(oldFastaPath, "fasta"):
+    species = str(record.description).split(",")[6]
+    if species not in SavedRecords: #checks if key is already in the dictionary
+        SavedRecords[species] = [record.seq]
+        RecordsToSave.append(record)
+    else:
+        if str(record.seq) in SavedRecords[species]:
+            continue
+        else:
+            SavedRecords[species].append(record.seq)
+            RecordsToSave.append(record)
+
+outputPath = r"/Users/gnickles/Documents/GN_Botany563/MainProject/data/PF05141_NoSameSeq.fa"
+SeqIO.write(RecordsToSave, outputPath, 'fasta')
+```
+
+My program took the sequences from 363 to 267. This removed a significant proportion of the redundancy that was from duplicate copies. I now re-ran that under Muscle.
+
+```sh
+$ rm MuscleAlignment/MusclePf05141.afa 
+$ muscle -in ./PF05141_NoSameSeq.fa -out MuscleAlignment/MusclePf05141.afa
+
+MUSCLE v3.8.1551 by Robert C. Edgar
+
+http://www.drive5.com/muscle
+This software is donated to the public domain.
+Please cite: Edgar, R.C. Nucleic Acids Res 32(5), 1792-97.
+
+PF05141_NoSameSeq 267 seqs, lengths min 48, max 330, avg 257
+00:00:00      2 MB(0%)  Iter   1  100.00%  K-mer dist pass 1
+00:00:00      2 MB(0%)  Iter   1  100.00%  K-mer dist pass 2
+00:00:01     47 MB(1%)  Iter   1  100.00%  Align node       
+00:00:01     47 MB(1%)  Iter   1  100.00%  Root alignment
+00:00:01     48 MB(1%)  Iter   2  100.00%  Refine tree   
+00:00:01     48 MB(1%)  Iter   2  100.00%  Root alignment
+00:00:01     48 MB(1%)  Iter   2  100.00%  Root alignment
+00:00:08     48 MB(1%)  Iter   3  100.00%  Refine biparts
+00:00:15     48 MB(1%)  Iter   4  100.00%  Refine biparts
+00:00:15     48 MB(1%)  Iter   5  100.00%  Refine biparts
+00:00:15     48 MB(1%)  Iter   5  100.00%  Refine biparts
+```
+
+- this seems to have helped in the alignment
+- I still have the option of removing a couple problem sequences, for now I'm opting to not do that out of fear in losing information but I might in the future
+
+```sh
+# example of normal sequence in msa
+>rna-gnl|WGS:LHCL|ZTR_00170_mrna GCA_001305275.1_6 Fungi,Ascomycota,Eurotiomycetes,Eurotiales,Trichocomaceae,Talaromyces,Talaromyces_verruculosus,
+-------HWIRLNEPVRMVLPA---FPFKSAN----PDKVSSLLPDFAEFLGLSRLNQMC
+LDIRKVYSPGAQITLATDGVVFN---------DLV-LVGDNEVWKYGQEI-----RRMVE
+E-------NFFDHNIKVVYAMELLG------------------ITNQVDPDEKTFFATID
+KCRDQIIA-QFTQHEEAMQHLIDEDPDSRLT-YTGIKTFCKVDQENS--IYRTRAPSRKA
+FLRDMSSLALKILARSE---GFGHLIRNQLPHHIRLSIHPSS-GAAKLSICLLPQPS-GA
+--------------------------------------VARAPWMSSIAVDEK-GNYLSV
+HSKDVRETH----
+# example of one of the poor ones
+>rna-gnl|WGS:VIFY|MPDQ_006355-T1_mrna GCA_006542485.1_1 Fungi,Ascomycota,Eurotiomycetes,Eurotiales,Aspergillaceae,Monascus,Monascus_purpureus,
+-----VEFFVSRNLRLELCLPA---FPCKSSN----SRKVLGVVPDKGEELALRRL----
+------------------------------------------------------------
+--------HEFVH-----------------------------------------------
+------------------------------------------------------------
+------------------------------------------------------------
+------------------------------------------------------------
+-------------
+
+```
+
+
+
+
+
+### T-Coffee
+
+I ran the following:
+
+```sh
+t_coffee PF05141_NoSameSeq.fa -mode mcoffee
+
+PROGRAM: T-COFFEE Version_13.45.0.4846264 (Version_13.45.0.4846264)
+-full_log      	S	[0] 
+-genepred_score	S	[0] 	nsd
+-run_name      	S	[0] 
+-mem_mode      	S	[0] 	mem
+-extend        	D	[1] 	1 
+-extend_mode   	S	[0] 	very_fast_triplet
+-max_n_pair    	D	[0] 	10 
+-seq_name_for_quadruplet	S	[0] 	all
+-compact       	S	[0] 	default
+-clean         	S	[0] 	no
+-do_self       	FL	[0] 	0
+-do_normalise  	D	[0] 	1000 
+-template_file 	S	[0] 
+-setenv        	S	[0] 	0
+-export        	S	[0] 	0
+-template_mode 	S	[0] 
+-flip          	D	[0] 	0 
+-remove_template_file	D	[0] 	0 
+-profile_template_file	S	[0] 
+-in            	S	[1] 	Mclustalw2_msa	Mt_coffee_msa	Mpoa_msa	Mmuscle_msa	Mmafft_msa	Mdialignt_msa	Mpcma_msa	Mprobcons_msa
+-seq           	S	[1] 	PF05141_NoSameSeq.fa
+-aln           	S	[0] 
+-method_limits 	S	[0] 
+-method        	S	[0] 
+-lib           	S	[0] 
+-profile       	S	[0] 
+-profile1      	S	[0] 
+-profile2      	S	[0] 
+-pdb           	S	[0] 
+-relax_lib     	D	[0] 	1 
+-filter_lib    	D	[0] 	0 
+-shrink_lib    	D	[0] 	0 
+-out_lib       	W_F	[0] 	no
+-out_lib_mode  	S	[0] 	primary
+-lib_only      	D	[0] 	0 
+-outseqweight  	W_F	[0] 	no
+-seq_source    	S	[0] 	ANY
+-cosmetic_penalty	D	[0] 	0 
+-gapopen       	D	[0] 	0 
+-gapext        	D	[0] 	0 
+-fgapopen      	D	[0] 	0 
+-fgapext       	D	[0] 	0 
+-nomatch       	D	[0] 	0 
+-newtree       	W_F	[0] 	default
+-tree          	W_F	[0] 	NO
+-usetree       	R_F	[0] 
+-tree_mode     	S	[0] 	nj
+-distance_matrix_mode	S	[0] 	ktup
+-distance_matrix_sim_mode	S	[0] 	idmat_sim1
+-quicktree     	FL	[0] 	0
+-outfile       	W_F	[0] 	default
+-maximise      	FL	[1] 	1
+-output        	S	[0] 	aln	html
+-len           	D	[0] 	0 
+-infile        	R_F	[0] 
+-matrix        	S	[0] 	default
+-tg_mode       	D	[0] 	1 
+-profile_mode  	S	[0] 	cw_profile_profile
+-profile_comparison	S	[0] 	profile
+-dp_mode       	S	[0] 	linked_pair_wise
+-ktuple        	D	[0] 	1 
+-ndiag         	D	[0] 	0 
+-diag_threshold	D	[0] 	0 
+-diag_mode     	D	[0] 	0 
+-sim_matrix    	S	[0] 	vasiliky
+-transform     	S	[0] 
+-extend_seq    	FL	[0] 	0
+-outorder      	S	[0] 	input
+-inorder       	S	[0] 	aligned
+-seqnos        	S	[0] 	off
+-case          	S	[0] 	keep
+-cpu           	D	[0] 	0 
+-ulimit        	D	[0] 	-1 
+-maxnseq       	D	[0] 	-1 
+-maxlen        	D	[0] 	-1 
+-sample_dp     	D	[0] 	0 
+-weight        	S	[0] 	default
+-seq_weight    	S	[0] 	no
+-align         	FL	[1] 	1
+-mocca         	FL	[0] 	0
+-domain        	FL	[0] 	0
+-start         	D	[0] 	0 
+-len           	D	[0] 	0 
+-scale         	D	[0] 	0 
+-mocca_interactive	FL	[0] 	0
+-method_evaluate_mode	S	[0] 	default
+-color_mode    	S	[0] 	new
+-aln_line_length	D	[0] 	0 
+-evaluate_mode 	S	[0] 	triplet
+-get_type      	FL	[0] 	0
+-clean_aln     	D	[0] 	0 
+-clean_threshold	D	[1] 	1 
+-clean_iteration	D	[1] 	1 
+-clean_evaluate_mode	S	[0] 	t_coffee_fast
+-extend_matrix 	FL	[0] 	0
+-prot_min_sim  	D	[0] 	0 
+-prot_max_sim  	D	[100] 	100 
+-psiJ          	D	[0] 	3 
+-psitrim_mode  	S	[0] 	regtrim
+-psitrim_tree  	S	[0] 	codnd
+-psitrim       	D	[100] 	100 
+-prot_min_cov  	D	[90] 	90 
+-pdb_type      	S	[0] 	d
+-pdb_min_sim   	D	[35] 	35 
+-pdb_max_sim   	D	[100] 	100 
+-pdb_min_cov   	D	[50] 	50 
+-pdb_blast_server	W_F	[0] 	EBI
+-blast         	W_F	[0] 
+-blast_server  	W_F	[0] 	EBI
+-pdb_db        	W_F	[0] 	pdb
+-protein_db    	W_F	[0] 	uniref50
+-method_log    	W_F	[0] 	no
+-struc_to_use  	S	[0] 
+-cache         	W_F	[0] 	use
+-print_cache   	FL	[0] 	0
+-align_pdb_param_file	W_F	[0] 	no
+-align_pdb_hasch_mode	W_F	[0] 	hasch_ca_trace_bubble
+-external_aligner	S	[0] 	NO
+-msa_mode      	S	[0] 	tree
+-et_mode       	S	[0] 	et
+-master        	S	[0] 	no
+-blast_nseq    	D	[0] 	0 
+-lalign_n_top  	D	[0] 	10 
+-iterate       	D	[0] 	0 
+-trim          	D	[0] 	0 
+-split         	D	[0] 	0 
+-trimfile      	S	[0] 	default
+-split         	D	[0] 	0 
+-split_nseq_thres	D	[0] 	0 
+-split_score_thres	D	[0] 	0 
+-check_pdb_status	D	[0] 	0 
+-clean_seq_name	D	[0] 	0 
+-seq_to_keep   	S	[0] 
+-dpa_master_aln	S	[0] 
+-dpa_maxnseq   	D	[0] 	0 
+-dpa_min_score1	D	[0] 
+-dpa_min_score2	D	[0] 
+-dpa_keep_tmpfile	FL	[0] 	0
+-dpa_debug     	D	[0] 	0 
+-multi_core    	S	[1] 	methods_relax_msa
+-n_core        	D	[0] 	1 
+-thread        	D	[0] 	1 
+-max_n_proc    	D	[0] 	1 
+-lib_list      	S	[0] 
+-prune_lib_mode	S	[0] 	5
+-tip           	S	[0] 	none
+-rna_lib       	S	[0] 
+-no_warning    	D	[0] 	0 
+-run_local_script	D	[0] 	0 
+-proxy         	S	[0] 	unset
+-email         	S	[0] 
+-clean_overaln 	D	[0] 	0 
+-overaln_param 	S	[0] 
+-overaln_mode  	S	[0] 
+-overaln_model 	S	[0] 
+-overaln_threshold	D	[0] 	0 
+-overaln_target	D	[0] 	0 
+-overaln_P1    	D	[0] 	0 
+-overaln_P2    	D	[0] 	0 
+-overaln_P3    	D	[0] 	0 
+-overaln_P4    	D	[0] 	0 
+-exon_boundaries	S	[0] 
+-display       	D	[0] 	100 
+
+INPUT FILES
+	Input File (M) clustalw2_msa 
+	Input File (M) t_coffee_msa 
+	Input File (M) poa_msa 
+	Input File (M) muscle_msa 
+	Input File (M) mafft_msa 
+	Input File (M) dialignt_msa 
+	Input File (M) pcma_msa 
+	Input File (M) probcons_msa 
+	Input File (S) PF05141_NoSameSeq.fa  Format fasta_seq
+
+Identify Master Sequences [no]:
+
+Master Sequences Identified
+INPUT SEQUENCES: 267 SEQUENCES  [PROTEIN]
+	Multi Core Mode (read): 1 processor(s):
+
+	--- Process Method/Library/Aln Mclustalw2_msa
+pid 17175 -- COMMAND FAILED: clustalw2  -INFILE=/var/tmp/tco/tcotb57kncn17155//4402417174dza9t1442  -OUTFILE=/var/tmp/tco/tcotb57kncn17155//4402417174dza9t1443        -OUTORDER=INPUT -NEWTREE=SCRATCH_FILE -align   >>/dev/null 2>&1
+
+	xxx Retrieved Mclustalw2_msa
+	--- Process Method/Library/Aln Mt_coffee_msa
+	xxx Retrieved Mt_coffee_msa
+	--- Process Method/Library/Aln Mpoa_msa
+	xxx Retrieved Mpoa_msa
+	--- Process Method/Library/Aln Mmuscle_msa
+	xxx Retrieved Mmuscle_msa
+	--- Process Method/Library/Aln Mmafft_msa
+	xxx Retrieved Mmafft_msa
+	--- Process Method/Library/Aln Mdialignt_msa
+	xxx Retrieved Mdialignt_msa
+	--- Process Method/Library/Aln Mpcma_msa
+	xxx Retrieved Mpcma_msa
+	--- Process Method/Library/Aln Mprobcons_msa
+	xxx Retrieved Mprobcons_msa
+	--- Process Method/Library/Aln SPF05141_NoSameSeq.fa
+	xxx Retrieved SPF05141_NoSameSeq.fa
+
+	All Methods Retrieved
+
+MANUAL PENALTIES: gapopen=0 gapext=0
+
+	Library Total Size: [420966]
+
+Library Relaxation: Multi_proc [1]
+ 
+!		[Relax Library][TOT=  267][100 %]
+
+Relaxation Summary: [420966]--->[420646]
+
+
+
+UN-WEIGHTED MODE: EVERY SEQUENCE WEIGHTS 1
+
+MAKE GUIDE TREE 
+	[MODE=nj][DONE]
+
+PROGRESSIVE_ALIGNMENT [Tree Based]
+
+#Single Thread
+	Group  533: [Group  532 (  46 seq)] with [Group  487 ( 221 seq)]-->[Len=  395][PID:17155]
+
+
+!		[Final Evaluation][TOT=  197][100 %]
+
+
+
+OUTPUT RESULTS
+	#### File Type= GUIDE_TREE      Format= newick          Name= PF05141_NoSameSeq.dnd
+	#### File Type= MSA             Format= aln             Name= PF05141_NoSameSeq.aln
+	#### File Type= MSA             Format= html            Name= PF05141_NoSameSeq.html
+
+# Command Line: t_coffee PF05141_NoSameSeq.fa -mode mcoffee  [PROGRAM:T-COFFEE]
+# T-COFFEE Memory Usage: Current= 44.455 Mb, Max= 68.336 Mb
+# Results Produced with T-COFFEE Version_13.45.0.4846264 (Version_13.45.0.4846264)
+# T-COFFEE is available from http://www.tcoffee.org
+# Register on: https://groups.google.com/group/tcoffee/
+
+
+*************************************************************************************************
+*                        MESSAGES RECAPITULATION                                    
+17175 -- WARNING: COMMAND FAILED: clustalw2  -INFILE=/var/tmp/tco/tcotb57kncn17155//4402417174dza9t1442  -OUTFILE=/var/tmp/tco/tcotb57kncn17155//4402417174dza9t1443        -OUTORDER=INPUT -NEWTREE=SCRATCH_FILE -align   >>/dev/null 2>&1
+*************************************************************************************************
+```
+
+- the html file has almost everything listed in the good column! This is way better than my first attempt when I used the gene and not the protein domain of interest
+
+- looking into the alignment file there are multiple regions that are all listed on the file
+  - I think **probably 8 groups** as there are 8 copies of the sequences I cmd f'd
 
