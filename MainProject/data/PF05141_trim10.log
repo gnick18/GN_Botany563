@@ -1,0 +1,382 @@
+IQ-TREE multicore version 2.0.3 for Mac OS X 64-bit built Dec 19 2020
+Developed by Bui Quang Minh, Nguyen Lam Tung, Olga Chernomor,
+Heiko Schmidt, Dominik Schrempf, Michael Woodhams.
+
+Host:    Nymeria-Keller-Lab.local (AVX512, FMA3, 8 GB RAM)
+Command: iqtree -s ./MafftAlignment/PF05141_aln_trimmed10.fas -m MFP --safe --mem 8G -T 4 -B 1000 --prefix ./PF05141_trim10
+Seed:    936054 (Using SPRNG - Scalable Parallel Random Number Generator)
+Time:    Mon Apr 26 21:20:08 2021
+Kernel:  Safe AVX+FMA - 4 threads (8 CPU cores detected)
+
+Reading alignment file ./MafftAlignment/PF05141_aln_trimmed10.fas ... Fasta format detected
+NOTE: Change sequence name 'rna-An01g02330 325 bp' -> rna-An01g02330_325_bp
+NOTE: Change sequence name 'rna-ANIA_02705 325 bp' -> rna-ANIA_02705_325_bp
+NOTE: Change sequence name 'rna-ANIA_02606 325 bp' -> rna-ANIA_02606_325_bp
+NOTE: Change sequence name 'rna-AFUB_101900 325 bp' -> rna-AFUB_101900_325_bp
+NOTE: Change sequence name 'rna-AFUB_051200 325 bp' -> rna-AFUB_051200_325_bp
+NOTE: Change sequence name 'rna-AFUB_035500 325 bp' -> rna-AFUB_035500_325_bp
+NOTE: Change sequence name 'rna-gnl|china|mrna.Ao3042_03026 325 bp' -> rna-gnl|china|mrna.Ao3042_03026_325_bp
+NOTE: Change sequence name 'rna-gnl|WGS 325 bp' -> rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'rna-gnl|WGS 325 bp' -> rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'rna-gnl|WGS 325 bp' -> rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'rna-gnl|WGS 325 bp' -> rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'gene-PROQFM164_S01g000571 325 bp' -> gene-PROQFM164_S01g000571_325_bp
+NOTE: Change sequence name 'gene-PROQFM164_S01g000574 325 bp' -> gene-PROQFM164_S01g000574_325_bp
+NOTE: Change sequence name 'gene-PROQFM164_S01g003549 325 bp' -> gene-PROQFM164_S01g003549_325_bp
+NOTE: Change sequence name 'gene-PCAMFM013_S010g000375 325 bp' -> gene-PCAMFM013_S010g000375_325_bp
+NOTE: Change sequence name 'gene-PCAMFM013_S010g000378 325 bp' -> gene-PCAMFM013_S010g000378_325_bp
+NOTE: Change sequence name 'gene-PCAMFM013_S025g000125 325 bp' -> gene-PCAMFM013_S025g000125_325_bp
+NOTE: Change sequence name 'gene-PCAMFM013_S005g000273 325 bp' -> gene-PCAMFM013_S005g000273_325_bp
+NOTE: Change sequence name 'rna-gnl|jgi|EURHEDRAFT_mRNA409674 325 bp' -> rna-gnl|jgi|EURHEDRAFT_mRNA409674_325_bp
+NOTE: Change sequence name 'rna-gnl|WGS 325 bp' -> rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'rna-gnl|WGS 325 bp' -> rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'rna-gnl|WGS 325 bp' -> rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'rna-gnl|RolfPradeLab|mrna.AFUMN_2672 325 bp' -> rna-gnl|RolfPradeLab|mrna.AFUMN_2672_325_bp
+NOTE: Change sequence name 'rna-gnl|RolfPradeLab|mrna.AFUMN_2053 325 bp' -> rna-gnl|RolfPradeLab|mrna.AFUMN_2053_325_bp
+NOTE: Change sequence name 'rna-gnl|CaiTAMU|mrna.GQ26_0310120.3 325 bp' -> rna-gnl|CaiTAMU|mrna.GQ26_0310120.3_325_bp
+NOTE: Change sequence name 'rna-gnl|CaiTAMU|mrna.GQ26_0051510.1 325 bp' -> rna-gnl|CaiTAMU|mrna.GQ26_0051510.1_325_bp
+NOTE: Change sequence name 'rna-gnl|CaiTAMU|mrna.GQ26_0051540.1 325 bp' -> rna-gnl|CaiTAMU|mrna.GQ26_0051540.1_325_bp
+NOTE: Change sequence name 'rna-gnl|GabaldonCRG|mrna.PEXP_049400 325 bp' -> rna-gnl|GabaldonCRG|mrna.PEXP_049400_325_bp
+NOTE: Change sequence name 'rna-gnl|GabaldonCRG|mrna.PEXP_104350 325 bp' -> rna-gnl|GabaldonCRG|mrna.PEXP_104350_325_bp
+NOTE: Change sequence name 'rna-gnl|GabaldonCRG|mrna.PEXP_104370 325 bp' -> rna-gnl|GabaldonCRG|mrna.PEXP_104370_325_bp
+NOTE: Change sequence name 'rna-gnl|GabaldonCRG|mrna.PEXP_030230 325 bp' -> rna-gnl|GabaldonCRG|mrna.PEXP_030230_325_bp
+NOTE: Change sequence name 'rna-gnl|GabaldonCRG|mrna.PEXP_060620 325 bp' -> rna-gnl|GabaldonCRG|mrna.PEXP_060620_325_bp
+NOTE: Change sequence name 'rna-gnl|GabaldonCRG|mrna.PITC_049450 325 bp' -> rna-gnl|GabaldonCRG|mrna.PITC_049450_325_bp
+NOTE: Change sequence name 'rna-gnl|GabaldonCRG|mrna.PITC_065890 325 bp' -> rna-gnl|GabaldonCRG|mrna.PITC_065890_325_bp
+NOTE: Change sequence name 'rna-gnl|GabaldonCRG|mrna.PITC_065910 325 bp' -> rna-gnl|GabaldonCRG|mrna.PITC_065910_325_bp
+NOTE: Change sequence name 'gene-TCE0_034f11610 325 bp' -> gene-TCE0_034f11610_325_bp
+NOTE: Change sequence name 'gene-TCE0_018r05594 325 bp' -> gene-TCE0_018r05594_325_bp
+NOTE: Change sequence name 'gene-TCE0_015f02342 325 bp' -> gene-TCE0_015f02342_325_bp
+NOTE: Change sequence name 'gene-TCE0_015f02345 325 bp' -> gene-TCE0_015f02345_325_bp
+NOTE: Change sequence name 'rna-gnl|WGS 325 bp' -> rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'rna-gnl|WGS 325 bp' -> rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'rna-gnl|WGS 325 bp' -> rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'gene-PISL3812_02611 325 bp' -> gene-PISL3812_02611_325_bp
+NOTE: Change sequence name 'gene-PISL3812_06189 325 bp' -> gene-PISL3812_06189_325_bp
+NOTE: Change sequence name 'gene-PISL3812_07143 325 bp' -> gene-PISL3812_07143_325_bp
+NOTE: Change sequence name 'rna-gnl|WGS 325 bp' -> rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'rna-gnl|WGS 325 bp' -> rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'rna-gnl|WGS 325 bp' -> rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'rna-PMG11_08554 325 bp' -> rna-PMG11_08554_325_bp
+NOTE: Change sequence name 'rna-PMG11_08570 325 bp' -> rna-PMG11_08570_325_bp
+NOTE: Change sequence name 'gene-AUD_0702 325 bp' -> gene-AUD_0702_325_bp
+NOTE: Change sequence name 'gene-AUD_3595 325 bp' -> gene-AUD_3595_325_bp
+NOTE: Change sequence name 'rna-gnl|WGS 325 bp' -> rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'rna-gnl|WGS 325 bp' -> rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'rna-gnl|WGS 325 bp' -> rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'rna-gnl|WGS 325 bp' -> rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'rna-gnl|WGS 325 bp' -> rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'rna-gnl|WGS 325 bp' -> rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'rna-gnl|WGS 325 bp' -> rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'rna-gnl|WGS 325 bp' -> rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'rna-gnl|WGS 325 bp' -> rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'gene-ALT_6188 325 bp' -> gene-ALT_6188_325_bp
+NOTE: Change sequence name 'gene-ALT_1441 325 bp' -> gene-ALT_1441_325_bp
+NOTE: Change sequence name 'gene-ABL_00114 325 bp' -> gene-ABL_00114_325_bp
+NOTE: Change sequence name 'rna-gnl|WGS 325 bp' -> rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'rna-gnl|WGS 325 bp' -> rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'rna-gnl|WGS 325 bp' -> rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'rna-gnl|WGS 325 bp' -> rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'gene-RIB2604_02112180 325 bp' -> gene-RIB2604_02112180_325_bp
+NOTE: Change sequence name 'rna-gnl|WGS 325 bp' -> rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'rna-gnl|WGS 325 bp' -> rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'rna-gnl|WGS 325 bp' -> rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'rna-gnl|WGS 325 bp' -> rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'rna-gnl|WGS 325 bp' -> rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'rna-gnl|WGS 325 bp' -> rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'rna-gnl|WGS 325 bp' -> rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'rna-gnl|WGS 325 bp' -> rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'rna-gnl|WGS 325 bp' -> rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'rna-gnl|WGS 325 bp' -> rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'rna-gnl|WGS 325 bp' -> rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'rna-gnl|WGS 325 bp' -> rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'rna-gnl|WGS 325 bp' -> rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'rna-gnl|WGS 325 bp' -> rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'rna-gnl|WGS 325 bp' -> rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'rna-gnl|WGS 325 bp' -> rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'rna-gnl|WGS 325 bp' -> rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'rna-gnl|WGS 325 bp' -> rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'rna-gnl|WGS 325 bp' -> rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'rna-gnl|WGS 325 bp' -> rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'rna-gnl|WGS 325 bp' -> rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'rna-gnl|WGS 325 bp' -> rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'rna-gnl|WGS 325 bp' -> rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'rna-gnl|WGS 325 bp' -> rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'rna-gnl|WGS 325 bp' -> rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'rna-gnl|WGS 325 bp' -> rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'rna-gnl|WGS 325 bp' -> rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'rna-gnl|WGS 325 bp' -> rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'rna-gnl|WGS 325 bp' -> rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'rna-gnl|WGS 325 bp' -> rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'rna-gnl|WGS 325 bp' -> rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'rna-gnl|WGS 325 bp' -> rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'rna-gnl|WGS 325 bp' -> rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'rna-gnl|WGS 325 bp' -> rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'rna-gnl|WGS 325 bp' -> rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'rna-gnl|WGS 325 bp' -> rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'rna-gnl|WGS 325 bp' -> rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'rna-gnl|WGS 325 bp' -> rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'rna-gnl|WGS 325 bp' -> rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'rna-gnl|WGS 325 bp' -> rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'rna-gnl|WGS 325 bp' -> rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'rna-gnl|WGS 325 bp' -> rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'rna-gnl|WGS 325 bp' -> rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'rna-gnl|WGS 325 bp' -> rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'rna-gnl|WGS 325 bp' -> rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'rna-gnl|WGS 325 bp' -> rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'rna-gnl|WGS 325 bp' -> rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'rna-gnl|WGS 325 bp' -> rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'rna-gnl|WGS 325 bp' -> rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'rna-gnl|WGS 325 bp' -> rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'gene-AAWM_09775 325 bp' -> gene-AAWM_09775_325_bp
+NOTE: Change sequence name 'rna-gnl|WGS 325 bp' -> rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'rna-gnl|WGS 325 bp' -> rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'rna-gnl|WGS 325 bp' -> rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'rna-gnl|WGS 325 bp' -> rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'rna-gnl|WGS 325 bp' -> rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'rna-gnl|WGS 325 bp' -> rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'rna-gnl|WGS 325 bp' -> rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'rna-gnl|WGS 325 bp' -> rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'rna-gnl|WGS 325 bp' -> rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'rna-gnl|WGS 325 bp' -> rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'rna-gnl|WGS 325 bp' -> rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'rna-gnl|WGS 325 bp' -> rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'rna-gnl|WGS 325 bp' -> rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'rna-gnl|WGS 325 bp' -> rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'rna-gnl|WGS 325 bp' -> rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'rna-gnl|WGS 325 bp' -> rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'rna-gnl|WGS 325 bp' -> rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'rna-gnl|WGS 325 bp' -> rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'rna-gnl|WGS 325 bp' -> rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'rna-gnl|WGS 325 bp' -> rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'rna-gnl|WGS 325 bp' -> rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'rna-gnl|WGS 325 bp' -> rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'rna-gnl|WGS 325 bp' -> rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'rna-gnl|WGS 325 bp' -> rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'rna-gnl|WGS 325 bp' -> rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'rna-gnl|WGS 325 bp' -> rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'rna-gnl|WGS 325 bp' -> rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'gene-IFM46972_04429 325 bp' -> gene-IFM46972_04429_325_bp
+NOTE: Change sequence name 'gene-IFM46972_09354 325 bp' -> gene-IFM46972_09354_325_bp
+NOTE: Change sequence name 'gene-IFM47457_04106 325 bp' -> gene-IFM47457_04106_325_bp
+NOTE: Change sequence name 'gene-IFM5058_00884 325 bp' -> gene-IFM5058_00884_325_bp
+NOTE: Change sequence name 'gene-IFM51744_04285 325 bp' -> gene-IFM51744_04285_325_bp
+NOTE: Change sequence name 'gene-IFM60648_08388 325 bp' -> gene-IFM60648_08388_325_bp
+NOTE: Change sequence name 'gene-IFM61392_08658 325 bp' -> gene-IFM61392_08658_325_bp
+NOTE: Change sequence name 'gene-IFM61606_00579 325 bp' -> gene-IFM61606_00579_325_bp
+NOTE: Change sequence name 'gene-IFM62136_00050 325 bp' -> gene-IFM62136_00050_325_bp
+NOTE: Change sequence name 'rna-gnl|WGS 325 bp' -> rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'rna-gnl|WGS 325 bp' -> rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'rna-gnl|WGS 325 bp' -> rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'rna-gnl|WGS 325 bp' -> rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'rna-gnl|WGS 325 bp' -> rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'rna-gnl|WGS 325 bp' -> rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'rna-gnl|WGS 325 bp' -> rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'rna-gnl|WGS 325 bp' -> rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'rna-gnl|WGS 325 bp' -> rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'rna-gnl|WGS 325 bp' -> rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'rna-gnl|WGS 325 bp' -> rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'rna-gnl|WGS 325 bp' -> rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'rna-gnl|WGS 325 bp' -> rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'rna-gnl|WGS 325 bp' -> rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'rna-gnl|WGS 325 bp' -> rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'rna-gnl|WGS 325 bp' -> rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'rna-gnl|WGS 325 bp' -> rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'rna-gnl|WGS 325 bp' -> rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'rna-XM_002147474.1 325 bp' -> rna-XM_002147474.1_325_bp
+NOTE: Change sequence name 'rna-XM_002145999.1 325 bp' -> rna-XM_002145999.1_325_bp
+NOTE: Change sequence name 'rna-XM_001276263.1 325 bp' -> rna-XM_001276263.1_325_bp
+NOTE: Change sequence name 'rna-XM_001273638.1 325 bp' -> rna-XM_001273638.1_325_bp
+NOTE: Change sequence name 'rna-XM_001273643.1 325 bp' -> rna-XM_001273643.1_325_bp
+NOTE: Change sequence name 'rna-XM_001273880.1 325 bp' -> rna-XM_001273880.1_325_bp
+NOTE: Change sequence name 'rna-XM_002340186.1 325 bp' -> rna-XM_002340186.1_325_bp
+NOTE: Change sequence name 'rna-XM_002340189.1 325 bp' -> rna-XM_002340189.1_325_bp
+NOTE: Change sequence name 'rna-XM_002483215.1 325 bp' -> rna-XM_002483215.1_325_bp
+NOTE: Change sequence name 'rna-XM_001263102.1 325 bp' -> rna-XM_001263102.1_325_bp
+NOTE: Change sequence name 'rna-XM_001266262.1 325 bp' -> rna-XM_001266262.1_325_bp
+NOTE: Change sequence name 'rna-XM_001267449.1 325 bp' -> rna-XM_001267449.1_325_bp
+NOTE: Change sequence name 'rna-XM_023237319.1 325 bp' -> rna-XM_023237319.1_325_bp
+NOTE: Change sequence name 'rna-XM_002568496.1 325 bp' -> rna-XM_002568496.1_325_bp
+NOTE: Change sequence name 'rna-XM_002559005.1 325 bp' -> rna-XM_002559005.1_325_bp
+NOTE: Change sequence name 'rna-XM_002559008.1 325 bp' -> rna-XM_002559008.1_325_bp
+NOTE: Change sequence name 'rna-XM_014678353.1 325 bp' -> rna-XM_014678353.1_325_bp
+NOTE: Change sequence name 'rna-XM_014678458.1 325 bp' -> rna-XM_014678458.1_325_bp
+NOTE: Change sequence name 'rna-XM_014682195.1 325 bp' -> rna-XM_014682195.1_325_bp
+NOTE: Change sequence name 'rna-XM_014682198.1 325 bp' -> rna-XM_014682198.1_325_bp
+NOTE: Change sequence name 'rna-XM_016742571.1 325 bp' -> rna-XM_016742571.1_325_bp
+NOTE: Change sequence name 'rna-XM_015554482.1 325 bp' -> rna-XM_015554482.1_325_bp
+NOTE: Change sequence name 'rna-XM_015549023.1 325 bp' -> rna-XM_015549023.1_325_bp
+NOTE: Change sequence name 'rna-XM_022627821.1 325 bp' -> rna-XM_022627821.1_325_bp
+NOTE: Change sequence name 'rna-XM_022635965.1 325 bp' -> rna-XM_022635965.1_325_bp
+NOTE: Change sequence name 'rna-XM_022635883.1 325 bp' -> rna-XM_022635883.1_325_bp
+NOTE: Change sequence name 'rna-XM_022530350.1 325 bp' -> rna-XM_022530350.1_325_bp
+NOTE: Change sequence name 'rna-XM_022529743.1 325 bp' -> rna-XM_022529743.1_325_bp
+NOTE: Change sequence name 'rna-XM_022728313.1 325 bp' -> rna-XM_022728313.1_325_bp
+NOTE: Change sequence name 'rna-XM_022726748.1 325 bp' -> rna-XM_022726748.1_325_bp
+NOTE: Change sequence name 'rna-XM_022547077.1 325 bp' -> rna-XM_022547077.1_325_bp
+NOTE: Change sequence name 'rna-XM_022550605.1 325 bp' -> rna-XM_022550605.1_325_bp
+NOTE: Change sequence name 'rna-XM_020199864.1 325 bp' -> rna-XM_020199864.1_325_bp
+NOTE: Change sequence name 'rna-XM_020268925.1 325 bp' -> rna-XM_020268925.1_325_bp
+NOTE: Change sequence name 'rna-XM_020268928.1 325 bp' -> rna-XM_020268928.1_325_bp
+NOTE: Change sequence name 'rna-XM_026754921.1 325 bp' -> rna-XM_026754921.1_325_bp
+NOTE: Change sequence name 'rna-XM_026755014.1 325 bp' -> rna-XM_026755014.1_325_bp
+NOTE: Change sequence name 'rna-XM_026760789.1 325 bp' -> rna-XM_026760789.1_325_bp
+NOTE: Change sequence name 'rna-XM_024817321.1 325 bp' -> rna-XM_024817321.1_325_bp
+NOTE: Change sequence name 'rna-XM_024823923.1 325 bp' -> rna-XM_024823923.1_325_bp
+NOTE: Change sequence name 'rna-XM_024835203.1 325 bp' -> rna-XM_024835203.1_325_bp
+NOTE: Change sequence name 'rna-XM_024850870.1 325 bp' -> rna-XM_024850870.1_325_bp
+NOTE: Change sequence name 'rna-XM_025614842.1 325 bp' -> rna-XM_025614842.1_325_bp
+NOTE: Change sequence name 'rna-XM_025615787.1 325 bp' -> rna-XM_025615787.1_325_bp
+NOTE: Change sequence name 'rna-XM_025528171.1 325 bp' -> rna-XM_025528171.1_325_bp
+NOTE: Change sequence name 'rna-XM_025538922.1 325 bp' -> rna-XM_025538922.1_325_bp
+NOTE: Change sequence name 'rna-XM_025578670.1 325 bp' -> rna-XM_025578670.1_325_bp
+NOTE: Change sequence name 'rna-XM_025621996.1 325 bp' -> rna-XM_025621996.1_325_bp
+NOTE: Change sequence name 'rna-XM_025591034.1 325 bp' -> rna-XM_025591034.1_325_bp
+NOTE: Change sequence name 'rna-XM_025591070.1 325 bp' -> rna-XM_025591070.1_325_bp
+NOTE: Change sequence name 'rna-XM_025637372.1 325 bp' -> rna-XM_025637372.1_325_bp
+NOTE: Change sequence name 'rna-XM_025632081.1 325 bp' -> rna-XM_025632081.1_325_bp
+NOTE: Change sequence name 'rna-XM_025657864.1 325 bp' -> rna-XM_025657864.1_325_bp
+NOTE: Change sequence name 'rna-XM_025651746.1 325 bp' -> rna-XM_025651746.1_325_bp
+NOTE: Change sequence name 'rna-XM_025652473.1 325 bp' -> rna-XM_025652473.1_325_bp
+NOTE: Change sequence name 'rna-XM_025675968.1 325 bp' -> rna-XM_025675968.1_325_bp
+NOTE: Change sequence name 'rna-XM_025687119.1 325 bp' -> rna-XM_025687119.1_325_bp
+NOTE: Change sequence name 'rna-XM_025717322.1 325 bp' -> rna-XM_025717322.1_325_bp
+NOTE: Change sequence name 'rna-XM_025723315.1 325 bp' -> rna-XM_025723315.1_325_bp
+NOTE: Change sequence name 'rna-XM_025691201.1 325 bp' -> rna-XM_025691201.1_325_bp
+NOTE: Change sequence name 'rna-XM_025711614.1 325 bp' -> rna-XM_025711614.1_325_bp
+NOTE: Change sequence name 'rna-XM_026769112.1 325 bp' -> rna-XM_026769112.1_325_bp
+NOTE: Change sequence name 'rna-XM_026752468.1 325 bp' -> rna-XM_026752468.1_325_bp
+NOTE: Change sequence name 'rna-XM_033573857.1 325 bp' -> rna-XM_033573857.1_325_bp
+NOTE: Change sequence name 'rna-XM_033575261.1 325 bp' -> rna-XM_033575261.1_325_bp
+NOTE: Change sequence name 'rna-XM_033569831.1 325 bp' -> rna-XM_033569831.1_325_bp
+NOTE: Change sequence name 'rna-XM_032047578.1 325 bp' -> rna-XM_032047578.1_325_bp
+NOTE: Change sequence name 'rna-XM_032063380.1 325 bp' -> rna-XM_032063380.1_325_bp
+NOTE: Change sequence name 'rna-XM_032061952.1 325 bp' -> rna-XM_032061952.1_325_bp
+NOTE: Change sequence name 'rna-XM_032074515.1 325 bp' -> rna-XM_032074515.1_325_bp
+NOTE: Change sequence name 'rna-XM_032071503.1 325 bp' -> rna-XM_032071503.1_325_bp
+NOTE: Change sequence name 'rna-XM_032086462.1 325 bp' -> rna-XM_032086462.1_325_bp
+NOTE: Change sequence name 'rna-XM_035500304.1 325 bp' -> rna-XM_035500304.1_325_bp
+Alignment most likely contains protein sequences
+Alignment has 247 sequences with 325 columns, 324 distinct patterns
+305 parsimony-informative, 12 singleton sites, 8 constant sites
+ERROR: Duplicated sequence name rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name rna-gnl|WGS_325_bp
+ERROR: Please rename sequences listed above!

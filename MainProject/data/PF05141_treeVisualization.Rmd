@@ -1,0 +1,73 @@
+---
+title: "PF05141_treeVisualization"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Installing Biostrings:
+http://bioconductor.org/packages/release/bioc/html/Biostrings.html
+```{r}
+if (!requireNamespace("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+
+BiocManager::install("Biostrings")
+```
+
+
+Installing ggtree: I found the link that told me where to install this here:
+http://bioconductor.org/packages/release/bioc/html/ggtree.html
+```{r}
+if (!requireNamespace("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+
+BiocManager::install("ggtree")
+```
+This tutorial is what I'm using to help guide me through this analysis:
+https://4va.github.io/biodatasci/r-ggtree.html
+
+Loading the package
+```{r}
+library(tidyverse)
+library(ggtree)
+library(Biostrings)
+```
+
+Reading in the consensus tree and ML tree
+```{r}
+consensusTree <- read.tree("./iqtree/gappyout/PF05141_trimGappyout.contree")
+ggtree(consensusTree)
+
+ML <- read.tree("./iqtree/gappyout/PF05141_trimGappyout.treefile")
+ggtree(ML)
+
+#trim10 <- read.tree("./iqtree/trim10/PF05141_trim10.contree")
+#ggtree(trim10)
+```
+
+adding a scale to the x axis
+```{r}
+ggtree(ML) + theme_tree2()
+```
+making a cladogram and disabling scaling. **This is really helpful for seeing the groupings but you do lose information of the evolutionary timescale**
+```{r}
+#ML_plot <- ggtree(ML, branch.length = "none")
+CT_plot <- ggtree(consensusTree, branch.length = "none", layout = "equal_angle")
+CT_plot2 <- ggtree(consensusTree, branch.length = "none", layout = "circular")
+#ML_plot
+CT_plot
+CT_plot2
+```
+
+Adding nodes and lables to the tips. While I'm experimenting with different graphics I'll do it on the CT_plot only, I can add these details to ML later.
+```{r}
+CT_plot + geom_tippoint()  + geom_nodepoint()
+# + geom_tiplab(align=TRUE, linesize=0.5)
+```
+Trying our a MSAPlot. When I first tried running this command it said there is no package called Biostrings. Thus I found the link to install it and added it to the top of this Rmd file.
+```{r}
+msaplot(p=ggtree(consensusTree), fasta="./iqtree/PF05141_aln_trimmedGappyout.fas")
+```
+The main issue is that the names don't match up. I either need to make make names and re-run the iqtree analysis or change the names now in both files (this might be harder)

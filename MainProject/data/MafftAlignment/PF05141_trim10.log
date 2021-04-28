@@ -1,0 +1,332 @@
+IQ-TREE multicore version 2.0.3 for Mac OS X 64-bit built Dec 19 2020
+Developed by Bui Quang Minh, Nguyen Lam Tung, Olga Chernomor,
+Heiko Schmidt, Dominik Schrempf, Michael Woodhams.
+
+Host:    Nymeria-Keller-Lab.local (AVX512, FMA3, 8 GB RAM)
+Command: iqtree -s PF05141_aln_editedTrimmed10.fas -m MFP --safe --mem 8G -T 4 -B 1000 --prefix PF05141_trim10
+Seed:    703958 (Using SPRNG - Scalable Parallel Random Number Generator)
+Time:    Mon Apr 26 21:13:16 2021
+Kernel:  Safe AVX+FMA - 4 threads (8 CPU cores detected)
+
+Reading alignment file PF05141_aln_editedTrimmed10.fas ... Fasta format detected
+NOTE: Change sequence name 'Penicillium_oxalicum_114-2__rna-gnl|WGS 325 bp' -> Penicillium_oxalicum_114-2__rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'Penicillium_oxalicum_114-2__rna-gnl|WGS 325 bp' -> Penicillium_oxalicum_114-2__rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'Penicillium_oxalicum_114-2__rna-gnl|WGS 325 bp' -> Penicillium_oxalicum_114-2__rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'Penicillium_oxalicum_114-2__rna-gnl|WGS 325 bp' -> Penicillium_oxalicum_114-2__rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'Penicillium_chrysogenum__rna-gnl|WGS 325 bp' -> Penicillium_chrysogenum__rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'Penicillium_chrysogenum__rna-gnl|WGS 325 bp' -> Penicillium_chrysogenum__rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'Penicillium_chrysogenum__rna-gnl|WGS 325 bp' -> Penicillium_chrysogenum__rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'Aspergillus_flavus_AF70__rna-gnl|WGS 325 bp' -> Aspergillus_flavus_AF70__rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'Aspergillus_flavus_AF70__rna-gnl|WGS 325 bp' -> Aspergillus_flavus_AF70__rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'Aspergillus_parasiticus_SU-1__rna-gnl|WGS 325 bp' -> Aspergillus_parasiticus_SU-1__rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'Aspergillus_rambellii__rna-gnl|WGS 325 bp' -> Aspergillus_rambellii__rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'Aspergillus_fumigatus_Z5__rna-gnl|WGS 325 bp' -> Aspergillus_fumigatus_Z5__rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'Aspergillus_fumigatus_Z5__rna-gnl|WGS 325 bp' -> Aspergillus_fumigatus_Z5__rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'Penicillium_nordicum__rna-gnl|WGS 325 bp' -> Penicillium_nordicum__rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'Penicillium_nordicum__rna-gnl|WGS 325 bp' -> Penicillium_nordicum__rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'Penicillium_nordicum__rna-gnl|WGS 325 bp' -> Penicillium_nordicum__rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'Talaromyces_verruculosus__rna-gnl|WGS 325 bp' -> Talaromyces_verruculosus__rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'Talaromyces_verruculosus__rna-gnl|WGS 325 bp' -> Talaromyces_verruculosus__rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'Talaromyces_verruculosus__rna-gnl|WGS 325 bp' -> Talaromyces_verruculosus__rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'Talaromyces_verruculosus__rna-gnl|WGS 325 bp' -> Talaromyces_verruculosus__rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'Talaromyces_verruculosus__rna-gnl|WGS 325 bp' -> Talaromyces_verruculosus__rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'Talaromyces_verruculosus__rna-gnl|WGS 325 bp' -> Talaromyces_verruculosus__rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'Penicillium_griseofulvum__rna-gnl|WGS 325 bp' -> Penicillium_griseofulvum__rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'Penicillium_griseofulvum__rna-gnl|WGS 325 bp' -> Penicillium_griseofulvum__rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'Penicillium_griseofulvum__rna-gnl|WGS 325 bp' -> Penicillium_griseofulvum__rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'Penicillium_griseofulvum__rna-gnl|WGS 325 bp' -> Penicillium_griseofulvum__rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'Aspergillus_cristatus__rna-gnl|WGS 325 bp' -> Aspergillus_cristatus__rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'Aspergillus_brasiliensis_CBS_101740__rna-gnl|WGS 325 bp' -> Aspergillus_brasiliensis_CBS_101740__rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'Aspergillus_versicolor_CBS_583.65__rna-gnl|WGS 325 bp' -> Aspergillus_versicolor_CBS_583.65__rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'Aspergillus_luchuensis_CBS_106.47__rna-gnl|WGS 325 bp' -> Aspergillus_luchuensis_CBS_106.47__rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'Aspergillus_sydowii_CBS_593.65__rna-gnl|WGS 325 bp' -> Aspergillus_sydowii_CBS_593.65__rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'Aspergillus_tubingensis_CBS_134.48__rna-gnl|WGS 325 bp' -> Aspergillus_tubingensis_CBS_134.48__rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'Aspergillus_carbonarius_ITEM_5010__rna-gnl|WGS 325 bp' -> Aspergillus_carbonarius_ITEM_5010__rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'Aspergillus_carbonarius_ITEM_5010__rna-gnl|WGS 325 bp' -> Aspergillus_carbonarius_ITEM_5010__rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'Aspergillus_carbonarius_ITEM_5010__rna-gnl|WGS 325 bp' -> Aspergillus_carbonarius_ITEM_5010__rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'Aspergillus_carbonarius_ITEM_5010__rna-gnl|WGS 325 bp' -> Aspergillus_carbonarius_ITEM_5010__rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'Aspergillus_carbonarius_ITEM_5010__rna-gnl|WGS 325 bp' -> Aspergillus_carbonarius_ITEM_5010__rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'Aspergillus_oryzae__rna-gnl|WGS 325 bp' -> Aspergillus_oryzae__rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'Aspergillus_oryzae__rna-gnl|WGS 325 bp' -> Aspergillus_oryzae__rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'Penicillium_brasilianum__rna-gnl|WGS 325 bp' -> Penicillium_brasilianum__rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'Penicillium_decumbens__rna-gnl|WGS 325 bp' -> Penicillium_decumbens__rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'Penicillium_vulpinum__rna-gnl|WGS 325 bp' -> Penicillium_vulpinum__rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'Penicillium_vulpinum__rna-gnl|WGS 325 bp' -> Penicillium_vulpinum__rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'Penicillium_vulpinum__rna-gnl|WGS 325 bp' -> Penicillium_vulpinum__rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'Penicillium_polonicum__rna-gnl|WGS 325 bp' -> Penicillium_polonicum__rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'Penicillium_polonicum__rna-gnl|WGS 325 bp' -> Penicillium_polonicum__rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'Penicillium_polonicum__rna-gnl|WGS 325 bp' -> Penicillium_polonicum__rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'Penicillium_polonicum__rna-gnl|WGS 325 bp' -> Penicillium_polonicum__rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'Penicillium_polonicum__rna-gnl|WGS 325 bp' -> Penicillium_polonicum__rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'Penicillium_polonicum__rna-gnl|WGS 325 bp' -> Penicillium_polonicum__rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'Penicillium_steckii__rna-gnl|WGS 325 bp' -> Penicillium_steckii__rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'Penicillium_steckii__rna-gnl|WGS 325 bp' -> Penicillium_steckii__rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'Penicillium_coprophilum__rna-gnl|WGS 325 bp' -> Penicillium_coprophilum__rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'Penicillium_coprophilum__rna-gnl|WGS 325 bp' -> Penicillium_coprophilum__rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'Penicillium_coprophilum__rna-gnl|WGS 325 bp' -> Penicillium_coprophilum__rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'Aspergillus_niger__rna-gnl|WGS 325 bp' -> Aspergillus_niger__rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'Aspergillus_fumigatus__rna-gnl|WGS 325 bp' -> Aspergillus_fumigatus__rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'Aspergillus_fumigatus__rna-gnl|WGS 325 bp' -> Aspergillus_fumigatus__rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'Aspergillus_turcosus__rna-gnl|WGS 325 bp' -> Aspergillus_turcosus__rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'Aspergillus_turcosus__rna-gnl|WGS 325 bp' -> Aspergillus_turcosus__rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'Aspergillus_flavus__rna-gnl|WGS 325 bp' -> Aspergillus_flavus__rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'Aspergillus_flavus__rna-gnl|WGS 325 bp' -> Aspergillus_flavus__rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'Aspergillus_flavus__rna-gnl|WGS 325 bp' -> Aspergillus_flavus__rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'Aspergillus_arachidicola__rna-gnl|WGS 325 bp' -> Aspergillus_arachidicola__rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'Aspergillus_arachidicola__rna-gnl|WGS 325 bp' -> Aspergillus_arachidicola__rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'Aspergillus_ochraceoroseus_IBT_24754__rna-gnl|WGS 325 bp' -> Aspergillus_ochraceoroseus_IBT_24754__rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'Aspergillus_taichungensis__rna-gnl|WGS 325 bp' -> Aspergillus_taichungensis__rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'Aspergillus_ellipticus_CBS_707.79__rna-gnl|WGS 325 bp' -> Aspergillus_ellipticus_CBS_707.79__rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'Aspergillus_ellipticus_CBS_707.79__rna-gnl|WGS 325 bp' -> Aspergillus_ellipticus_CBS_707.79__rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'Aspergillus_ellipticus_CBS_707.79__rna-gnl|WGS 325 bp' -> Aspergillus_ellipticus_CBS_707.79__rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'Aspergillus_indologenus_CBS_114.80__rna-gnl|WGS 325 bp' -> Aspergillus_indologenus_CBS_114.80__rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'Aspergillus_indologenus_CBS_114.80__rna-gnl|WGS 325 bp' -> Aspergillus_indologenus_CBS_114.80__rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'Aspergillus_fijiensis_CBS_313.89__rna-gnl|WGS 325 bp' -> Aspergillus_fijiensis_CBS_313.89__rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'Aspergillus_fijiensis_CBS_313.89__rna-gnl|WGS 325 bp' -> Aspergillus_fijiensis_CBS_313.89__rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'Aspergillus_fijiensis_CBS_313.89__rna-gnl|WGS 325 bp' -> Aspergillus_fijiensis_CBS_313.89__rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'Aspergillus_phoenicis_ATCC_13157__rna-gnl|WGS 325 bp' -> Aspergillus_phoenicis_ATCC_13157__rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'Aspergillus_leporis__rna-gnl|WGS 325 bp' -> Aspergillus_leporis__rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'Aspergillus_leporis__rna-gnl|WGS 325 bp' -> Aspergillus_leporis__rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'Aspergillus_flavus__rna-gnl|WGS 325 bp' -> Aspergillus_flavus__rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'Aspergillus_parasiticus__rna-gnl|WGS 325 bp' -> Aspergillus_parasiticus__rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'Aspergillus_parasiticus__rna-gnl|WGS 325 bp' -> Aspergillus_parasiticus__rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'Aspergillus_pseudonomius__rna-gnl|WGS 325 bp' -> Aspergillus_pseudonomius__rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'Aspergillus_pseudonomius__rna-gnl|WGS 325 bp' -> Aspergillus_pseudonomius__rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'Aspergillus_novoparasiticus__rna-gnl|WGS 325 bp' -> Aspergillus_novoparasiticus__rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'Aspergillus_novoparasiticus__rna-gnl|WGS 325 bp' -> Aspergillus_novoparasiticus__rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'Aspergillus_minisclerotigenes__rna-gnl|WGS 325 bp' -> Aspergillus_minisclerotigenes__rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'Aspergillus_minisclerotigenes__rna-gnl|WGS 325 bp' -> Aspergillus_minisclerotigenes__rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'Aspergillus_avenaceus__rna-gnl|WGS 325 bp' -> Aspergillus_avenaceus__rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'Aspergillus_avenaceus__rna-gnl|WGS 325 bp' -> Aspergillus_avenaceus__rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'Aspergillus_tamarii__rna-gnl|WGS 325 bp' -> Aspergillus_tamarii__rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'Aspergillus_tamarii__rna-gnl|WGS 325 bp' -> Aspergillus_tamarii__rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'Aspergillus_transmontanensis__rna-gnl|WGS 325 bp' -> Aspergillus_transmontanensis__rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'Aspergillus_transmontanensis__rna-gnl|WGS 325 bp' -> Aspergillus_transmontanensis__rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'Aspergillus_sergii__rna-gnl|WGS 325 bp' -> Aspergillus_sergii__rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'Aspergillus_sergii__rna-gnl|WGS 325 bp' -> Aspergillus_sergii__rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'Aspergillus_arachidicola__rna-gnl|WGS 325 bp' -> Aspergillus_arachidicola__rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'Aspergillus_coremiiformis__rna-gnl|WGS 325 bp' -> Aspergillus_coremiiformis__rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'Aspergillus_bertholletiae__rna-gnl|WGS 325 bp' -> Aspergillus_bertholletiae__rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'Aspergillus_bertholletiae__rna-gnl|WGS 325 bp' -> Aspergillus_bertholletiae__rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'Aspergillus_alliaceus__rna-gnl|WGS 325 bp' -> Aspergillus_alliaceus__rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'Aspergillus_alliaceus__rna-gnl|WGS 325 bp' -> Aspergillus_alliaceus__rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'Aspergillus_pseudocaelatus__rna-gnl|WGS 325 bp' -> Aspergillus_pseudocaelatus__rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'Aspergillus_pseudocaelatus__rna-gnl|WGS 325 bp' -> Aspergillus_pseudocaelatus__rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'Talaromyces_pinophilus__rna-gnl|WGS 325 bp' -> Talaromyces_pinophilus__rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'Talaromyces_pinophilus__rna-gnl|WGS 325 bp' -> Talaromyces_pinophilus__rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'Talaromyces_pinophilus__rna-gnl|WGS 325 bp' -> Talaromyces_pinophilus__rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'Talaromyces_pinophilus__rna-gnl|WGS 325 bp' -> Talaromyces_pinophilus__rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'Penicillium_rolfsii__rna-gnl|WGS 325 bp' -> Penicillium_rolfsii__rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'Aspergillus_fumigatiaffinis__rna-gnl|WGS 325 bp' -> Aspergillus_fumigatiaffinis__rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'Aspergillus_fumigatiaffinis__rna-gnl|WGS 325 bp' -> Aspergillus_fumigatiaffinis__rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'Aspergillus_fumigatiaffinis__rna-gnl|WGS 325 bp' -> Aspergillus_fumigatiaffinis__rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'Aspergillus_fumigatiaffinis__rna-gnl|WGS 325 bp' -> Aspergillus_fumigatiaffinis__rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'Aspergillus_fumigatiaffinis__rna-gnl|WGS 325 bp' -> Aspergillus_fumigatiaffinis__rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'Aspergillus_fumigatiaffinis__rna-gnl|WGS 325 bp' -> Aspergillus_fumigatiaffinis__rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'Aspergillus_lentulus__rna-gnl|WGS 325 bp' -> Aspergillus_lentulus__rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'Aspergillus_lentulus__rna-gnl|WGS 325 bp' -> Aspergillus_lentulus__rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'Aspergillus_lentulus__rna-gnl|WGS 325 bp' -> Aspergillus_lentulus__rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'Aspergillus_felis__rna-gnl|WGS 325 bp' -> Aspergillus_felis__rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'Aspergillus_hiratsukae__rna-gnl|WGS 325 bp' -> Aspergillus_hiratsukae__rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'Aspergillus_hiratsukae__rna-gnl|WGS 325 bp' -> Aspergillus_hiratsukae__rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'Aspergillus_hiratsukae__rna-gnl|WGS 325 bp' -> Aspergillus_hiratsukae__rna-gnl|WGS_325_bp
+Alignment most likely contains protein sequences
+Alignment has 247 sequences with 325 columns, 324 distinct patterns
+305 parsimony-informative, 12 singleton sites, 8 constant sites
+WARNING: Some sequence names are changed as follows:
+Aspergillus_niger:rna-An01g02330(GCA_000002855.2_1) -> Aspergillus_niger_rna-An01g02330_GCA_000002855.2_1_
+Aspergillus_nidulans_FGSC_A4:rna-ANIA_02705(GCA_000011425.1_2) -> Aspergillus_nidulans_FGSC_A4_rna-ANIA_02705_GCA_000011425.1_2_
+Aspergillus_nidulans_FGSC_A4:rna-ANIA_02606(GCA_000011425.1_2) -> Aspergillus_nidulans_FGSC_A4_rna-ANIA_02606_GCA_000011425.1_2_
+Aspergillus_fumigatus_A1163:rna-AFUB_101900(GCA_000150145.1_4) -> Aspergillus_fumigatus_A1163_rna-AFUB_101900_GCA_000150145.1_4_
+Aspergillus_fumigatus_A1163:rna-AFUB_051200(GCA_000150145.1_4) -> Aspergillus_fumigatus_A1163_rna-AFUB_051200_GCA_000150145.1_4_
+Aspergillus_fumigatus_A1163:rna-AFUB_035500(GCA_000150145.1_4) -> Aspergillus_fumigatus_A1163_rna-AFUB_035500_GCA_000150145.1_4_
+Aspergillus_oryzae_3.042:rna-gnl|china|mrna.Ao3042_03026(GCA_000269785.2_3) -> Aspergillus_oryzae_3.042_rna-gnl|china|mrna.Ao3042_03026_GCA_000269785.2_3_
+Penicillium_roqueforti_FM164:gene-PROQFM164_S01g000571(GCA_000513255.1_3) -> Penicillium_roqueforti_FM164_gene-PROQFM164_S01g000571_GCA_000513255.1_3_
+Penicillium_roqueforti_FM164:gene-PROQFM164_S01g000574(GCA_000513255.1_3) -> Penicillium_roqueforti_FM164_gene-PROQFM164_S01g000574_GCA_000513255.1_3_
+Penicillium_roqueforti_FM164:gene-PROQFM164_S01g003549(GCA_000513255.1_3) -> Penicillium_roqueforti_FM164_gene-PROQFM164_S01g003549_GCA_000513255.1_3_
+Penicillium_camemberti_FM_013:gene-PCAMFM013_S010g000375(GCA_000513335.1_5) -> Penicillium_camemberti_FM_013_gene-PCAMFM013_S010g000375_GCA_000513335.1_5_
+Penicillium_camemberti_FM_013:gene-PCAMFM013_S010g000378(GCA_000513335.1_5) -> Penicillium_camemberti_FM_013_gene-PCAMFM013_S010g000378_GCA_000513335.1_5_
+Penicillium_camemberti_FM_013:gene-PCAMFM013_S025g000125(GCA_000513335.1_5) -> Penicillium_camemberti_FM_013_gene-PCAMFM013_S025g000125_GCA_000513335.1_5_
+Penicillium_camemberti_FM_013:gene-PCAMFM013_S005g000273(GCA_000513335.1_5) -> Penicillium_camemberti_FM_013_gene-PCAMFM013_S005g000273_GCA_000513335.1_5_
+Aspergillus_ruber_CBS_135680:rna-gnl|jgi|EURHEDRAFT_mRNA409674(GCA_000600275.1_1) -> Aspergillus_ruber_CBS_135680_rna-gnl|jgi|EURHEDRAFT_mRNA409674_GCA_000600275.1_1_
+Aspergillus_fumigatus_var._RP-2014:rna-gnl|RolfPradeLab|mrna.AFUMN_2672(GCA_000731615.1_4) -> Aspergillus_fumigatus_var._RP-2014_rna-gnl|RolfPradeLab|mrna.AFUMN_2672_GCA_000731615.1_4_
+Aspergillus_fumigatus_var._RP-2014:rna-gnl|RolfPradeLab|mrna.AFUMN_2053(GCA_000731615.1_4) -> Aspergillus_fumigatus_var._RP-2014_rna-gnl|RolfPradeLab|mrna.AFUMN_2053_GCA_000731615.1_4_
+Talaromyces_marneffei_PM1:rna-gnl|CaiTAMU|mrna.GQ26_0310120.3(GCA_000750115.1_3) -> Talaromyces_marneffei_PM1_rna-gnl|CaiTAMU|mrna.GQ26_0310120.3_GCA_000750115.1_3_
+Talaromyces_marneffei_PM1:rna-gnl|CaiTAMU|mrna.GQ26_0051510.1(GCA_000750115.1_3) -> Talaromyces_marneffei_PM1_rna-gnl|CaiTAMU|mrna.GQ26_0051510.1_GCA_000750115.1_3_
+Talaromyces_marneffei_PM1:rna-gnl|CaiTAMU|mrna.GQ26_0051540.1(GCA_000750115.1_3) -> Talaromyces_marneffei_PM1_rna-gnl|CaiTAMU|mrna.GQ26_0051540.1_GCA_000750115.1_3_
+Penicillium_expansum:rna-gnl|GabaldonCRG|mrna.PEXP_049400(GCA_000769735.1_5) -> Penicillium_expansum_rna-gnl|GabaldonCRG|mrna.PEXP_049400_GCA_000769735.1_5_
+Penicillium_expansum:rna-gnl|GabaldonCRG|mrna.PEXP_104350(GCA_000769735.1_5) -> Penicillium_expansum_rna-gnl|GabaldonCRG|mrna.PEXP_104350_GCA_000769735.1_5_
+Penicillium_expansum:rna-gnl|GabaldonCRG|mrna.PEXP_104370(GCA_000769735.1_5) -> Penicillium_expansum_rna-gnl|GabaldonCRG|mrna.PEXP_104370_GCA_000769735.1_5_
+Penicillium_expansum:rna-gnl|GabaldonCRG|mrna.PEXP_030230(GCA_000769735.1_5) -> Penicillium_expansum_rna-gnl|GabaldonCRG|mrna.PEXP_030230_GCA_000769735.1_5_
+Penicillium_expansum:rna-gnl|GabaldonCRG|mrna.PEXP_060620(GCA_000769735.1_5) -> Penicillium_expansum_rna-gnl|GabaldonCRG|mrna.PEXP_060620_GCA_000769735.1_5_
+Penicillium_italicum:rna-gnl|GabaldonCRG|mrna.PITC_049450(GCA_000769765.1_3) -> Penicillium_italicum_rna-gnl|GabaldonCRG|mrna.PITC_049450_GCA_000769765.1_3_
+Penicillium_italicum:rna-gnl|GabaldonCRG|mrna.PITC_065890(GCA_000769765.1_3) -> Penicillium_italicum_rna-gnl|GabaldonCRG|mrna.PITC_065890_GCA_000769765.1_3_
+Penicillium_italicum:rna-gnl|GabaldonCRG|mrna.PITC_065910(GCA_000769765.1_3) -> Penicillium_italicum_rna-gnl|GabaldonCRG|mrna.PITC_065910_GCA_000769765.1_3_
+Talaromyces_cellulolyticus:gene-TCE0_034f11610(GCA_000829775.1_4) -> Talaromyces_cellulolyticus_gene-TCE0_034f11610_GCA_000829775.1_4_
+Talaromyces_cellulolyticus:gene-TCE0_018r05594(GCA_000829775.1_4) -> Talaromyces_cellulolyticus_gene-TCE0_018r05594_GCA_000829775.1_4_
+Talaromyces_cellulolyticus:gene-TCE0_015f02342(GCA_000829775.1_4) -> Talaromyces_cellulolyticus_gene-TCE0_015f02342_GCA_000829775.1_4_
+Talaromyces_cellulolyticus:gene-TCE0_015f02345(GCA_000829775.1_4) -> Talaromyces_cellulolyticus_gene-TCE0_015f02345_GCA_000829775.1_4_
+Talaromyces_islandicus:gene-PISL3812_02611(GCA_000985935.1_3) -> Talaromyces_islandicus_gene-PISL3812_02611_GCA_000985935.1_3_
+Talaromyces_islandicus:gene-PISL3812_06189(GCA_000985935.1_3) -> Talaromyces_islandicus_gene-PISL3812_06189_GCA_000985935.1_3_
+Talaromyces_islandicus:gene-PISL3812_07143(GCA_000985935.1_3) -> Talaromyces_islandicus_gene-PISL3812_07143_GCA_000985935.1_3_
+Penicillium_brasilianum:rna-PMG11_08554(GCA_001048715.1_2) -> Penicillium_brasilianum_rna-PMG11_08554_GCA_001048715.1_2_
+Penicillium_brasilianum:rna-PMG11_08570(GCA_001048715.1_2) -> Penicillium_brasilianum_rna-PMG11_08570_GCA_001048715.1_2_
+Aspergillus_udagawae:gene-AUD_0702(GCA_001078395.1_3) -> Aspergillus_udagawae_gene-AUD_0702_GCA_001078395.1_3_
+Aspergillus_udagawae:gene-AUD_3595(GCA_001078395.1_3) -> Aspergillus_udagawae_gene-AUD_3595_GCA_001078395.1_3_
+Aspergillus_lentulus:gene-ALT_6188(GCA_001445615.1_2) -> Aspergillus_lentulus_gene-ALT_6188_GCA_001445615.1_2_
+Aspergillus_lentulus:gene-ALT_1441(GCA_001445615.1_2) -> Aspergillus_lentulus_gene-ALT_1441_GCA_001445615.1_2_
+Aspergillus_niger:gene-ABL_00114(GCA_001515345.1_1) -> Aspergillus_niger_gene-ABL_00114_GCA_001515345.1_1_
+Aspergillus_luchuensis:gene-RIB2604_02112180(GCA_001602395.1_1) -> Aspergillus_luchuensis_gene-RIB2604_02112180_GCA_001602395.1_1_
+Aspergillus_awamori:gene-AAWM_09775(GCA_003850985.1_1) -> Aspergillus_awamori_gene-AAWM_09775_GCA_003850985.1_1_
+Aspergillus_udagawae:gene-IFM46972_04429(GCA_010723835.1_3) -> Aspergillus_udagawae_gene-IFM46972_04429_GCA_010723835.1_3_
+Aspergillus_udagawae:gene-IFM46972_09354(GCA_010723835.1_3) -> Aspergillus_udagawae_gene-IFM46972_09354_GCA_010723835.1_3_
+Aspergillus_lentulus:gene-IFM47457_04106(GCA_010723975.1_2) -> Aspergillus_lentulus_gene-IFM47457_04106_GCA_010723975.1_2_
+Aspergillus_udagawae:gene-IFM5058_00884(GCA_010724135.1_3) -> Aspergillus_udagawae_gene-IFM5058_00884_GCA_010724135.1_3_
+Aspergillus_udagawae:gene-IFM51744_04285(GCA_010724255.1_3) -> Aspergillus_udagawae_gene-IFM51744_04285_GCA_010724255.1_3_
+Aspergillus_lentulus:gene-IFM60648_08388(GCA_010724575.1_2) -> Aspergillus_lentulus_gene-IFM60648_08388_GCA_010724575.1_2_
+Aspergillus_lentulus:gene-IFM61392_08658(GCA_010724635.1_2) -> Aspergillus_lentulus_gene-IFM61392_08658_GCA_010724635.1_2_
+Aspergillus_udagawae:gene-IFM61606_00579(GCA_010724795.1_3) -> Aspergillus_udagawae_gene-IFM61606_00579_GCA_010724795.1_3_
+Aspergillus_lentulus:gene-IFM62136_00050(GCA_010724915.1_2) -> Aspergillus_lentulus_gene-IFM62136_00050_GCA_010724915.1_2_
+Talaromyces_marneffei_ATCC_18224:rna-XM_002147474.1(GCF_000001985.1_4) -> Talaromyces_marneffei_ATCC_18224_rna-XM_002147474.1_GCF_000001985.1_4_
+Talaromyces_marneffei_ATCC_18224:rna-XM_002145999.1(GCF_000001985.1_4) -> Talaromyces_marneffei_ATCC_18224_rna-XM_002145999.1_GCF_000001985.1_4_
+Aspergillus_clavatus_NRRL_1:rna-XM_001276263.1(GCF_000002715.2_4) -> Aspergillus_clavatus_NRRL_1_rna-XM_001276263.1_GCF_000002715.2_4_
+Aspergillus_clavatus_NRRL_1:rna-XM_001273638.1(GCF_000002715.2_4) -> Aspergillus_clavatus_NRRL_1_rna-XM_001273638.1_GCF_000002715.2_4_
+Aspergillus_clavatus_NRRL_1:rna-XM_001273643.1(GCF_000002715.2_4) -> Aspergillus_clavatus_NRRL_1_rna-XM_001273643.1_GCF_000002715.2_4_
+Aspergillus_clavatus_NRRL_1:rna-XM_001273880.1(GCF_000002715.2_4) -> Aspergillus_clavatus_NRRL_1_rna-XM_001273880.1_GCF_000002715.2_4_
+Talaromyces_stipitatus_ATCC_10500:rna-XM_002340186.1(GCF_000003125.1_3) -> Talaromyces_stipitatus_ATCC_10500_rna-XM_002340186.1_GCF_000003125.1_3_
+Talaromyces_stipitatus_ATCC_10500:rna-XM_002340189.1(GCF_000003125.1_3) -> Talaromyces_stipitatus_ATCC_10500_rna-XM_002340189.1_GCF_000003125.1_3_
+Talaromyces_stipitatus_ATCC_10500:rna-XM_002483215.1(GCF_000003125.1_3) -> Talaromyces_stipitatus_ATCC_10500_rna-XM_002483215.1_GCF_000003125.1_3_
+Aspergillus_fischeri_NRRL_181:rna-XM_001263102.1(GCF_000149645.2_4) -> Aspergillus_fischeri_NRRL_181_rna-XM_001263102.1_GCF_000149645.2_4_
+Aspergillus_fischeri_NRRL_181:rna-XM_001266262.1(GCF_000149645.2_4) -> Aspergillus_fischeri_NRRL_181_rna-XM_001266262.1_GCF_000149645.2_4_
+Aspergillus_fischeri_NRRL_181:rna-XM_001267449.1(GCF_000149645.2_4) -> Aspergillus_fischeri_NRRL_181_rna-XM_001267449.1_GCF_000149645.2_4_
+Aspergillus_oryzae_RIB40:rna-XM_023237319.1(GCF_000184455.2_3) -> Aspergillus_oryzae_RIB40_rna-XM_023237319.1_GCF_000184455.2_3_
+Penicillium_rubens_Wisconsin_54-1255:rna-XM_002568496.1(GCF_000226395.1_3) -> Penicillium_rubens_Wisconsin_54-1255_rna-XM_002568496.1_GCF_000226395.1_3_
+Penicillium_rubens_Wisconsin_54-1255:rna-XM_002559005.1(GCF_000226395.1_3) -> Penicillium_rubens_Wisconsin_54-1255_rna-XM_002559005.1_GCF_000226395.1_3_
+Penicillium_rubens_Wisconsin_54-1255:rna-XM_002559008.1(GCF_000226395.1_3) -> Penicillium_rubens_Wisconsin_54-1255_rna-XM_002559008.1_GCF_000226395.1_3_
+Penicillium_digitatum_Pd1:rna-XM_014678353.1(GCF_000315645.1_4) -> Penicillium_digitatum_Pd1_rna-XM_014678353.1_GCF_000315645.1_4_
+Penicillium_digitatum_Pd1:rna-XM_014678458.1(GCF_000315645.1_4) -> Penicillium_digitatum_Pd1_rna-XM_014678458.1_GCF_000315645.1_4_
+Penicillium_digitatum_Pd1:rna-XM_014682195.1(GCF_000315645.1_4) -> Penicillium_digitatum_Pd1_rna-XM_014682195.1_GCF_000315645.1_4_
+Penicillium_digitatum_Pd1:rna-XM_014682198.1(GCF_000315645.1_4) -> Penicillium_digitatum_Pd1_rna-XM_014682198.1_GCF_000315645.1_4_
+Penicillium_expansum:rna-XM_016742571.1(GCF_000769745.1_5) -> Penicillium_expansum_rna-XM_016742571.1_GCF_000769745.1_5_
+Aspergillus_nomiae_NRRL_13137:rna-XM_015554482.1(GCF_001204775.2_2) -> Aspergillus_nomiae_NRRL_13137_rna-XM_015554482.1_GCF_001204775.2_2_
+Aspergillus_nomiae_NRRL_13137:rna-XM_015549023.1(GCF_001204775.2_2) -> Aspergillus_nomiae_NRRL_13137_rna-XM_015549023.1_GCF_001204775.2_2_
+Penicillium_arizonense:rna-XM_022627821.1(GCF_001773325.1_3) -> Penicillium_arizonense_rna-XM_022627821.1_GCF_001773325.1_3_
+Penicillium_arizonense:rna-XM_022635965.1(GCF_001773325.1_3) -> Penicillium_arizonense_rna-XM_022635965.1_GCF_001773325.1_3_
+Penicillium_arizonense:rna-XM_022635883.1(GCF_001773325.1_3) -> Penicillium_arizonense_rna-XM_022635883.1_GCF_001773325.1_3_
+Aspergillus_bombycis:rna-XM_022530350.1(GCF_001792695.1_2) -> Aspergillus_bombycis_rna-XM_022530350.1_GCF_001792695.1_2_
+Aspergillus_bombycis:rna-XM_022529743.1(GCF_001792695.1_2) -> Aspergillus_bombycis_rna-XM_022529743.1_GCF_001792695.1_2_
+Penicilliopsis_zonata_CBS_506.65:rna-XM_022728313.1(GCF_001890105.1_2) -> Penicilliopsis_zonata_CBS_506.65_rna-XM_022728313.1_GCF_001890105.1_2_
+Penicilliopsis_zonata_CBS_506.65:rna-XM_022726748.1(GCF_001890105.1_2) -> Penicilliopsis_zonata_CBS_506.65_rna-XM_022726748.1_GCF_001890105.1_2_
+Aspergillus_glaucus_CBS_516.65:rna-XM_022547077.1(GCF_001890805.1_2) -> Aspergillus_glaucus_CBS_516.65_rna-XM_022547077.1_GCF_001890805.1_2_
+Aspergillus_glaucus_CBS_516.65:rna-XM_022550605.1(GCF_001890805.1_2) -> Aspergillus_glaucus_CBS_516.65_rna-XM_022550605.1_GCF_001890805.1_2_
+Aspergillus_aculeatus_ATCC_16872:rna-XM_020199864.1(GCF_001890905.1_1) -> Aspergillus_aculeatus_ATCC_16872_rna-XM_020199864.1_GCF_001890905.1_1_
+Talaromyces_atroroseus:rna-XM_020268925.1(GCF_001907595.1_2) -> Talaromyces_atroroseus_rna-XM_020268925.1_GCF_001907595.1_2_
+Talaromyces_atroroseus:rna-XM_020268928.1(GCF_001907595.1_2) -> Talaromyces_atroroseus_rna-XM_020268928.1_GCF_001907595.1_2_
+Aspergillus_thermomutatus:rna-XM_026754921.1(GCF_002237265.1_4) -> Aspergillus_thermomutatus_rna-XM_026754921.1_GCF_002237265.1_4_
+Aspergillus_thermomutatus:rna-XM_026755014.1(GCF_002237265.1_4) -> Aspergillus_thermomutatus_rna-XM_026755014.1_GCF_002237265.1_4_
+Aspergillus_thermomutatus:rna-XM_026760789.1(GCF_002237265.1_4) -> Aspergillus_thermomutatus_rna-XM_026760789.1_GCF_002237265.1_4_
+Aspergillus_candidus:rna-XM_024817321.1(GCF_002847045.1_1) -> Aspergillus_candidus_rna-XM_024817321.1_GCF_002847045.1_1_
+Aspergillus_novofumigatus_IBT_16806:rna-XM_024823923.1(GCF_002847465.1_1) -> Aspergillus_novofumigatus_IBT_16806_rna-XM_024823923.1_GCF_002847465.1_1_
+Aspergillus_campestris_IBT_28561:rna-XM_024835203.1(GCF_002847485.1_1) -> Aspergillus_campestris_IBT_28561_rna-XM_024835203.1_GCF_002847485.1_1_
+Aspergillus_steynii_IBT_23096:rna-XM_024850870.1(GCF_002849105.1_1) -> Aspergillus_steynii_IBT_23096_rna-XM_024850870.1_GCF_002849105.1_1_
+Aspergillus_sclerotioniger_CBS_115572:rna-XM_025614842.1(GCF_003184525.1_3) -> Aspergillus_sclerotioniger_CBS_115572_rna-XM_025614842.1_GCF_003184525.1_3_
+Aspergillus_sclerotioniger_CBS_115572:rna-XM_025615787.1(GCF_003184525.1_3) -> Aspergillus_sclerotioniger_CBS_115572_rna-XM_025615787.1_GCF_003184525.1_3_
+Aspergillus_eucalypticola_CBS_122712:rna-XM_025528171.1(GCF_003184535.1_1) -> Aspergillus_eucalypticola_CBS_122712_rna-XM_025528171.1_GCF_003184535.1_1_
+Aspergillus_heteromorphus_CBS_117.55:rna-XM_025538922.1(GCF_003184545.1_1) -> Aspergillus_heteromorphus_CBS_117.55_rna-XM_025538922.1_GCF_003184545.1_1_
+Aspergillus_saccharolyticus_JOP_1030-1:rna-XM_025578670.1(GCF_003184585.1_2) -> Aspergillus_saccharolyticus_JOP_1030-1_rna-XM_025578670.1_GCF_003184585.1_2_
+Aspergillus_neoniger_CBS_115656:rna-XM_025621996.1(GCF_003184625.1_1) -> Aspergillus_neoniger_CBS_115656_rna-XM_025621996.1_GCF_003184625.1_1_
+Aspergillus_brunneoviolaceus_CBS_621.78:rna-XM_025591034.1(GCF_003184695.1_3) -> Aspergillus_brunneoviolaceus_CBS_621.78_rna-XM_025591034.1_GCF_003184695.1_3_
+Aspergillus_brunneoviolaceus_CBS_621.78:rna-XM_025591070.1(GCF_003184695.1_3) -> Aspergillus_brunneoviolaceus_CBS_621.78_rna-XM_025591070.1_GCF_003184695.1_3_
+Aspergillus_uvarum_CBS_121591:rna-XM_025637372.1(GCF_003184745.1_2) -> Aspergillus_uvarum_CBS_121591_rna-XM_025637372.1_GCF_003184745.1_2_
+Aspergillus_uvarum_CBS_121591:rna-XM_025632081.1(GCF_003184745.1_2) -> Aspergillus_uvarum_CBS_121591_rna-XM_025632081.1_GCF_003184745.1_2_
+Aspergillus_piperis_CBS_112811:rna-XM_025657864.1(GCF_003184755.1_1) -> Aspergillus_piperis_CBS_112811_rna-XM_025657864.1_GCF_003184755.1_1_
+Aspergillus_aculeatinus_CBS_121060:rna-XM_025651746.1(GCF_003184765.1_2) -> Aspergillus_aculeatinus_CBS_121060_rna-XM_025651746.1_GCF_003184765.1_2_
+Aspergillus_aculeatinus_CBS_121060:rna-XM_025652473.1(GCF_003184765.1_2) -> Aspergillus_aculeatinus_CBS_121060_rna-XM_025652473.1_GCF_003184765.1_2_
+Aspergillus_japonicus_CBS_114.51:rna-XM_025675968.1(GCF_003184785.1_2) -> Aspergillus_japonicus_CBS_114.51_rna-XM_025675968.1_GCF_003184785.1_2_
+Aspergillus_costaricaensis_CBS_115574:rna-XM_025687119.1(GCF_003184835.1_1) -> Aspergillus_costaricaensis_CBS_115574_rna-XM_025687119.1_GCF_003184835.1_1_
+Aspergillus_ibericus_CBS_121593:rna-XM_025717322.1(GCF_003184845.1_2) -> Aspergillus_ibericus_CBS_121593_rna-XM_025717322.1_GCF_003184845.1_2_
+Aspergillus_ibericus_CBS_121593:rna-XM_025723315.1(GCF_003184845.1_2) -> Aspergillus_ibericus_CBS_121593_rna-XM_025723315.1_GCF_003184845.1_2_
+Aspergillus_homomorphus_CBS_101889:rna-XM_025691201.1(GCF_003184865.1_1) -> Aspergillus_homomorphus_CBS_101889_rna-XM_025691201.1_GCF_003184865.1_1_
+Aspergillus_vadensis_CBS_113365:rna-XM_025711614.1(GCF_003184925.1_1) -> Aspergillus_vadensis_CBS_113365_rna-XM_025711614.1_GCF_003184925.1_1_
+Aspergillus_welwitschiae:rna-XM_026769112.1(GCF_003344945.1_1) -> Aspergillus_welwitschiae_rna-XM_026769112.1_GCF_003344945.1_1_
+Aspergillus_mulundensis:rna-XM_026752468.1(GCF_003369625.1_1) -> Aspergillus_mulundensis_rna-XM_026752468.1_GCF_003369625.1_1_
+Aspergillus_tanneri:rna-XM_033573857.1(GCF_003426965.1_4) -> Aspergillus_tanneri_rna-XM_033573857.1_GCF_003426965.1_4_
+Aspergillus_tanneri:rna-XM_033575261.1(GCF_003426965.1_4) -> Aspergillus_tanneri_rna-XM_033575261.1_GCF_003426965.1_4_
+Aspergillus_tanneri:rna-XM_033569831.1(GCF_003426965.1_4) -> Aspergillus_tanneri_rna-XM_033569831.1_GCF_003426965.1_4_
+Aspergillus_alliaceus:rna-XM_032047578.1(GCF_009176365.1_2) -> Aspergillus_alliaceus_rna-XM_032047578.1_GCF_009176365.1_2_
+Aspergillus_pseudotamarii:rna-XM_032063380.1(GCF_009193445.1_2) -> Aspergillus_pseudotamarii_rna-XM_032063380.1_GCF_009193445.1_2_
+Aspergillus_pseudotamarii:rna-XM_032061952.1(GCF_009193445.1_2) -> Aspergillus_pseudotamarii_rna-XM_032061952.1_GCF_009193445.1_2_
+Aspergillus_caelatus:rna-XM_032074515.1(GCF_009193585.1_2) -> Aspergillus_caelatus_rna-XM_032074515.1_GCF_009193585.1_2_
+Aspergillus_caelatus:rna-XM_032071503.1(GCF_009193585.1_2) -> Aspergillus_caelatus_rna-XM_032071503.1_GCF_009193585.1_2_
+Aspergillus_pseudonomius:rna-XM_032086462.1(GCF_009193645.1_2) -> Aspergillus_pseudonomius_rna-XM_032086462.1_GCF_009193645.1_2_
+Aspergillus_tubingensis:rna-XM_035500304.1(GCF_013340325.1_1) -> Aspergillus_tubingensis_rna-XM_035500304.1_GCF_013340325.1_1_
+
+ERROR: Duplicated sequence name Aspergillus_alliaceus__rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name Aspergillus_arachidicola__rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name Aspergillus_arachidicola__rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name Aspergillus_avenaceus__rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name Aspergillus_bertholletiae__rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name Aspergillus_carbonarius_ITEM_5010__rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name Aspergillus_carbonarius_ITEM_5010__rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name Aspergillus_carbonarius_ITEM_5010__rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name Aspergillus_carbonarius_ITEM_5010__rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name Aspergillus_ellipticus_CBS_707.79__rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name Aspergillus_ellipticus_CBS_707.79__rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name Aspergillus_fijiensis_CBS_313.89__rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name Aspergillus_fijiensis_CBS_313.89__rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name Aspergillus_flavus_AF70__rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name Aspergillus_flavus__rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name Aspergillus_flavus__rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name Aspergillus_flavus__rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name Aspergillus_fumigatiaffinis__rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name Aspergillus_fumigatiaffinis__rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name Aspergillus_fumigatiaffinis__rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name Aspergillus_fumigatiaffinis__rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name Aspergillus_fumigatiaffinis__rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name Aspergillus_fumigatus_Z5__rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name Aspergillus_fumigatus__rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name Aspergillus_hiratsukae__rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name Aspergillus_hiratsukae__rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name Aspergillus_indologenus_CBS_114.80__rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name Aspergillus_lentulus__rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name Aspergillus_lentulus__rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name Aspergillus_leporis__rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name Aspergillus_minisclerotigenes__rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name Aspergillus_novoparasiticus__rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name Aspergillus_oryzae__rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name Aspergillus_parasiticus__rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name Aspergillus_pseudocaelatus__rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name Aspergillus_pseudonomius__rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name Aspergillus_sergii__rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name Aspergillus_tamarii__rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name Aspergillus_transmontanensis__rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name Aspergillus_turcosus__rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name Penicillium_chrysogenum__rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name Penicillium_chrysogenum__rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name Penicillium_coprophilum__rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name Penicillium_coprophilum__rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name Penicillium_griseofulvum__rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name Penicillium_griseofulvum__rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name Penicillium_griseofulvum__rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name Penicillium_nordicum__rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name Penicillium_nordicum__rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name Penicillium_oxalicum_114-2__rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name Penicillium_oxalicum_114-2__rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name Penicillium_oxalicum_114-2__rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name Penicillium_polonicum__rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name Penicillium_polonicum__rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name Penicillium_polonicum__rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name Penicillium_polonicum__rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name Penicillium_polonicum__rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name Penicillium_steckii__rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name Penicillium_vulpinum__rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name Penicillium_vulpinum__rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name Talaromyces_pinophilus__rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name Talaromyces_pinophilus__rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name Talaromyces_pinophilus__rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name Talaromyces_verruculosus__rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name Talaromyces_verruculosus__rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name Talaromyces_verruculosus__rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name Talaromyces_verruculosus__rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name Talaromyces_verruculosus__rna-gnl|WGS_325_bp
+ERROR: Please rename sequences listed above!

@@ -18,7 +18,7 @@ There exists common patterns that underlys different classes of major secondary 
 
 There currently doesn't exist any tools geared toward helping users search for their own non-canoncal gene clusters. I have created a python tool called GBKCreator.py that has enabled me to develop the first dataset of isocyanide BGCS in every sequenced Eurotiales. These isocyanide synthatses (ICS) were first characterized the Keller Lab several years ago, and it's been found that every ICS contains the same core bacbone gene and protein domain. By searching for this protein domain in every annotated Eurotiales genome, and grabbing windows around the located backbone gene, I was also to manually analyze and network the distribution and patterns in this noval secondary metabilite family.
 
-For class I will run a phylogenetic analysis of the backbone ICS protein domains that my program discovered. My networking program I've already been running take into account the evolution of entire gene clusters. This phylogenetic approach will allow me to get insite into the evolution of the core bacbkbone ICS protein domain. The resulting trees that are made by this analysis might give inside into the evolutionary history of this novel secondary metabolite family.
+For class I will run a phylogenetic analysis of the backbone ICS protein domains that my program discovered (amino acid sequences). My networking program I've already been running takes into account the evolution of entire gene clusters. This phylogenetic approach will allow me to get insite into the evolution of the core backbone ICS protein domain. The resulting trees that are made by this analysis might give inside into the evolutionary history of this novel secondary metabolite family.
 
 **Overall steps with justification of each step**
 
@@ -26,7 +26,7 @@ There are some things that are going to be done after step 6 but it goes far bey
 
 1. Create a pipeline that can grab the amino acid sequences of every ICS protein domain within Eurotiales. This pipeline then needs to condense them all into a single fasta file, while adding in the metadata to each grabbed core protein domain.
 
-- This part of the project is straightforard in terms of goal, but will require me to make a custom bash/python pipeline to exicute the most efficiently.
+- This part of the project is straightforard in terms of goal, but will require me to make a custom bash/python pipeline to execute.
 
 2. Make an alignment of the fasta file using both muscle and T-Coffee
 
@@ -34,7 +34,7 @@ There are some things that are going to be done after step 6 but it goes far bey
 
 3. Using trimAl, remove the poorly aligned regions from my multiple sequence alignment. 
 
--  I will previously used trimAl and it is a great tool to automate removal of poorly aligned regions
+-  I have previously used trimAl and it is a great tool to automate removal of poorly aligned regions
 -  I will also maintain my untrimmed-tree and depending on if it is not full of gaps, will use in parallel to the trimmed dataset 
    -  both will be evaluated after the tree building stage for quality of the trees they were able to construct
 4. Using ModelFinder2 identify the optimal model of evolution for my dataset.
@@ -178,9 +178,9 @@ VSYQKLFPTRAGSHYIHIRFPNGRQFPAPAPGQAQQAVDAVIRAWEETECKQAQTPIQRELIIDANPWLRMTQWAVYLQG
 ```
 
 
-# Notes and troubleshooting 
+# Initial Testing, Notes, and troubleshooting 
 
-#### Botany 563 Main Project Pipeline
+***Botany 563 Main Project Pipeline***
 
 Grant Nickles; gnickles@wisc.edu
 
@@ -377,7 +377,7 @@ Final output will be: all of the fasta locations that had PF05141 domain. Will N
 
 After trying to run some new stuff in R from the class today I realized whatever the hell I had done before was garbage. I also realized I could use bash to do a majority of what I was trying to do... This took about two hours but I checked and it's actually making PFAM domains now. Thank god.
 
-Long used the following pipeline to make this work.
+I used the following pipeline to make this work.
 
 ```sh
 #!/bin/bash
@@ -1507,7 +1507,6 @@ PF05141 363 seqs, lengths min 48, max 330, avg 253
 - For the most part I'm pretty happy with how it looks
   
 - most sequences have decent coverage with not a ton of gaps
-  
 
 Some are almost entirly gaps, I have to decide if I want to remove those ones and re-run the alignment. If there is a potential sequence I'll remove I'll include it below. 
 
@@ -1858,4 +1857,1229 @@ OUTPUT RESULTS
 
 - looking into the alignment file there are multiple regions that are all listed on the file
   - I think **probably 8 groups** as there are 8 copies of the sequences I cmd f'd
+
+
+
+# Full Runthrough notes and troubleshooting
+
+Before I was trying out different programs but the organization was haphazard. I was also using old datasets for half of the analysis and need to re-do those. 
+
+## Step one: gathering the Data
+
+My pipeline that is above in the TL&DR is the most up to date and was correct. I decided to upload the correct files into the git repository as they are relativley small fasta files. These files that are of major importance are `/GN_Botany563/MainProject/data/PF05141.fa` and `/GN_Botany563/MainProject/data/PF05141_NoSameSeq.fa`
+
+- the nosameseq file was made from the other fasta by removing duplicate sequences, this made sure I wasn't enriching for duplicates of the same species in my runs
+
+## Step two: editing the sequences
+
+This was in a recomendation by a reviewer. I'll remove the really poor sequences that I seem to have.
+
+- after looking through my sequences some are vastly shorter than others. I might want to remove any sequences that are extremly short or extremly long as they are outliers
+- The vast majority of the other sequences are the same size
+- I still seem to have a large number of duplicates species wise and I should think about changing how I name these sequences
+  - The ones that are left are not perfectly identical and have minor aa changes but are 90% the same
+
+1. First I'm going to remove sequences that are extremly short
+
+```python
+$ python
+Python 3.7.9 (default, Aug 31 2020, 07:22:35) 
+[Clang 10.0.0 ] :: Anaconda, Inc. on darwin
+Type "help", "copyright", "credits" or "license" for more information.
+>>> fastaPath = r'/Users/gnickles/Documents/GN_Botany563/MainProject/data/PF05141_NoSameSeq.fa'
+>>> from Bio import SeqIO
+>>> import sys
+>>> import os
+>>> avgSeqLength = 0
+>>> for record in SeqIO.parse(fastaPath, "fasta"):
+... break
+  File "<stdin>", line 2
+    break
+        ^
+IndentationError: expected an indented block
+>>> print(avgSeqLength)
+0
+>>> counter = 0
+>>> total = 0
+>>> for record in SeqIO.parse(fastaPath, "fasta"):
+... total = total + len(record.seq)
+  File "<stdin>", line 2
+    total = total + len(record.seq)
+        ^
+IndentationError: expected an indented block
+>>> for record in SeqIO.parse(fastaPath, "fasta"):
+...     total = total + len(record.seq)
+... 
+>>> print(total)
+68816
+>>> total = 0
+>>> for record in SeqIO.parse(fastaPath, "fasta"):
+...     total = total + len(record.seq)
+...     count = count + 1
+... 
+Traceback (most recent call last):
+  File "<stdin>", line 3, in <module>
+NameError: name 'count' is not defined
+>>> for record in SeqIO.parse(fastaPath, "fasta"):
+... 
+  File "<stdin>", line 2
+    
+    ^
+IndentationError: expected an indented block
+>>> print total
+  File "<stdin>", line 1
+    print total
+              ^
+SyntaxError: Missing parentheses in call to 'print'. Did you mean print(total)?
+>>> total = 0
+>>> print(counter)
+0
+>>> for record in SeqIO.parse(fastaPath, "fasta"):
+...     total = total + len(record.seq)
+...     counter = counter + 1
+... 
+>>> print(counter)
+267
+>>> avgSeqLength = int(total) / int(counter)
+>>> print(avgSeqLength)
+257.7378277153558
+
+```
+
+According to this program the avg for all sequences is 257. I'll remove any sequences are are smaller than 150 aa and will see how many this took out.
+
+```python
+>>> print(counter)
+267
+>>> avgSeqLength = int(total) / int(counter)
+>>> print(avgSeqLength)
+257.7378277153558
+>>> seqToSave = []
+>>> for record in SeqIO.parse(fastaPath, "fasta"):
+...     seqlength = len(record.seq)
+...     if int(seqlength) >= 150:
+...             seqToSave.append(record)
+... 
+>>> print(len(seqToSave))
+247
+
+```
+
+This removed only 20 sequences! I'm more than happy with this. I'll do the same for extremly large sizes.
+
+```python
+>>> seqToSave2 = []
+>>> for record in SeqIO.parse(fastaPath, "fasta"):
+...     seqlength = len(record.seq)
+...     if int(seqlength) >= 150 and int(seqlength) <= 350:
+...             seqToSave2.append(record)
+... 
+>>> print(len(seqToSave2))
+247
+```
+
+This didn't remove any other sequences. I'll write out this to a file called `PF05141_editedSeqs.fa`
+
+```python
+>>> SeqIO.write(seqToSave2, "/Users/gnickles/Documents/GN_Botany563/MainProject/data/PF05141_editedSeqs.fa", 'fasta')
+247
+```
+
+## Step three: making the alignment
+
+For this step I will be using Muscle and mafft. I chose them due to there efficiency and ability to auto choose the best alignment parameters.
+
+### mafft
+
+I realized that I didn't have the mafft program installed so I downloaded it from this link:
+
+https://mafft.cbrc.jp/alignment/software/macosx.html
+
+![mafftInstallation](./ImagesForNotes/mafftInstallation.png)
+
+The GUI installer gave me this prompt at the end meaning it installed into my `/usr/local/bin/` folder.
+
+```sh
+$ /usr/local/bin/mafft -h
+/usr/local/bin/mafft: Cannot open -h.
+
+------------------------------------------------------------------------------
+  MAFFT v7.475 (2020/Nov/23)
+  https://mafft.cbrc.jp/alignment/software/
+  MBE 30:772-780 (2013), NAR 30:3059-3066 (2002)
+------------------------------------------------------------------------------
+High speed:
+  % mafft in > out
+  % mafft --retree 1 in > out (fast)
+
+High accuracy (for <~200 sequences x <~2,000 aa/nt):
+  % mafft --maxiterate 1000 --localpair  in > out (% linsi in > out is also ok)
+  % mafft --maxiterate 1000 --genafpair  in > out (% einsi in > out)
+  % mafft --maxiterate 1000 --globalpair in > out (% ginsi in > out)
+
+If unsure which option to use:
+  % mafft --auto in > out
+
+--op # :         Gap opening penalty, default: 1.53
+--ep # :         Offset (works like gap extension penalty), default: 0.0
+--maxiterate # : Maximum number of iterative refinement, default: 0
+--clustalout :   Output: clustal format, default: fasta
+--reorder :      Outorder: aligned, default: input order
+--quiet :        Do not report progress
+--thread # :     Number of threads (if unsure, --thread -1)
+--dash :         Add structural information (Rozewicki et al, submitted)
+
+```
+
+I'm going to run the auto option
+
+```sh
+$ /usr/local/bin/mafft --auto PF05141_editedSeqs.fa > PF05141_aln.fas
+nthread = 0
+nthreadpair = 0
+nthreadtb = 0
+ppenalty_ex = 0
+stacksize: 8192 kb
+rescale = 1
+Gap Penalty = -1.53, +0.00, +0.00
+
+
+
+Making a distance matrix ..
+  201 / 247
+done.
+
+Constructing a UPGMA tree (efffree=0) ... 
+  240 / 247
+done.
+
+Progressive alignment 1/2... 
+STEP   233 / 246  f
+Reallocating..done. *alloclen = 1666
+STEP   246 / 246  d
+done.
+
+Making a distance matrix from msa.. 
+  200 / 247
+done.
+
+Constructing a UPGMA tree (efffree=1) ... 
+  240 / 247
+done.
+
+Progressive alignment 2/2... 
+STEP   236 / 246  f
+Reallocating..done. *alloclen = 1666
+STEP   246 / 246  d
+done.
+
+disttbfast (aa) Version 7.475
+alg=A, model=BLOSUM62, 1.53, -0.00, -0.00, noshift, amax=0.0
+0 thread(s)
+
+rescale = 1
+dndpre (aa) Version 7.475
+alg=X, model=BLOSUM62, 1.53, +0.12, -0.00, noshift, amax=0.0
+0 thread(s)
+
+minimumweight = 0.000010
+autosubalignment = 0.000000
+nthread = 0
+randomseed = 0
+blosum 62 / kimura 200
+poffset = 0
+niter = 2
+sueff_global = 0.100000
+nadd = 2
+rescale = 1
+
+  240 / 247
+Segment   1/  1    1- 384
+done 002-001-1  identical.   
+dvtditr (aa) Version 7.475
+alg=A, model=BLOSUM62, 1.53, -0.00, -0.00, noshift, amax=0.0
+0 thread(s)
+
+
+Strategy:
+ FFT-NS-i (Standard)
+ Iterative refinement method (max. 2 iterations)
+
+If unsure which option to use, try 'mafft --auto input > output'.
+For more information, see 'mafft --help', 'mafft --man' and the mafft page.
+
+The default gap scoring scheme has been changed in version 7.110 (2013 Oct).
+It tends to insert more gaps into gap-rich regions than previous versions.
+To disable this change, add the --leavegappyregion option.
+
+```
+
+### Muscle
+
+```sh
+ muscle -h
+Invalid command line option "h"
+
+MUSCLE v3.8.1551 by Robert C. Edgar
+
+http://www.drive5.com/muscle
+This software is donated to the public domain.
+Please cite: Edgar, R.C. Nucleic Acids Res 32(5), 1792-97.
+
+
+Basic usage
+
+    muscle -in <inputfile> -out <outputfile>
+
+Common options (for a complete list please see the User Guide):
+
+    -in <inputfile>    Input file in FASTA format (default stdin)
+    -out <outputfile>  Output alignment in FASTA format (default stdout)
+    -diags             Find diagonals (faster for similar sequences)
+    -maxiters <n>      Maximum number of iterations (integer, default 16)
+    -maxhours <h>      Maximum time to iterate in hours (default no limit)
+    -html              Write output in HTML format (default FASTA)
+    -msf               Write output in GCG MSF format (default FASTA)
+    -clw               Write output in CLUSTALW format (default FASTA)
+    -clwstrict         As -clw, with 'CLUSTAL W (1.81)' header
+    -log[a] <logfile>  Log to file (append if -loga, overwrite if -log)
+    -quiet             Do not write progress messages to stderr
+    -version           Display version information and exit
+
+Without refinement (very fast, avg accuracy similar to T-Coffee): -maxiters 2
+Fastest possible (amino acids): -maxiters 1 -diags -sv -distance1 kbit20_3
+Fastest possible (nucleotides): -maxiters 1 -diags
+
+```
+
+I will be specifying the -in, -out but will not adjust the maxiters (aka the basic usage parameters)
+
+```sh
+$ muscle -in PF05141_editedSeqs.fa -out ./MuscleAlignment/PF05141_aln.fas
+
+MUSCLE v3.8.1551 by Robert C. Edgar
+
+http://www.drive5.com/muscle
+This software is donated to the public domain.
+Please cite: Edgar, R.C. Nucleic Acids Res 32(5), 1792-97.
+
+PF05141_editedSeqs 247 seqs, lengths min 156, max 330, avg 270
+00:00:00      2 MB(0%)  Iter   1  100.00%  K-mer dist pass 1
+00:00:00      2 MB(0%)  Iter   1  100.00%  K-mer dist pass 2
+00:00:01     45 MB(1%)  Iter   1  100.00%  Align node       
+00:00:01     45 MB(1%)  Iter   1  100.00%  Root alignment
+00:00:01     45 MB(1%)  Iter   2  100.00%  Refine tree   
+00:00:01     45 MB(1%)  Iter   2  100.00%  Root alignment
+00:00:01     45 MB(1%)  Iter   2  100.00%  Root alignment
+00:00:03     45 MB(1%)  Iter   3  100.00%  Refine biparts
+00:00:05     45 MB(1%)  Iter   4  100.00%  Refine biparts
+00:00:05     45 MB(1%)  Iter   5  100.00%  Refine biparts
+00:00:05     45 MB(1%)  Iter   5  100.00%  Refine biparts
+00:00:07     45 MB(1%)  Iter   6  100.00%  Refine biparts
+00:00:08     45 MB(1%)  Iter   7  100.00%  Refine biparts
+00:00:08     45 MB(1%)  Iter   8  100.00%  Refine biparts
+00:00:08     45 MB(1%)  Iter   8  100.00%  Refine biparts
+
+```
+
+### Determining best alignment
+
+Both of the programs made the alignments very fast. I was very dissapointed at both programs not making the score explicitly clear on the std.err/out pages. However, mafft displayed vastly more information about what it used to do it's alignment. I strongly think both would work for my purposes, but due to the increase in information that mafft provided in it's online documentation and output on my terminal I will choose to move forward with it.
+
+## Step four: trimming out the gaps
+
+I wanted to try trimming out the gaps and leaving them in. Both options will be carried through to iqtree to creat the phylogenies for each gene.
+
+I was unsure where trimal was installed on my computer so I ran a script to find it:
+
+```sh
+$ sudo find . -name trimal
+Password:
+find: ./Box: No such file or directory
+./bin/trimAl/source/trimal
+find: ./Library/VoiceTrigger/SAT: Operation not permitted
+./anaconda3/pkgs/trimal-1.4.1-ha1b3eb9_4/bin/trimal
+./anaconda3/envs/phyluce/bin/trimal
+
+```
+
+This was stored in the` ./bin/trimAl` in addition to some python bio packages.
+
+The parameters for trimAl are as follows:
+
+```sh
+$ ./bin/trimAl/source/trimal -h
+
+trimAl 1.2rev59. Copyright (C) 2009. Salvador Capella-Gutierrez and Toni Gabaldón.
+
+trimAl webpage: http://trimal.cgenomics.org
+
+This program is free software: you can redistribute it and/or modify 
+it under the terms of the GNU General Public License as published by 
+the Free Software Foundation, the last available version.
+
+Please cite:	Salvador Capella-Gutierrez, Jose M. Silla-Martinez and
+            	Toni Gabaldon. trimAl: a tool for automated alignment 
+            	trimming (2009).
+
+Basic usage
+	trimal -in <inputfile> -out <outputfile> -(other options).
+
+Common options (for a complete list please see the User Guide or visit http://trimal.cgenomics.org):
+
+    -h                       Print this information and show some examples.
+    --version                Print the trimAl version.
+
+    -in <inputfile>          Input file in several formats (clustal, fasta, NBRF/PIR, nexus, phylip3.2, phylip).
+    -compareset <inputfile>  Input list of paths for the files containing the alignments to compare.
+    -matrix <inpufile>       Input file for user-defined similarity matrix (default is Blosum62).
+
+    -out <outputfile>        Output alignment in the same input format (default stdout). (default input format)
+    -htmlout <outputfile>    Get a summary of trimal's work in an HTML file.
+
+    -clustal                 Output file in CLUSTAL format
+    -fasta                   Output file in FASTA format
+    -nbrf                    Output file in NBRF/PIR format
+    -nexus                   Output file in NEXUS format
+    -mega                    Output file in MEGA format
+    -phylip3.2               Output file in PHYLIP3.2 format
+    -phylip                  Output file in PHYLIP/PHYLIP4 format
+
+    -complementary           Get the complementary alignment.
+    -colnumbering            Get the relationship between the columns in the old and new alignment.
+
+    -select { n,l,m-k }      Selection of columns to be removed from the alignment. (see User Guide).
+    -gt -gapthreshold <n>    1 - (fraction of sequences with a gap allowed).
+    -st -simthreshold <n>    Minimum average similarity allowed.
+    -ct -conthreshold <n>    Minimum consistency value allowed.
+    -cons <n>                Minimum percentage of the positions in the original alignment to conserve.
+
+    -nogaps                  Remove all positions with gaps in the alignment.
+    -noallgaps               Remove columns composed only by gaps.
+
+    -gappyout                Use automated selection on "gappyout" mode. This method only uses information based on gaps' distribution. (see User Guide).
+    -strict                  Use automated selection on "strict" mode. (see User Guide).
+    -strictplus              Use automated selection on "strictplus" mode. (see User Guide).
+                             (Optimized for Neighbour Joining phylogenetic tree reconstruction).
+
+    -automated1              Use a heuristic selection of the automatic method based on similarity statistics. (see User Guide).
+                             (Optimized for Maximum Likelihood phylogenetic tree reconstruction).
+
+    -resoverlap              Minimum overlap of a positions with other positions in the column to be considered a "good position". (see User Guide).
+    -seqoverlap              Minimum percentage of "good positions" that a sequence must have in order to be conserved. (see User Guide).
+
+    -w <n>                   (half) Window size, score of position i is the average of the window (i - n) to (i + n).
+    -gw <n>                  (half) Window size only applies to statistics/methods based on Gaps.
+    -sw <n>                  (half) Window size only applies to statistics/methods based on Similarity.
+    -cw <n>                  (half) Window size only applies to statistics/methods based on Consistency.
+
+    -sgc                     Print gap percentage count for columns in the input alignment.
+    -sgt                     Print accumulated gap percentage count.
+    -scc                     Print conservation values for columns in the input alignment.
+    -sct                     Print accumulated conservation values count.
+    -sfc                     Print compare values for columns in the selected alignment from compare files method.
+    -sft                     Print accumulated compare values count for the selected alignment from compare files method.
+    -sident                  Print identity statistics for all sequences in the alignemnt. (see User Guide).
+
+Some Examples:
+
+1) Removes all positions in the alignment with gaps in 10% or more of
+   the sequences, unless this leaves less than 60%. In such case, print
+   the 60% best (with less gaps) positions.
+
+   trimal -in <inputfile> -out <outputfile> -gt 0.9 -cons 60
+
+2) As above but, the gap percentage is averaged over a window starting
+   3 positions before and ending 3 positions after the column.
+
+   trimal -in <inputfile> -out <outputfile> -gt 0.9 -cons 60 -w 3
+
+3) Uses an automatic method to decide optimal thresholds, based in the gap percentage
+   count over the whole alignment. (see User Guide for details).
+
+   trimal -in <inputfile> -out <outputfile> -gappyout
+
+4) Uses automatics methods to decide optimal thresholds, based on the combination 
+   of strict method and similarity values. (see User Guide for details).
+
+   trimal -in <inputfile> -out <outputfile> -strictplus
+
+5) Uses an heuristic to decide the optimal method to trimming the alignment. 
+   (see User Guide for details).
+
+   trimal -in <inputfile> -out <outputfile> -automated1
+
+6) Uses residue and sequences overlap thresholds to delete some sequences from the 
+   alignemnt. (see User Guide for details).
+
+   trimal -in <inputfile> -out <outputfile> -resoverlap 0.8 -seqoverlap 75
+
+7) Selection of columns to be deleted from the alignment. The selection can 
+   be a column's number or a column's number interval.
+
+   trimal -in <inputfile> -out <outputfile> -select { 2,3,10,45-60,68,70-78 }
+
+8) Get the complementary alignment from the alignment previously trimmed.
+
+   trimal -in <inputfile> -out <outputfile> -select { 2,3,45-60 } -complementary
+```
+
+I want to avoid removing too much. So I will try the automated verison of the software to see how that performs, and I will try running it is a really generous `-gt 0.1` to only remove columns with 90% or more gaps.
+
+```sh
+$ ~/bin/trimAl/source/trimal -in ./MafftAlignment/PF05141_aln.fas -out ./MafftAlignment/PF05141_aln_trimmed.fas -gappyout
+#running it again with the -gt parameter
+$ ~/bin/trimAl/source/trimal -in ./MafftAlignment/PF05141_aln.fas -out ./MafftAlignment/PF05141_aln_trimmed2.fas -gt 0.1
+```
+
+The gappyout command removed almost 100 bp more than the gt 0.1 method. Since this is my first time trying out different trimAl commands I'll keep both and will make trees from them. I'm really curious what ends up scoring the best. 
+
+I noticed a big error in the trimAl program, it removes the comments on all the fasta files. This means I have no idea what sequence is what anymore. What I'm going to do is make a script that changes the metadata look like this:
+
+```sh
+#before:
+>rna-ANIA_02705 GCA_000011425.1_2 Fungi,Ascomycota,Eurotiomycetes,Eurotiales,Aspergillaceae,Aspergillus,Aspergillus_nidulans,Aspergillus_nidulans_FGSC_A4
+-----VYLFIKDNKKIEFCLP---AFPCKSS--N-PDKVAGVVPDAAEYLALEHLNDFVQ
+KVGSIYEPGATLWVISDGHVFS---------DCIGVDDALVDSYGA------ILASQYKA
+TTKNQPS--NSNIQFTGLEDLF-FSSPES-TSSFSTNMLDSISIPQPIETVLTESAQKCR
+LLLDT-VGGIDRKHLRGLIDRKHSETLALYQGQSRFMLEDLGAYLSE---RNIGSKARKR
+IASKVAEEMIARNH---AYSNLVELLFPHHVRLSIHAHTNAGPKFGIRLFPRGAVRAAPT
+AQAILS------ISQSKSESE--------SGAITNPLYEFQIPTPWHNCLVRVEG--LEG
+MLLTRSGIIRDAIS---
+#after:
+>Aspergillus_nidulans_FGSC_A4:rna-ANIA_02705(GCA_000011425.1_2)
+-----VYLFIKDNKKIEFCLP---AFPCKSS--N-PDKVAGVVPDAAEYLALEHLNDFVQ
+KVGSIYEPGATLWVISDGHVFS---------DCIGVDDALVDSYGA------ILASQYKA
+TTKNQPS--NSNIQFTGLEDLF-FSSPES-TSSFSTNMLDSISIPQPIETVLTESAQKCR
+LLLDT-VGGIDRKHLRGLIDRKHSETLALYQGQSRFMLEDLGAYLSE---RNIGSKARKR
+IASKVAEEMIARNH---AYSNLVELLFPHHVRLSIHAHTNAGPKFGIRLFPRGAVRAAPT
+AQAILS------ISQSKSESE--------SGAITNPLYEFQIPTPWHNCLVRVEG--LEG
+MLLTRSGIIRDAIS---
+```
+
+If the species doesn't have strain specific information I will put the species that it came from:
+
+**Script: ID_Editor.py** this is also stored in the code section of the github repository
+
+```python
+from Bio import SeqIO
+import pdb
+fastaPath = r'/Users/gnickles/Documents/GN_Botany563/MainProject/data/MafftAlignment/PF05141_aln.fas'
+recordToSave = []
+for record in SeqIO.parse(fastaPath, "fasta"):
+    name = record.description
+    gene = record.id
+    species = name.split(",")[-1]
+    if species == "":
+        species = name.split(",")[-2]
+    tempName = name.split()[1]
+    newName = species + ":" + gene + "()" + tempName + ")"
+    record.id = newName
+    record.description = ""
+    recordToSave.append(record)
+
+SeqIO.write(recordToSave, "/Users/gnickles/Documents/GN_Botany563/MainProject/data/MafftAlignment/PF05141_aln_edited.fas", 'fasta')
+
+```
+
+Now I'll re-run the trimAl program:
+
+```sh
+$ ~/bin/trimAl/source/trimal -in ./MafftAlignment/PF05141_aln_edited.fas -out ./MafftAlignment/PF05141_aln_trimmedGappyout.fas -gappyout
+#running it again with the -gt parameter
+$ ~/bin/trimAl/source/trimal -in ./MafftAlignment/PF05141_aln_edited.fas -out ./MafftAlignment/PF05141_aln_trimmed10.fas -gt 0.1
+```
+
+Annoyingly trimAl still removed the sequences ID's that I had edited onto them. They now only have the species.
+
+```sh
+>Aspergillus_niger 246 bp
+IRAKQPIRMILPAFPFKSPNGNKTLGSLPDKGEEICLAHLNGLCAAISDVYEYGAKLTIV
+SDGLVYNDILGVSDRDVWEYGHALREMVAENKYDHIEFARLRDLVHSEDVKLDGETYERL
+APVFRQELIEQHTPVGFDAAVMIKSDENICTTYRGYIKFLTKDLEHLYVEGTTSRKAHKK
+YLGNVAKAMITRGAAFAEAIIKNYSGYIRLSIHPSNGLTKISINVLPRSPVTPWHSAPCY
+TVDGRF
+>Aspergillus_nidulans_FGSC_A4 246 bp
+IKDNKKIEFCLPAFPCKSSNPDKVAGVVPDAAEYLALEHLNDFVQKVGSIYEPGATLWVI
+SDGHVFSDCIGVDDALVDSYGAILASQYKATTKSNIQFTGLEDLF-FSIPQPIETVLTES
+AQKCRLLLDTVGGIDRKHLRGLIDRHSETLALYQGQSRFMLEDLGAYLSERNIGSKARKR
+IASKVAEEMIARNHAYSNLVELLFPHHVRLSIHAHTNAGKFGIRLFPRGAITPWHNCLVR
+VELEGM
+```
+
+I'm going to run the ID editor again replacing everything with commas. I can go in later to change these.
+
+```python
+from Bio import SeqIO
+import pdb
+fastaPath = r'/Users/gnickles/Documents/GN_Botany563/MainProject/data/MafftAlignment/PF05141_aln.fas'
+recordToSave = []
+for record in SeqIO.parse(fastaPath, "fasta"):
+    name = record.description
+    gene = record.id
+    species = name.split(",")[-1]
+    if species == "":
+        species = name.split(",")[-2]
+    tempName = name.split()[1]
+    newName = species + "," + gene + "," + tempName + ","
+    record.id = newName
+    record.description = ""
+    recordToSave.append(record)
+
+SeqIO.write(recordToSave, "/Users/gnickles/Documents/GN_Botany563/MainProject/data/MafftAlignment/PF05141_editedSeqs_fixedID2.fa", 'fasta')
+
+```
+
+```sh
+$ ~/bin/trimAl/source/trimal -in ./MafftAlignment/PF05141_editedSeqs_fixedID2.fa -out ./MafftAlignment/PF05141_aln_trimmedGappyout_2.fas -gappyout
+#running it again with the -gt parameter
+$ ~/bin/trimAl/source/trimal -in ./MafftAlignment/PF05141_editedSeqs_fixedID2.fa -out ./MafftAlignment/PF05141_aln_trimmed10_2.fas -gt 0.1
+```
+
+This also didn't work. I'll try using `__`
+
+```sh
+$ ~/bin/trimAl/source/trimal -in ./MafftAlignment/PF05141_aln_edited2.fas -out ./MafftAlignment/PF05141_aln_trimmedGappyout.fas -gappyout
+#running it again with the -gt parameter
+$ ~/bin/trimAl/source/trimal -in ./MafftAlignment/PF05141_aln_edited2.fas -out ./MafftAlignment/PF05141_aln_trimmed10.fas -gt 0.1
+```
+
+That worked! Now I'll change the characters back to what they should be:
+
+**Script: __Fixer.py** which is stored in the code section of the gitHub repository
+
+```python
+from Bio import SeqIO
+import pdb
+fastaPath1 = r'/Users/gnickles/Documents/GN_Botany563/MainProject/data/MafftAlignment/PF05141_aln_trimmed10.fas'
+fastaPath2 = r'/Users/gnickles/Documents/GN_Botany563/MainProject/data/MafftAlignment/PF05141_aln_trimmedGappyout.fas'
+recordToSave1 = []
+recordToSave2 = []
+for record in SeqIO.parse(fastaPath1, "fasta"):
+    name = record.id
+    nameSplit = name.split("__")
+    if len(nameSplit) == 4:
+        part1 = nameSplit[0]
+        part2 = nameSplit[1]
+        part3 = nameSplit[2]
+        newName = part1 + ":" + part2 + "(" + part3 + ")"
+        record.description = ""
+        record.id = newName
+    recordToSave1.append(record)
+
+for record in SeqIO.parse(fastaPath2, "fasta"):
+    name = record.id
+    nameSplit = name.split("__")
+    if len(nameSplit) == 4:
+        part1 = nameSplit[0]
+        part2 = nameSplit[1]
+        part3 = nameSplit[2]
+        newName = part1 + ":" + part2 + "(" + part3 + ")"
+        record.description = ""
+        record.id = newName
+    recordToSave2.append(record)
+
+SeqIO.write(recordToSave1, "/Users/gnickles/Documents/GN_Botany563/MainProject/data/MafftAlignment/PF05141_aln_editedTrimmed10.fas", 'fasta')
+SeqIO.write(recordToSave2, "/Users/gnickles/Documents/GN_Botany563/MainProject/data/MafftAlignment/PF05141_aln_editedTrimmedGappyout.fas", 'fasta')
+
+```
+
+
+
+
+
+## Step five: running IQTree
+
+I had to download this software on my computer from this link:
+
+http://www.iqtree.org/
+
+After unzipping this file I coppies the bin to my `~/bin/`
+
+```sh
+(base) gnickles@Nymeria-Keller-Lab:~/Box/Bioinformatics_Software$ cd iqtree-1.6.12-MacOSX
+(base) gnickles@Nymeria-Keller-Lab:~/Box/Bioinformatics_Software/iqtree-1.6.12-MacOSX$ ls
+bin/         example.cf   example.nex  example.phy  models.nex
+(base) gnickles@Nymeria-Keller-Lab:~/Box/Bioinformatics_Software/iqtree-1.6.12-MacOSX$ cd bin/
+(base) gnickles@Nymeria-Keller-Lab:~/Box/Bioinformatics_Software/iqtree-1.6.12-MacOSX/bin$ ls
+iqtree*
+(base) gnickles@Nymeria-Keller-Lab:~/Box/Bioinformatics_Software/iqtree-1.6.12-MacOSX/bin$ cp * ~/bin/
+(base) gnickles@Nymeria-Keller-Lab:~/Box/Bioinformatics_Software/iqtree-1.6.12-MacOSX$ ls ~/bin/
+EMBOSS-6.6.0/            emboss-latest.tar        share/
+SamTools/                iqtree*                  trimAl/
+datasets*                run_bigscape*            trimal.v1.2rev59.tar.gz
+
+```
+
+The parameters:
+
+```sh
+$ iqtree -h
+IQ-TREE multicore version 2.0.3 for Mac OS X 64-bit built Dec 19 2020
+Developed by Bui Quang Minh, Nguyen Lam Tung, Olga Chernomor,
+Heiko Schmidt, Dominik Schrempf, Michael Woodhams.
+
+Usage: iqtree [-s ALIGNMENT] [-p PARTITION] [-m MODEL] [-t TREE] ...
+
+GENERAL OPTIONS:
+  -h, --help           Print (more) help usages
+  -s FILE[,...,FILE]   PHYLIP/FASTA/NEXUS/CLUSTAL/MSF alignment file(s)
+  -s DIR               Directory of alignment files
+  --seqtype STRING     BIN, DNA, AA, NT2AA, CODON, MORPH (default: auto-detect)
+  -t FILE|PARS|RAND    Starting tree (default: 99 parsimony and BIONJ)
+  -o TAX[,...,TAX]     Outgroup taxon (list) for writing .treefile
+  --prefix STRING      Prefix for all output files (default: aln/partition)
+  --seed NUM           Random seed number, normally used for debugging purpose
+  --safe               Safe likelihood kernel to avoid numerical underflow
+  --mem NUM[G|M|%]     Maximal RAM usage in GB | MB | %
+  --runs NUM           Number of indepedent runs (default: 1)
+  --redo               Ignore checkpoint and overwrite outputs (default: OFF)
+  -v, --verbose        Verbose mode, printing more messages to screen
+  -V, --version        Display version number
+  --quiet              Quiet mode, suppress printing to screen (stdout)
+  -fconst f1,...,fN    Add constant patterns into alignment (N=no. states)
+  --epsilon NUM        Likelihood epsilon for parameter estimate (default 0.01)
+  -T NUM|AUTO          No. cores/threads or AUTO-detect (default: 1)
+  --threads-max NUM    Max number of threads for -T AUTO (default: all cores)
+
+PARTITION MODEL:
+  -p FILE|DIR          NEXUS/RAxML partition file or directory with alignments
+                       Edge-linked proportional partition model
+  -q FILE|DIR          Like -p but edge-linked equal partition model 
+  -Q FILE|DIR          Like -p but edge-unlinked partition model
+  -S FILE|DIR          Like -p but separate tree inference
+  --subsample NUM      Randomly sub-sample partitions (negative for complement)
+  --subsample-seed NUM Random number seed for --subsample
+
+LIKELIHOOD/QUARTET MAPPING:
+  --lmap NUM           Number of quartets for likelihood mapping analysis
+  --lmclust FILE       NEXUS file containing clusters for likelihood mapping
+  --quartetlh          Print quartet log-likelihoods to .quartetlh file
+
+TREE SEARCH ALGORITHM:
+  --ninit NUM          Number of initial parsimony trees (default: 100)
+  --ntop NUM           Number of top initial trees (default: 20)
+  --nbest NUM          Number of best trees retained during search (defaut: 5)
+  -n NUM               Fix number of iterations to stop (default: OFF)
+  --nstop NUM          Number of unsuccessful iterations to stop (default: 100)
+  --perturb NUM        Perturbation strength for randomized NNI (default: 0.5)
+  --radius NUM         Radius for parsimony SPR search (default: 6)
+  --allnni             Perform more thorough NNI search (default: OFF)
+  -g FILE              (Multifurcating) topological constraint tree file
+  --fast               Fast search to resemble FastTree
+  --polytomy           Collapse near-zero branches into polytomy
+  --tree-fix           Fix -t tree (no tree search performed)
+  --treels             Write locally optimal trees into .treels file
+  --show-lh            Compute tree likelihood without optimisation
+  --terrace            Check if the tree lies on a phylogenetic terrace
+
+ULTRAFAST BOOTSTRAP/JACKKNIFE:
+  -B, --ufboot NUM     Replicates for ultrafast bootstrap (>=1000)
+  -J, --ufjack NUM     Replicates for ultrafast jackknife (>=1000)
+  --jack-prop NUM      Subsampling proportion for jackknife (default: 0.5)
+  --sampling STRING    GENE|GENESITE resampling for partitions (default: SITE)
+  --boot-trees         Write bootstrap trees to .ufboot file (default: none)
+  --wbtl               Like --boot-trees but also writing branch lengths
+  --nmax NUM           Maximum number of iterations (default: 1000)
+  --nstep NUM          Iterations for UFBoot stopping rule (default: 100)
+  --bcor NUM           Minimum correlation coefficient (default: 0.99)
+  --beps NUM           RELL epsilon to break tie (default: 0.5)
+  --bnni               Optimize UFBoot trees by NNI on bootstrap alignment
+
+NON-PARAMETRIC BOOTSTRAP/JACKKNIFE:
+  -b, --boot NUM       Replicates for bootstrap + ML tree + consensus tree
+  -j, --jack NUM       Replicates for jackknife + ML tree + consensus tree
+  --jack-prop NUM      Subsampling proportion for jackknife (default: 0.5)
+  --bcon NUM           Replicates for bootstrap + consensus tree
+  --bonly NUM          Replicates for bootstrap only
+  --tbe                Transfer bootstrap expectation
+
+SINGLE BRANCH TEST:
+  --alrt NUM           Replicates for SH approximate likelihood ratio test
+  --alrt 0             Parametric aLRT test (Anisimova and Gascuel 2006)
+  --abayes             approximate Bayes test (Anisimova et al. 2011)
+  --lbp NUM            Replicates for fast local bootstrap probabilities
+
+MODEL-FINDER:
+  -m TESTONLY          Standard model selection (like jModelTest, ProtTest)
+  -m TEST              Standard model selection followed by tree inference
+  -m MF                Extended model selection with FreeRate heterogeneity
+  -m MFP               Extended model selection followed by tree inference
+  -m ...+LM            Additionally test Lie Markov models
+  -m ...+LMRY          Additionally test Lie Markov models with RY symmetry
+  -m ...+LMWS          Additionally test Lie Markov models with WS symmetry
+  -m ...+LMMK          Additionally test Lie Markov models with MK symmetry
+  -m ...+LMSS          Additionally test strand-symmetric models
+  --mset STRING        Restrict search to models supported by other programs
+                       (raxml, phyml or mrbayes)
+  --mset STR,...       Comma-separated model list (e.g. -mset WAG,LG,JTT)
+  --msub STRING        Amino-acid model source
+                       (nuclear, mitochondrial, chloroplast or viral)
+  --mfreq STR,...      List of state frequencies
+  --mrate STR,...      List of rate heterogeneity among sites
+                       (e.g. -mrate E,I,G,I+G,R is used for -m MF)
+  --cmin NUM           Min categories for FreeRate model [+R] (default: 2)
+  --cmax NUM           Max categories for FreeRate model [+R] (default: 10)
+  --merit AIC|AICc|BIC  Akaike|Bayesian information criterion (default: BIC)
+  --mtree              Perform full tree search for every model
+  --mredo              Ignore .model.gz checkpoint file (default: OFF)
+  --madd STR,...       List of mixture models to consider
+  --mdef FILE          Model definition NEXUS file (see Manual)
+  --modelomatic        Find best codon/protein/DNA models (Whelan et al. 2015)
+
+PARTITION-FINDER:
+  --merge              Merge partitions to increase model fit
+  --merge greedy|rcluster|rclusterf
+                       Set merging algorithm (default: rclusterf)
+  --merge-model 1|all  Use only 1 or all models for merging (default: 1)
+  --merge-model STR,...
+                       Comma-separated model list for merging
+  --merge-rate 1|all   Use only 1 or all rate heterogeneity (default: 1)
+  --merge-rate STR,...
+                       Comma-separated rate list for merging
+  --rcluster NUM       Percentage of partition pairs for rcluster algorithm
+  --rclusterf NUM      Percentage of partition pairs for rclusterf algorithm
+  --rcluster-max NUM   Max number of partition pairs (default: 10*partitions)
+
+SUBSTITUTION MODEL:
+  -m STRING            Model name string (e.g. GTR+F+I+G)
+                 DNA:  HKY (default), JC, F81, K2P, K3P, K81uf, TN/TrN, TNef,
+                       TIM, TIMef, TVM, TVMef, SYM, GTR, or 6-digit model
+                       specification (e.g., 010010 = HKY)
+             Protein:  LG (default), Poisson, cpREV, mtREV, Dayhoff, mtMAM,
+                       JTT, WAG, mtART, mtZOA, VT, rtREV, DCMut, PMB, HIVb,
+                       HIVw, JTTDCMut, FLU, Blosum62, GTR20, mtMet, mtVer, mtInv, Q.LG
+			Q.pfam, Q.pfam_gb, Q.bird, Q.mammal, Q.insect, Q.plant, Q.yeast
+     Protein mixture:  C10,...,C60, EX2, EX3, EHO, UL2, UL3, EX_EHO, LG4M, LG4X
+              Binary:  JC2 (default), GTR2
+     Empirical codon:  KOSI07, SCHN05
+   Mechanistic codon:  GY (default), MG, MGK, GY0K, GY1KTS, GY1KTV, GY2K,
+                       MG1KTS, MG1KTV, MG2K
+Semi-empirical codon:  XX_YY where XX is empirical and YY is mechanistic model
+      Morphology/SNP:  MK (default), ORDERED, GTR
+      Lie Markov DNA:  1.1, 2.2b, 3.3a, 3.3b, 3.3c, 3.4, 4.4a, 4.4b, 4.5a,
+                       4.5b, 5.6a, 5.6b, 5.7a, 5.7b, 5.7c, 5.11a, 5.11b, 5.11c,
+                       5.16, 6.6, 6.7a, 6.7b, 6.8a, 6.8b, 6.17a, 6.17b, 8.8,
+                       8.10a, 8.10b, 8.16, 8.17, 8.18, 9.20a, 9.20b, 10.12,
+                       10.34, 12.12 (optionally prefixed by RY, WS or MK)
+      Non-reversible:  STRSYM (strand symmetric model, equiv. WS6.6),
+                       NONREV, UNREST (unrestricted model, equiv. 12.12)
+           Otherwise:  Name of file containing user-model parameters
+
+STATE FREQUENCY:
+  -m ...+F             Empirically counted frequencies from alignment
+  -m ...+FO            Optimized frequencies by maximum-likelihood
+  -m ...+FQ            Equal frequencies
+  -m ...+FRY           For DNA, freq(A+G)=1/2=freq(C+T)
+  -m ...+FWS           For DNA, freq(A+T)=1/2=freq(C+G)
+  -m ...+FMK           For DNA, freq(A+C)=1/2=freq(G+T)
+  -m ...+Fabcd         4-digit constraint on ACGT frequency
+                       (e.g. +F1221 means f_A=f_T, f_C=f_G)
+  -m ...+FU            Amino-acid frequencies given protein matrix
+  -m ...+F1x4          Equal NT frequencies over three codon positions
+  -m ...+F3x4          Unequal NT frequencies over three codon positions
+
+RATE HETEROGENEITY AMONG SITES:
+  -m ...+I             A proportion of invariable sites
+  -m ...+G[n]          Discrete Gamma model with n categories (default n=4)
+  -m ...*G[n]          Discrete Gamma model with unlinked model parameters
+  -m ...+I+G[n]        Invariable sites plus Gamma model with n categories
+  -m ...+R[n]          FreeRate model with n categories (default n=4)
+  -m ...*R[n]          FreeRate model with unlinked model parameters
+  -m ...+I+R[n]        Invariable sites plus FreeRate model with n categories
+  -m ...+Hn            Heterotachy model with n classes
+  -m ...*Hn            Heterotachy model with n classes and unlinked parameters
+  --alpha-min NUM      Min Gamma shape parameter for site rates (default: 0.02)
+  --gamma-median       Median approximation for +G site rates (default: mean)
+  --rate               Write empirical Bayesian site rates to .rate file
+  --mlrate             Write maximum likelihood site rates to .mlrate file
+
+POLYMORPHISM AWARE MODELS (PoMo):
+  -s FILE              Input counts file (see manual)
+  -m ...+P             DNA substitution model (see above) used with PoMo
+  -m ...+N<POPSIZE>    Virtual population size (default: 9)
+  -m ...+WB|WH|S]      Weighted binomial sampling
+  -m ...+WH            Weighted hypergeometric sampling
+  -m ...+S             Sampled sampling
+  -m ...+G[n]          Discrete Gamma rate with n categories (default n=4)
+
+COMPLEX MODELS:
+  -m "MIX{m1,...,mK}"  Mixture model with K components
+  -m "FMIX{f1,...fK}"  Frequency mixture model with K components
+  --mix-opt            Optimize mixture weights (default: detect)
+  -m ...+ASC           Ascertainment bias correction
+  --tree-freq FILE     Input tree to infer site frequency model
+  --site-freq FILE     Input site frequency model file
+  --freq-max           Posterior maximum instead of mean approximation
+
+TREE TOPOLOGY TEST:
+  --trees FILE         Set of trees to evaluate log-likelihoods
+  --test NUM           Replicates for topology test
+  --test-weight        Perform weighted KH and SH tests
+  --test-au            Approximately unbiased (AU) test (Shimodaira 2002)
+  --sitelh             Write site log-likelihoods to .sitelh file
+
+ANCESTRAL STATE RECONSTRUCTION:
+  --ancestral          Ancestral state reconstruction by empirical Bayes
+  --asr-min NUM        Min probability of ancestral state (default: equil freq)
+
+TEST OF SYMMETRY:
+  --symtest               Perform three tests of symmetry
+  --symtest-only          Do --symtest then exist
+  --symtest-remove-bad    Do --symtest and remove bad partitions
+  --symtest-remove-good   Do --symtest and remove good partitions
+  --symtest-type MAR|INT  Use MARginal/INTernal test when removing partitions
+  --symtest-pval NUMER    P-value cutoff (default: 0.05)
+  --symtest-keep-zero     Keep NAs in the tests
+
+CONCORDANCE FACTOR ANALYSIS:
+  -t FILE              Reference tree to assign concordance factor
+  --gcf FILE           Set of source trees for gene concordance factor (gCF)
+  --df-tree            Write discordant trees associated with gDF1
+  --scf NUM            Number of quartets for site concordance factor (sCF)
+  -s FILE              Sequence alignment for --scf
+  -p FILE|DIR          Partition file or directory for --scf
+  --cf-verbose         Write CF per tree/locus to cf.stat_tree/_loci
+
+TIME TREE RECONSTRUCTION:
+  --date FILE          Dates of tips or ancestral nodes
+  --date TAXNAME       Extract dates from taxon names after last '|'
+  --date-tip STRING    Tip dates as a real number or YYYY-MM-DD
+  --date-root STRING   Root date as a real number or YYYY-MM-DD
+  --dating STRING      Dating method: LSD for least square dating (default)
+
+```
+
+
+
+<u>Parameters I will use:</u>
+
+`-m MFP` : which will tell the program to perform ModelFinder in order to select the ideal model for my data
+
+`-s [alignment file]` 
+
+`--safe` according to the documentation this will avoid numerical underflow. Mickey often runs this when he is making trees and I will do the same
+
+`--mem 8 ` as my computer has a max of 8 gigs of ram
+
+`-T 4` as my computer has 4 cores and the default is only 1 core being used
+
+`-B 1000` tells the program to run an UFBoot of 1000 on the tree that is constructed 
+
+- this is `-bb` in the first version of the software which is why Mickey uses `-bb`
+
+`--prefix [prefix]` depending on which trimmed or untrimmed alignment I am making a tree from
+
+Since my data has severe model violations (the data doesn't have single copy orthologs and instead includes paralogs) I will also add the `-bnni` after `-B` which will prevent overestimating branch supports with UFBoot from the model violations
+
+I looked into the other parameters but I won't specify an outgroup as I want mine to me unrooted, I don't have a partition model, and I don't want to set any of the model parameters as model finder is going to do that for me.
+
+Thus I will run the following:
+
+```sh
+(base) gnickles@Nymeria-Keller-Lab:~/Documents/GN_Botany563/MainProject/data/MafftAlignment$ iqtree -s PF05141_editedSeqs.fa -m MFP --safe --mem 8G -T 4 -B 1000 --prefix PF05141_noTrim
+
+IQ-TREE multicore version 2.0.3 for Mac OS X 64-bit built Dec 19 2020
+Developed by Bui Quang Minh, Nguyen Lam Tung, Olga Chernomor,
+Heiko Schmidt, Dominik Schrempf, Michael Woodhams.
+
+Host:    Nymeria-Keller-Lab.local (AVX512, FMA3, 8 GB RAM)
+Command: iqtree -s PF05141_editedSeqs.fa -m MFP --safe --mem 8G -T 4 -B 1000 --prefix PF05141_noTrim
+Seed:    451786 (Using SPRNG - Scalable Parallel Random Number Generator)
+Time:    Mon Apr 26 21:08:04 2021
+OMP: Info #270: omp_set_nested routine deprecated, please use omp_set_max_active_levels instead.
+Kernel:  Safe AVX+FMA - 4 threads (8 CPU cores detected)
+
+Reading alignment file PF05141_editedSeqs.fa ... Fasta format detected
+ERROR: Sequence rna-ANIA_02705 contains too many characters (321)
+ERROR: Sequence rna-ANIA_02606 contains too many characters (270)
+ERROR: Sequence rna-AFUB_101900 contains not enough characters (257)
+...
+#this goes on like this for every sequence I inputed
+```
+
+This is likley an issue of the sequences not being the same length. Thus it would be best to only use the auto trimmed and strict trimming files which are different from each other by ~100bp.
+
+```sh
+IQ-TREE multicore version 2.0.3 for Mac OS X 64-bit built Dec 19 2020
+Developed by Bui Quang Minh, Nguyen Lam Tung, Olga Chernomor,
+Heiko Schmidt, Dominik Schrempf, Michael Woodhams.
+
+Host:    Nymeria-Keller-Lab.local (AVX512, FMA3, 8 GB RAM)
+Command: iqtree -s PF05141_aln_editedTrimmed10.fas -m MFP --safe --mem 8G -T 4 -B 1000 --prefix PF05141_trim10
+Seed:    703958 (Using SPRNG - Scalable Parallel Random Number Generator)
+Time:    Mon Apr 26 21:13:16 2021
+OMP: Info #270: omp_set_nested routine deprecated, please use omp_set_max_active_levels instead.
+Kernel:  Safe AVX+FMA - 4 threads (8 CPU cores detected)
+
+Reading alignment file PF05141_aln_editedTrimmed10.fas ... Fasta format detected
+NOTE: Change sequence name 'Penicillium_oxalicum_114-2__rna-gnl|WGS 325 bp' -> Penicillium_oxalicum_114-2__rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'Penicillium_oxalicum_114-2__rna-gnl|WGS 325 bp' -> Penicillium_oxalicum_114-2__rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'Penicillium_oxalicum_114-2__rna-gnl|WGS 325 bp' -> Penicillium_oxalicum_114-2__rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'Penicillium_oxalicum_114-2__rna-gnl|WGS 325 bp' -> Penicillium_oxalicum_114-2__rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'Penicillium_chrysogenum__rna-gnl|WGS 325 bp' -> Penicillium_chrysogenum__rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'Penicillium_chrysogenum__rna-gnl|WGS 325 bp' -> Penicillium_chrysogenum__rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'Penicillium_chrysogenum__rna-gnl|WGS 325 bp' -> Penicillium_chrysogenum__rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'Aspergillus_flavus_AF70__rna-gnl|WGS 325 bp' -> Aspergillus_flavus_AF70__rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'Aspergillus_flavus_AF70__rna-gnl|WGS 325 bp' -> Aspergillus_flavus_AF70__rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'Aspergillus_parasiticus_SU-1__rna-gnl|WGS 325 bp' -> Aspergillus_parasiticus_SU-1__rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'Aspergillus_rambellii__rna-gnl|WGS 325 bp' -> Aspergillus_rambellii__rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'Aspergillus_fumigatus_Z5__rna-gnl|WGS 325 bp' -> Aspergillus_fumigatus_Z5__rna-gnl|WGS_325_bp
+NOTE: Change sequence name 'Aspergillus_fumigatus_Z5__rna-gnl|WGS 325 bp' -> Aspergillus_fumigatus_Z5__rna-gnl|WGS_325_bp
+...
+ERROR: Duplicated sequence name Penicillium_nordicum__rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name Penicillium_nordicum__rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name Penicillium_oxalicum_114-2__rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name Penicillium_oxalicum_114-2__rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name Penicillium_oxalicum_114-2__rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name Penicillium_polonicum__rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name Penicillium_polonicum__rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name Penicillium_polonicum__rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name Penicillium_polonicum__rna-gnl|WGS_325_bp
+ERROR: Duplicated sequence name Penicillium_polonicum__rna-gnl|WGS_325_bp
+
+```
+
+It seems I had some duplicate names in my files. Thinking this through the easiest option is to keep the unique gene names for now. I can go back later into the newick files and change the node names to have the species. Thus I'll re-do the trimming without messing with any of the names.
+
+```sh
+$ ~/bin/trimAl/source/trimal -in ./MafftAlignment/PF05141_aln.fas -out ./MafftAlignment/PF05141_aln_trimmedGappyout.fas -gappyout
+#running it again with the -gt parameter
+$ ~/bin/trimAl/source/trimal -in ./MafftAlignment/PF05141_aln.fas -out ./MafftAlignment/PF05141_aln_trimmed10.fas -gt 0.1
+```
+
+This still is trimming files at the `:` character. I found on a webpage that the authors are aware of this and posted that adding the `-keepheader` command can prevent this truncating.
+
+https://github.com/scapella/trimal/issues/5
+
+When I tried running the `-keepheader` command it said that isn't a valid command. It is possible I don't have the most up-to-date installation of this software so I'm going to clone their git repo for it. These instructions were on the README.md
+
+```
+Basic Installation
+==================
+
+The simplest way to compile this package is:
+
+  1. 'cd' to the directory containing the package's source code ('source').
+
+  2. Type 'make' to compile the package.
+
+  3. Optionally, run trimAl/readAl with the examples into the 'dataset' 
+     directory to check the correct installation.
+
+   By default, 'make' compiles the source code of trimAl and readAl in the
+current directory. After that, you can either add to PATH the current
+directory or move these files to '/usr/local/bin' or to '/usr/bin' using
+root privileges.
+```
+
+This software would freeze and crash my computer everytime I tried running it. We tried running this on a diferent computer and it worked fine. Becuase it is such a small program I'm going to send my files over to that computer and run it on that instead of spending hours trying to figure out why it was breaking on my device. It might have something to do with me recently updating my device.
+
+## Step six: determining the best tree
+
+### Gappyout
+
+here is the last section of the log file from iqtree
+
+```sh
+--------------------------------------------------------------------
+|                    FINALIZING TREE SEARCH                        |
+--------------------------------------------------------------------
+Performs final model parameters optimization
+Estimate model parameters (epsilon = 0.010)
+1. Initial log-likelihood: -26057.086
+Optimal log-likelihood: -26057.083
+Proportion of invariable sites: 0.017
+Gamma shape alpha: 1.083
+Parameters optimization took 1 rounds (0.130 sec)
+BEST SCORE FOUND : -26057.083
+Creating bootstrap support values...
+Split supports printed to NEXUS file PF05141_trimGappyout.splits.nex
+Total tree length: 35.517
+
+Total number of iterations: 311
+CPU time used for tree search: 3242.722 sec (0h:54m:2s)
+Wall-clock time used for tree search: 585.694 sec (0h:9m:45s)
+Total CPU time used: 3294.729 sec (0h:54m:54s)
+Total wall-clock time used: 598.462 sec (0h:9m:58s)
+
+Computing bootstrap consensus tree...
+Reading input file PF05141_trimGappyout.splits.nex...
+246 taxa and 1628 splits.
+Consensus tree written to PF05141_trimGappyout.contree
+Reading input trees file PF05141_trimGappyout.contree
+Log-likelihood of consensus tree: -26058.203
+
+Analysis results written to: 
+  IQ-TREE report:                PF05141_trimGappyout.iqtree
+  Maximum-likelihood tree:       PF05141_trimGappyout.treefile
+  Likelihood distances:          PF05141_trimGappyout.mldist
+
+Ultrafast bootstrap approximation results written to:
+  Split support values:          PF05141_trimGappyout.splits.nex
+  Consensus tree:                PF05141_trimGappyout.contree
+  Screen log file:               PF05141_trimGappyout.log
+
+Date and Time: Tue Apr 27 12:00:04 2021
+
+```
+
+**Best-fit model** according to BIC: JTT+I+G4
+
+**MAXIMUM LIKELIHOOD TREE**
+
+Log-likelihood of the tree: -26057.0825 (s.e. 1018.0952)
+Unconstrained log-likelihood (without tree): -1354.3116
+Number of free parameters (#branches + #model parameters): 491
+Akaike information criterion (AIC) score: 53096.1651
+Corrected Akaike information criterion (AICc) score: 536240.1651
+Bayesian information criterion (BIC) score: 54817.2829
+
+Total tree length (sum of branch lengths): 35.5167
+Sum of internal branch lengths: 16.8405 (47.4158% of tree length)
+
+___
+
+Consensus tree is constructed from 5000bootstrap trees
+Log-likelihood of consensus tree: -26058.203490
+Robinson-Foulds distance between ML tree and consensus tree: 14
+
+Branches with support >0.000000% are kept (extended consensus)
+Branch lengths are optimized by maximum likelihood on original alignment
+
+
+
+### Trimming regions with >=90% gaps
+
+Here is the last section of the log file
+
+```sh
+--------------------------------------------------------------------
+|                    FINALIZING TREE SEARCH                        |
+--------------------------------------------------------------------
+Performs final model parameters optimization
+Estimate model parameters (epsilon = 0.010)
+1. Initial log-likelihood: -31162.244
+Optimal log-likelihood: -31162.238
+Site proportion and rates:  (0.161,0.098) (0.155,0.345) (0.149,0.601) (0.181,0.972) (0.235,1.554) (0.118,2.535)
+Parameters optimization took 1 rounds (1.329 sec)
+BEST SCORE FOUND : -31162.238
+Creating bootstrap support values...
+Split supports printed to NEXUS file PF05141_trim10.splits.nex
+Total tree length: 44.806
+
+Total number of iterations: 254
+CPU time used for tree search: 6984.218 sec (1h:56m:24s)
+Wall-clock time used for tree search: 1261.777 sec (0h:21m:1s)
+Total CPU time used: 7069.242 sec (1h:57m:49s)
+Total wall-clock time used: 1281.310 sec (0h:21m:21s)
+
+Computing bootstrap consensus tree...
+Reading input file PF05141_trim10.splits.nex...
+247 taxa and 1379 splits.
+Consensus tree written to PF05141_trim10.contree
+Reading input trees file PF05141_trim10.contree
+Log-likelihood of consensus tree: -31163.075
+
+Analysis results written to: 
+  IQ-TREE report:                PF05141_trim10.iqtree
+  Maximum-likelihood tree:       PF05141_trim10.treefile
+  Likelihood distances:          PF05141_trim10.mldist
+
+Ultrafast bootstrap approximation results written to:
+  Split support values:          PF05141_trim10.splits.nex
+  Consensus tree:                PF05141_trim10.contree
+  Screen log file:               PF05141_trim10.log
+
+Date and Time: Tue Apr 27 10:22:21 2021
+
+```
+
+**Best-fit model** according to BIC: JTT+R6
+
+**MAXIMUM LIKELIHOOD TREE**
+
+Log-likelihood of the tree: -31162.2378 (s.e. 1136.0995)
+Unconstrained log-likelihood (without tree): -1878.3569
+Number of free parameters (#branches + #model parameters): 501
+Akaike information criterion (AIC) score: 63326.4756
+Corrected Akaike information criterion (AICc) score: 566330.4756
+Bayesian information criterion (BIC) score: 65222.1720
+
+Total tree length (sum of branch lengths): 44.8058
+Sum of internal branch lengths: 21.3878 (47.7344% of tree length)
+
+___
+
+Consensus tree is constructed from 5000bootstrap trees
+Log-likelihood of consensus tree: -31163.075262
+Robinson-Foulds distance between ML tree and consensus tree: 30
+
+Branches with support >0.000000% are kept (extended consensus)
+Branch lengths are optimized by maximum likelihood on original alignment
+
+
+
+### Which one was better
+
+I first had to look up online how I can properly interpret the log-likelihood score on the consensus tree. According to what I found on: https://medium.com/@analyttica/log-likelihood-analyttica-function-series-cb059e0d379
+
+**Log Likelihood** value is a measure of goodness of fit for any model. Higher the value, better **is the** model. We should remember that **Log Likelihood** can lie between -Inf to +Inf. Hence, the absolute look at the value cannot give any indication. We can only compare the **Log Likelihood** values between multiple models.
+
+Based on this the log-likelihood of the gappyout tree scored higher. 
+
+I can also use the Robinson-Foulds metric to help get some insight on my scoring. The gappyout tree had a lower RF value meaning it required less operations to convert the ML tree to the consensus tree. Based on all of this I am confident that I'll move forward with the gappyout constructed tree. 
+
+## Step seven: tree visualizaion 
+
+I'll be using ggtree for my visualization. This is my first time trying to use ggtree.
+
+Here is a website I read that introduces ggtree: https://guangchuangyu.github.io/ggtree-book/chapter-ggtree.html
+
+I've been documenting a lot of my notes on the tree-visualization section. But I realized that I need to just make temp names for all of the fasta files. 
+
+Here is the script I made that does so:
+
+**tempNameMaker.py** which is stored in the Code section of the git repo
+
+```python
+from Bio import SeqIO
+import pdb
+import pandas as pd
+
+def MakeTempNames(fastaPath):
+    recordToSave = []
+    tn = []
+    sn = []
+    gn = []
+    GC = []
+    counter = 1
+    for record in SeqIO.parse(fastaPath, "fasta"):
+        #adding the info to the key file
+        tempName = str(counter) + "zzz"
+        tn.append(tempName)
+        counter += 1
+        recordID = record.description
+        geneName = recordID.split()[0]
+        genome = recordID.split()[1]
+        speciesName = recordID.split(",")[-2]
+        sn.append(speciesName)
+        gn.append(geneName)
+        GC.append(genome)
+        #changing to records ID to the tempName
+        record.description = ""
+        record.id = tempName
+        recordToSave.append(record)
+    df = pd.DataFrame({"TempName" : tn, "SpeciesName" : sn, "GeneName" : gn, "GenomeName" : GC})
+    pdb.set_trace()
+    SeqIO.write(recordToSave, "/Users/gnickles/Documents/GN_Botany563/MainProject/data/MafftAlignment/PF05141_aln_TN.fas", 'fasta')
+    df.to_csv("/Users/gnickles/Documents/GN_Botany563/MainProject/data/MafftAlignment/PF05141_key.tsv", sep="\t", index=False, header = False)
+
+fastaPath = r'/Users/gnickles/Documents/GN_Botany563/MainProject/data/MafftAlignment/PF05141_aln.fas'
+MakeTempNames(fastaPath)
+```
+
+I then re-ran the trimal and iqtree programs with the exact same parameters. This changed nothing but the fasta names. there is a key file called PF05141_key.tsv that has all the identifying information stored on it. 
+
+
 
