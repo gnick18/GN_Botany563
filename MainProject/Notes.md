@@ -3081,5 +3081,35 @@ MakeTempNames(fastaPath)
 
 I then re-ran the trimal and iqtree programs with the exact same parameters. This changed nothing but the fasta names. there is a key file called PF05141_key.tsv that has all the identifying information stored on it. 
 
+Next I made a script that changes back the temporary names to a designated column in the key file. I utilized a cool package I found called massedit that allows you to use regular expression over entire files or lists of files in one command. It's super cool that I can do this with a 6 line script. I added the print statement so you can see what it is changing what to. It also loops backwards to prevent small temp names from changing the larger ones.
 
+**EditingTempNames.py** which is in the git repo
+
+```python
+import pdb
+import pandas as pd
+import massedit
+
+#assumes the key files has headers, code can be modified to the index of the columns if needed
+def TempNamesToKeyNames(tempNameColumn, keyNameColumn, fileChanging, keyFile):
+    df = pd.read_csv(keyFile, sep='\t', header=0) #reading in the key file
+    #looping over the rows in the DataFrame from the bottom up (prevents 1zzz chaning 12(1zzz) for example
+    for i, row in df[::-1].iterrows():
+        tempName = row[tempNameColumn]
+        keyName = row[keyNameColumn]
+        print("Chaning " + tempName + " to " + keyName)
+        #in order to pass variables in a reg expression you need to add the rf to the begining of the string
+        #you also need to put the variable in '{}' with quotes around it
+        massedit.edit_files(fileChanging, [rf"re.sub('{tempName}', '{keyName}', line)"], dry_run=False)
+
+
+tempNameColumn = "TempName"
+keyNameColumn = "SpeciesName"
+keyFile = r'/Users/gnickles/Documents/GN_Botany563/MainProject/data/iqtree/PF05141_key.tsv'
+fileChanging = [r'/Users/gnickles/Documents/GN_Botany563/MainProject/data/iqtree/gappyout/PF05141_trimGappyout.contree', r'/Users/gnickles/Documents/GN_Botany563/MainProject/data/iqtree/gappyout/PF05141_trimGappyout.treefile']
+TempNamesToKeyNames(tempNameColumn, keyNameColumn, fileChanging, keyFile)
+
+```
+
+I also am going to change to names in the MSA file using my script:
 

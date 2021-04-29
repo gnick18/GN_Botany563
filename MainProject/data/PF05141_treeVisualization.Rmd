@@ -2,6 +2,9 @@
 title: "PF05141_treeVisualization"
 output: html_document
 ---
+```{r}
+rm(list=ls())
+```
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
@@ -13,7 +16,7 @@ http://bioconductor.org/packages/release/bioc/html/Biostrings.html
 if (!requireNamespace("BiocManager", quietly = TRUE))
     install.packages("BiocManager")
 
-BiocManager::install("Biostrings")
+#BiocManager::install("Biostrings")
 ```
 
 
@@ -23,7 +26,7 @@ http://bioconductor.org/packages/release/bioc/html/ggtree.html
 if (!requireNamespace("BiocManager", quietly = TRUE))
     install.packages("BiocManager")
 
-BiocManager::install("ggtree")
+#BiocManager::install("ggtree")
 ```
 This tutorial is what I'm using to help guide me through this analysis:
 https://4va.github.io/biodatasci/r-ggtree.html
@@ -34,7 +37,7 @@ library(tidyverse)
 library(ggtree)
 library(Biostrings)
 ```
-
+# Playing around with the ggtree settings
 Reading in the consensus tree and ML tree
 ```{r}
 consensusTree <- read.tree("./iqtree/gappyout/PF05141_trimGappyout.contree")
@@ -63,11 +66,154 @@ CT_plot2
 
 Adding nodes and lables to the tips. While I'm experimenting with different graphics I'll do it on the CT_plot only, I can add these details to ML later.
 ```{r}
-CT_plot + geom_tippoint()  + geom_nodepoint()
+CT_plot + geom_tippoint()  + geom_nodepoint() + geom_nodelab()
 # + geom_tiplab(align=TRUE, linesize=0.5)
 ```
 Trying our a MSAPlot. When I first tried running this command it said there is no package called Biostrings. Thus I found the link to install it and added it to the top of this Rmd file.
 ```{r}
 msaplot(p=ggtree(consensusTree), fasta="./iqtree/PF05141_aln_trimmedGappyout.fas")
 ```
-The main issue is that the names don't match up. I either need to make make names and re-run the iqtree analysis or change the names now in both files (this might be harder)
+The main issue is that the names don't match up. I either need to make make names and re-run the iqtree analysis or change the names now in both files (this might be harder) I fixed that issue and ran it above. Hmm that seems to be interesting looking but is not informative at all. Too much stuff on one plot.
+
+# Graphing the tree I want
+I'm going to make a circular tree that doesn't show evolutionary time but colors different major clades
+
+```{r}
+p = ggtree(ML, branch.length = "none", layout = "equal_angle") + ggtitle("Maximum Likleihood of PF05141 in Eurotiales")
+edge = data.frame(ML$edge, edge_num=1:nrow(ML$edge))
+colnames(edge)=c('parent',"node","edge_num")
+p %<+% edge + geom_label(aes(x=branch, label=edge_num))
+```
+```{r}
+p = ggtree(ML, branch.length = "none", layout = "circular") + ggtitle("Maximum Likleihood of PF05141 in Eurotiales") + geom_text2(aes(subset=!isTip, label=node), hjust=-.3, size = 2)
+p
+```
+
+
+**Adding in the tsv key file as metadata for the tips** 
+```{r}
+tipKeyData = read.csv("./iqtree/PF05141_key.tsv", sep = '\t', header=TRUE, stringsAsFactors=FALSE)
+
+info = as.data.frame(tipKeyData)
+```
+
+
+Clades that I want to highlight= 316, 261, 363, 410, 454, 483, 447
+
+```{r}
+p = ggtree(ML, branch.length = "none", layout = "circular") + ggtitle("Core isocyanide protein domains in Eurotiales") + geom_highlight(node=316, fill='steelblue', alpha=.6) + geom_highlight(node=261, fill='darkgreen', alpha=.6) + geom_highlight(node=363, fill="#E69F00", alpha=.6) + geom_highlight(node=410, fill="#F0E442", alpha=.6) + geom_highlight(node=454, fill="#CC79A7", alpha=.6) + geom_highlight(node=483, fill="#D55E00", alpha=.6) + geom_highlight(node=447, fill="#999999", alpha=.6)
+p
+```
+Now I'm going to see if I can color the tips on the tree based on species. I might also do this by genus if species is an overwelming amount of info. Something that could be cool is to make the aspergillus species various shades of red, and penicillium green, etc.
+
+
+```{r}
+p2 <- p %<+% info + geom_tippoint(aes(color = "#FFCCCC"))
+p2
+```
+In order to generate codes for every tip I wanted to make all the aspergili different shades red, penicillium blue, and talaromyces green. I used this website to help me quickly copy the colors onto a tsv file next to the species it lines up with:
+https://www.shadegenerator.com
+I then ran the following script which put them all in a line as a string
+```
+$ python
+Python 3.7.9 (default, Aug 31 2020, 07:22:35) 
+[Clang 10.0.0 ] :: Anaconda, Inc. on darwin
+Type "help", "copyright", "credits" or "license" for more information.
+>>> import pandas as pd
+>>> df = pd.read_csv("./SpeciesColorCodes.txt", sep="\t", header=None)
+>>> finalString = ""
+>>> for i, row in df.iterrows():
+...     
+... 
+  File "<stdin>", line 3
+    
+    ^
+IndentationError: expected an indented block
+>>> df = pd.read_csv("./SpeciesColorCodes.txt", sep="\t", header=0)
+>>> for i, row in df.iterrows():
+...     finalString = finalString + row["Species"] + "= '" + row["HexCode"] + "', "
+... 
+>>> print(finalString)
+Aspergillus_aculeatinus= '#FFE6E6', Aspergillus_aculeatus= '#FFD9D9', Aspergillus_alliaceus= '#FFCCCC', Aspergillus_arachidicola= '#FFBFBF', Aspergillus_avenaceus= '#FFB3B3', Aspergillus_awamori= '#FFA6A6', Aspergillus_bertholletiae= '#FF9999', Aspergillus_bombycis= '#FF8C8C', Aspergillus_brasiliensis= '#FF8080', Aspergillus_brunneoviolaceus= '#FF7373', Aspergillus_caelatus= '#FF6666', Aspergillus_campestris= '#FF5959', Aspergillus_candidus= '#FF4D4D', Aspergillus_carbonarius= '#FF4040', Aspergillus_clavatus= '#FF3333', Aspergillus_coremiiformis= '#FF2626', Aspergillus_costaricensis= '#FF1919', Aspergillus_cristatus= '#FF0D0D', Aspergillus_ellipticus= '#F20000', Aspergillus_eucalypticola= '#E60000', Aspergillus_felis= '#D90000', Aspergillus_fijiensis= '#CC0000', Aspergillus_fischeri= '#BF0000', Aspergillus_flavus= '#B30000', Aspergillus_fumigatiaffinis= '#A60000', Aspergillus_fumigatus= '#990000', Aspergillus_glaucus= '#8C0000', Aspergillus_heteromorphus= '#800000', Aspergillus_hiratsukae= '#730000', Aspergillus_homomorphus= '#660000', Aspergillus_ibericus= '#590000', Aspergillus_indologenus= '#AC5959', Aspergillus_japonicus= '#A64D4D', Aspergillus_lentulus= '#A04040', Aspergillus_leporis= '#993333', Aspergillus_luchuensis= '#932626', Aspergillus_minisclerotigenes= '#8D1919', Aspergillus_mulundensis= '#860D0D', Aspergillus_neoniger= '#7A0000', Aspergillus_nidulans= '#730000', Aspergillus_niger= '#6D0000', Aspergillus_nomiae= '#FFA333', Aspergillus_novofumigatus= '#FF9D26', Aspergillus_novoparasiticus= '#FF9819', Aspergillus_ochraceoroseus= '#FF920D', Aspergillus_oryzae= '#F28500', Aspergillus_parasiticus= '#E67E00', Aspergillus_phoenicis= '#D97700', Aspergillus_piperis= '#CC7000', Aspergillus_pseudocaelatus= '#BF6900', Aspergillus_pseudonomius= '#B36200', Aspergillus_pseudotamarii= '#A65B00', Aspergillus_rambellii= '#995400', Aspergillus_ruber= '#8C4D00', Aspergillus_saccharolyticus= '#FFE8CC', Aspergillus_sclerotioniger= '#FFE2BF', Aspergillus_sergii= '#FFDDB3', Aspergillus_steynii= '#FFD7A6', Aspergillus_sydowii= '#FFD199', Aspergillus_taichungensis= '#FFCB8C', Aspergillus_tamarii= '#FC6A88', Aspergillus_tanneri= '#FC7591', Aspergillus_thermomutatus= '#FB5F80', Aspergillus_transmontanensis= '#FB5577', Aspergillus_tubingensis= '#FB4A6F', Aspergillus_turcosus= '#FB3F66', Aspergillus_udagawae= '#FA355E', Aspergillus_uvarum= '#EE2851', Aspergillus_vadensis= '#E1264D', Aspergillus_versicolor= '#D52448', Aspergillus_welwitschiae= '#D52448', Penicilliopsis_zonata= '#4D4DFF', Penicillium_arizonense= '#4040FF', Penicillium_brasilianum= '#3333FF', Penicillium_camemberti= '#2626FF', Penicillium_chrysogenum= '#1919FF', Penicillium_coprophilum= '#0D0DFF', Penicillium_decumbens= '#0000F2', Penicillium_digitatum= '#0000E6', Penicillium_expansum= '#0000D9', Penicillium_griseofulvum= '#0000CC', Penicillium_italicum= '#0000BF', Penicillium_nordicum= '#0000B3', Penicillium_oxalicum= '#0000A6', Penicillium_polonicum= '#000099', Penicillium_rolfsii= '#00008C', Penicillium_roqueforti= '#5959FF', Penicillium_rubens= '#6666FF', Penicillium_steckii= '#7373FF', Penicillium_vulpinum= '#8080FF', Talaromyces_atroroseus= '#40A040', Talaromyces_cellulolyticus= '#339933', Talaromyces_islandicus= '#269326', Talaromyces_marneffei= '#198D19', Talaromyces_pinophilus= '#0D860D', Talaromyces_stipitatus= '#007A00', Talaromyces_verruculosus= '#007300', 
+>>> 
+
+```
+
+```{r}
+p3 <- p %<+% info + geom_tippoint(aes(color = label)) + 
+  scale_color_manual(values=c(Aspergillus_aculeatinus= '#FFE6E6', Aspergillus_aculeatus= '#FFD9D9', Aspergillus_alliaceus= '#FFCCCC', Aspergillus_arachidicola= '#FFBFBF', Aspergillus_avenaceus= '#FFB3B3', Aspergillus_awamori= '#FFA6A6', Aspergillus_bertholletiae= '#FF9999', Aspergillus_bombycis= '#FF8C8C', Aspergillus_brasiliensis= '#FF8080', Aspergillus_brunneoviolaceus= '#FF7373', Aspergillus_caelatus= '#FF6666', Aspergillus_campestris= '#FF5959', Aspergillus_candidus= '#FF4D4D', Aspergillus_carbonarius= '#FF4040', Aspergillus_clavatus= '#FF3333', Aspergillus_coremiiformis= '#FF2626', Aspergillus_costaricensis= '#FF1919', Aspergillus_cristatus= '#FF0D0D', Aspergillus_ellipticus= '#F20000', Aspergillus_eucalypticola= '#E60000', Aspergillus_felis= '#D90000', Aspergillus_fijiensis= '#CC0000', Aspergillus_fischeri= '#BF0000', Aspergillus_flavus= '#B30000', Aspergillus_fumigatiaffinis= '#A60000', Aspergillus_fumigatus= '#990000', Aspergillus_glaucus= '#8C0000', Aspergillus_heteromorphus= '#800000', Aspergillus_hiratsukae= '#730000', Aspergillus_homomorphus= '#660000', Aspergillus_ibericus= '#590000', Aspergillus_indologenus= '#AC5959', Aspergillus_japonicus= '#A64D4D', Aspergillus_lentulus= '#A04040', Aspergillus_leporis= '#993333', Aspergillus_luchuensis= '#932626', Aspergillus_minisclerotigenes= '#8D1919', Aspergillus_mulundensis= '#860D0D', Aspergillus_neoniger= '#7A0000', Aspergillus_nidulans= '#730000', Aspergillus_niger= '#6D0000', Aspergillus_nomiae= '#FFA333', Aspergillus_novofumigatus= '#FF9D26', Aspergillus_novoparasiticus= '#FF9819', Aspergillus_ochraceoroseus= '#FF920D', Aspergillus_oryzae= '#F28500', Aspergillus_parasiticus= '#E67E00', Aspergillus_phoenicis= '#D97700', Aspergillus_piperis= '#CC7000', Aspergillus_pseudocaelatus= '#BF6900', Aspergillus_pseudonomius= '#B36200', Aspergillus_pseudotamarii= '#A65B00', Aspergillus_rambellii= '#995400', Aspergillus_ruber= '#8C4D00', Aspergillus_saccharolyticus= '#FFE8CC', Aspergillus_sclerotioniger= '#FFE2BF', Aspergillus_sergii= '#FFDDB3', Aspergillus_steynii= '#FFD7A6', Aspergillus_sydowii= '#FFD199', Aspergillus_taichungensis= '#FFCB8C', Aspergillus_tamarii= '#FC6A88', Aspergillus_tanneri= '#FC7591', Aspergillus_thermomutatus= '#FB5F80', Aspergillus_transmontanensis= '#FB5577', Aspergillus_tubingensis= '#FB4A6F', Aspergillus_turcosus= '#FB3F66', Aspergillus_udagawae= '#FA355E', Aspergillus_uvarum= '#EE2851', Aspergillus_vadensis= '#E1264D', Aspergillus_versicolor= '#D52448', Aspergillus_welwitschiae= '#D52448', Penicilliopsis_zonata= '#4D4DFF', Penicillium_arizonense= '#4040FF', Penicillium_brasilianum= '#3333FF', Penicillium_camemberti= '#2626FF', Penicillium_chrysogenum= '#1919FF', Penicillium_coprophilum= '#0D0DFF', Penicillium_decumbens= '#0000F2', Penicillium_digitatum= '#0000E6', Penicillium_expansum= '#0000D9', Penicillium_griseofulvum= '#0000CC', Penicillium_italicum= '#0000BF', Penicillium_nordicum= '#0000B3', Penicillium_oxalicum= '#0000A6', Penicillium_polonicum= '#000099', Penicillium_rolfsii= '#00008C', Penicillium_roqueforti= '#5959FF', Penicillium_rubens= '#6666FF', Penicillium_steckii= '#7373FF', Penicillium_vulpinum= '#8080FF', Talaromyces_atroroseus= '#40A040', Talaromyces_cellulolyticus= '#339933', Talaromyces_islandicus= '#269326', Talaromyces_marneffei= '#198D19', Talaromyces_pinophilus= '#0D860D', Talaromyces_stipitatus= '#007A00', Talaromyces_verruculosus= '#007300')) +
+  theme(legend.position = "none")
+p3 
+```
+Woohoo! I'm really happy with how this looks. I'll make some final edits and will put the final graph with it's own chunk of code.
+#The final ML plot
+```{r}
+rm(list=ls())
+```
+
+```{r}
+ML <- read.tree("./iqtree/gappyout/PF05141_trimGappyout.treefile")
+```
+**Adding in the tsv key file as metadata for the tips** 
+```{r}
+tipKeyData = read.csv("./iqtree/PF05141_key.tsv", sep = '\t', header=TRUE, stringsAsFactors=FALSE)
+
+info = as.data.frame(tipKeyData)
+```
+
+```{r}
+#creating the tree and coloring the clades
+p = ggtree(ML, branch.length = "none", layout = "circular") + 
+  ggtitle(label="Core isocyanide protein domains in Eurotiales",
+          subtitle = "Aspergillus = red  |  Penicillium = blue  |  Talaromyces = green") +
+  geom_nodelab(color = "#000031", size = 3) +
+  geom_highlight(node=316, fill='steelblue', alpha=.6) + 
+  geom_highlight(node=261, fill='darkgreen', alpha=.6) + 
+  geom_highlight(node=363, fill="#E69F00", alpha=.6) + 
+  geom_highlight(node=410, fill="#F0E442", alpha=.6) + 
+  geom_highlight(node=454, fill="#CC79A7", alpha=.6) + 
+  geom_highlight(node=483, fill="#D55E00", alpha=.6) + 
+  geom_highlight(node=447, fill="#999999", alpha=.6) +
+  #editing the title and subtitle to look cleaner
+  theme(plot.title=element_text(face="bold", hjust = 0.5, size = 30), 
+        plot.subtitle = element_text(hjust = 0.5, color = "#4D4D4D", size = 20)
+  )
+
+#adding the species metadata and coloring based on
+p2 <- p %<+% info + geom_tippoint(aes(color = label)) + 
+  scale_color_manual(values=c(Aspergillus_aculeatinus= '#FFE6E6', Aspergillus_aculeatus= '#FFD9D9', Aspergillus_alliaceus= '#FFCCCC', Aspergillus_arachidicola= '#FFBFBF', Aspergillus_avenaceus= '#FFB3B3', Aspergillus_awamori= '#FFA6A6', Aspergillus_bertholletiae= '#FF9999', Aspergillus_bombycis= '#FF8C8C', Aspergillus_brasiliensis= '#FF8080', Aspergillus_brunneoviolaceus= '#FF7373', Aspergillus_caelatus= '#FF6666', Aspergillus_campestris= '#FF5959', Aspergillus_candidus= '#FF4D4D', Aspergillus_carbonarius= '#FF4040', Aspergillus_clavatus= '#FF3333', Aspergillus_coremiiformis= '#FF2626', Aspergillus_costaricensis= '#FF1919', Aspergillus_cristatus= '#FF0D0D', Aspergillus_ellipticus= '#F20000', Aspergillus_eucalypticola= '#E60000', Aspergillus_felis= '#D90000', Aspergillus_fijiensis= '#CC0000', Aspergillus_fischeri= '#BF0000', Aspergillus_flavus= '#B30000', Aspergillus_fumigatiaffinis= '#A60000', Aspergillus_fumigatus= '#990000', Aspergillus_glaucus= '#8C0000', Aspergillus_heteromorphus= '#800000', Aspergillus_hiratsukae= '#730000', Aspergillus_homomorphus= '#660000', Aspergillus_ibericus= '#590000', Aspergillus_indologenus= '#AC5959', Aspergillus_japonicus= '#A64D4D', Aspergillus_lentulus= '#A04040', Aspergillus_leporis= '#993333', Aspergillus_luchuensis= '#932626', Aspergillus_minisclerotigenes= '#8D1919', Aspergillus_mulundensis= '#860D0D', Aspergillus_neoniger= '#7A0000', Aspergillus_nidulans= '#730000', Aspergillus_niger= '#6D0000', Aspergillus_nomiae= '#FFA333', Aspergillus_novofumigatus= '#FF9D26', Aspergillus_novoparasiticus= '#FF9819', Aspergillus_ochraceoroseus= '#FF920D', Aspergillus_oryzae= '#F28500', Aspergillus_parasiticus= '#E67E00', Aspergillus_phoenicis= '#D97700', Aspergillus_piperis= '#CC7000', Aspergillus_pseudocaelatus= '#BF6900', Aspergillus_pseudonomius= '#B36200', Aspergillus_pseudotamarii= '#A65B00', Aspergillus_rambellii= '#995400', Aspergillus_ruber= '#8C4D00', Aspergillus_saccharolyticus= '#FFE8CC', Aspergillus_sclerotioniger= '#FFE2BF', Aspergillus_sergii= '#FFDDB3', Aspergillus_steynii= '#FFD7A6', Aspergillus_sydowii= '#FFD199', Aspergillus_taichungensis= '#FFCB8C', Aspergillus_tamarii= '#FC6A88', Aspergillus_tanneri= '#FC7591', Aspergillus_thermomutatus= '#FB5F80', Aspergillus_transmontanensis= '#FB5577', Aspergillus_tubingensis= '#FB4A6F', Aspergillus_turcosus= '#FB3F66', Aspergillus_udagawae= '#FA355E', Aspergillus_uvarum= '#EE2851', Aspergillus_vadensis= '#E1264D', Aspergillus_versicolor= '#D52448', Aspergillus_welwitschiae= '#D52448', Penicilliopsis_zonata= '#4D4DFF', Penicillium_arizonense= '#4040FF', Penicillium_brasilianum= '#3333FF', Penicillium_camemberti= '#2626FF', Penicillium_chrysogenum= '#1919FF', Penicillium_coprophilum= '#0D0DFF', Penicillium_decumbens= '#0000F2', Penicillium_digitatum= '#0000E6', Penicillium_expansum= '#0000D9', Penicillium_griseofulvum= '#0000CC', Penicillium_italicum= '#0000BF', Penicillium_nordicum= '#0000B3', Penicillium_oxalicum= '#0000A6', Penicillium_polonicum= '#000099', Penicillium_rolfsii= '#00008C', Penicillium_roqueforti= '#5959FF', Penicillium_rubens= '#6666FF', Penicillium_steckii= '#7373FF', Penicillium_vulpinum= '#8080FF', Talaromyces_atroroseus= '#40A040', Talaromyces_cellulolyticus= '#339933', Talaromyces_islandicus= '#269326', Talaromyces_marneffei= '#198D19', Talaromyces_pinophilus= '#0D860D', Talaromyces_stipitatus= '#007A00', Talaromyces_verruculosus= '#007300')) +
+  theme(legend.position = "none")
+
+p2
+```
+# Final CT Plot
+```{r}
+consensusTree <- read.tree("./iqtree/gappyout/PF05141_trimGappyout.contree")
+```
+
+```{r}
+#creating the tree and coloring the clades
+c = ggtree(consensusTree, branch.length = "none", layout = "circular") + 
+  
+  ggtitle(label="Core isocyanide protein domains in Eurotiales",
+          subtitle = "Aspergillus = red  |  Penicillium = blue  |  Talaromyces = green") +
+  geom_nodelab(color = "#000031", size = 3) +
+  geom_highlight(node=316, fill='steelblue', alpha=.6) + 
+  geom_highlight(node=261, fill='darkgreen', alpha=.6) + 
+  geom_highlight(node=363, fill="#E69F00", alpha=.6) + 
+  geom_highlight(node=410, fill="#F0E442", alpha=.6) + 
+  geom_highlight(node=454, fill="#CC79A7", alpha=.6) + 
+  geom_highlight(node=483, fill="#D55E00", alpha=.6) + 
+  geom_highlight(node=447, fill="#999999", alpha=.6) +
+  #editing the title and subtitle to look cleaner
+  theme(plot.title=element_text(face="bold", hjust = 0.5, size = 30), 
+        plot.subtitle = element_text(hjust = 0.5, color = "#4D4D4D", size = 20)
+  )
+
+#adding the species metadata and coloring based on
+c2 <- c %<+% info + geom_tippoint(aes(color = label)) + 
+  scale_color_manual(values=c(Aspergillus_aculeatinus= '#FFE6E6', Aspergillus_aculeatus= '#FFD9D9', Aspergillus_alliaceus= '#FFCCCC', Aspergillus_arachidicola= '#FFBFBF', Aspergillus_avenaceus= '#FFB3B3', Aspergillus_awamori= '#FFA6A6', Aspergillus_bertholletiae= '#FF9999', Aspergillus_bombycis= '#FF8C8C', Aspergillus_brasiliensis= '#FF8080', Aspergillus_brunneoviolaceus= '#FF7373', Aspergillus_caelatus= '#FF6666', Aspergillus_campestris= '#FF5959', Aspergillus_candidus= '#FF4D4D', Aspergillus_carbonarius= '#FF4040', Aspergillus_clavatus= '#FF3333', Aspergillus_coremiiformis= '#FF2626', Aspergillus_costaricensis= '#FF1919', Aspergillus_cristatus= '#FF0D0D', Aspergillus_ellipticus= '#F20000', Aspergillus_eucalypticola= '#E60000', Aspergillus_felis= '#D90000', Aspergillus_fijiensis= '#CC0000', Aspergillus_fischeri= '#BF0000', Aspergillus_flavus= '#B30000', Aspergillus_fumigatiaffinis= '#A60000', Aspergillus_fumigatus= '#990000', Aspergillus_glaucus= '#8C0000', Aspergillus_heteromorphus= '#800000', Aspergillus_hiratsukae= '#730000', Aspergillus_homomorphus= '#660000', Aspergillus_ibericus= '#590000', Aspergillus_indologenus= '#AC5959', Aspergillus_japonicus= '#A64D4D', Aspergillus_lentulus= '#A04040', Aspergillus_leporis= '#993333', Aspergillus_luchuensis= '#932626', Aspergillus_minisclerotigenes= '#8D1919', Aspergillus_mulundensis= '#860D0D', Aspergillus_neoniger= '#7A0000', Aspergillus_nidulans= '#730000', Aspergillus_niger= '#6D0000', Aspergillus_nomiae= '#FFA333', Aspergillus_novofumigatus= '#FF9D26', Aspergillus_novoparasiticus= '#FF9819', Aspergillus_ochraceoroseus= '#FF920D', Aspergillus_oryzae= '#F28500', Aspergillus_parasiticus= '#E67E00', Aspergillus_phoenicis= '#D97700', Aspergillus_piperis= '#CC7000', Aspergillus_pseudocaelatus= '#BF6900', Aspergillus_pseudonomius= '#B36200', Aspergillus_pseudotamarii= '#A65B00', Aspergillus_rambellii= '#995400', Aspergillus_ruber= '#8C4D00', Aspergillus_saccharolyticus= '#FFE8CC', Aspergillus_sclerotioniger= '#FFE2BF', Aspergillus_sergii= '#FFDDB3', Aspergillus_steynii= '#FFD7A6', Aspergillus_sydowii= '#FFD199', Aspergillus_taichungensis= '#FFCB8C', Aspergillus_tamarii= '#FC6A88', Aspergillus_tanneri= '#FC7591', Aspergillus_thermomutatus= '#FB5F80', Aspergillus_transmontanensis= '#FB5577', Aspergillus_tubingensis= '#FB4A6F', Aspergillus_turcosus= '#FB3F66', Aspergillus_udagawae= '#FA355E', Aspergillus_uvarum= '#EE2851', Aspergillus_vadensis= '#E1264D', Aspergillus_versicolor= '#D52448', Aspergillus_welwitschiae= '#D52448', Penicilliopsis_zonata= '#4D4DFF', Penicillium_arizonense= '#4040FF', Penicillium_brasilianum= '#3333FF', Penicillium_camemberti= '#2626FF', Penicillium_chrysogenum= '#1919FF', Penicillium_coprophilum= '#0D0DFF', Penicillium_decumbens= '#0000F2', Penicillium_digitatum= '#0000E6', Penicillium_expansum= '#0000D9', Penicillium_griseofulvum= '#0000CC', Penicillium_italicum= '#0000BF', Penicillium_nordicum= '#0000B3', Penicillium_oxalicum= '#0000A6', Penicillium_polonicum= '#000099', Penicillium_rolfsii= '#00008C', Penicillium_roqueforti= '#5959FF', Penicillium_rubens= '#6666FF', Penicillium_steckii= '#7373FF', Penicillium_vulpinum= '#8080FF', Talaromyces_atroroseus= '#40A040', Talaromyces_cellulolyticus= '#339933', Talaromyces_islandicus= '#269326', Talaromyces_marneffei= '#198D19', Talaromyces_pinophilus= '#0D860D', Talaromyces_stipitatus= '#007A00', Talaromyces_verruculosus= '#007300')) +
+  theme(legend.position = "none")
+
+c2
+```
