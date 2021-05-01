@@ -3111,5 +3111,23 @@ TempNamesToKeyNames(tempNameColumn, keyNameColumn, fileChanging, keyFile)
 
 ```
 
-I also am going to change to names in the MSA file using my script:
+I also am going to change to names in the MSA file using my script.
+
+
+
+# Final Results
+
+To see my notes on how I generated this plot see the Rmd script I made.
+
+## Maximum Liklihood Tree
+
+![MLTree](./data/MLTree.png)
+
+## Ultrafast Bootstrap Support Tree (B=5000)
+
+![ConsensusTree](./data/ConsensusTree.png)
+
+This cladogram looks really good! My next step is to compare these groupings with my networks once I refine them. I want to see if I have matching groups between them. I'll include an example on one of these networks below
+
+![EurotialesDraft2Image](./data/EurotialesDraft2Image.png)
 
