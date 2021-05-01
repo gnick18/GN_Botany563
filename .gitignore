@@ -92,14 +92,6 @@ Backup[ ]of[ ]*.numbers/
 *.odt
 *.csv
 
-# inkscape drawings
-*.svg
-*.eps
-*.jpg
-*.jpeg
-*.png
-*.dot
-*.json
 
 # dropbox
 .dropbox
